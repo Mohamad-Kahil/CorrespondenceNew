@@ -5,6 +5,7 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { FileText, Paperclip, X } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface NewMessageDialogProps {
   open: boolean;
@@ -16,6 +17,7 @@ export function NewMessageDialog({
   onOpenChange,
 }: NewMessageDialogProps) {
   const [attachedDocument, setAttachedDocument] = useState<File | null>(null);
+  const { t } = useLanguage();
 
   const handleDocumentAttach = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -28,12 +30,12 @@ export function NewMessageDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden grid grid-rows-[auto,1fr,auto] gap-4">
         <DialogHeader>
-          <DialogTitle>New Message</DialogTitle>
+          <DialogTitle>{t("newMessage")}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4 overflow-y-auto pr-2">
           <div className="space-y-2">
-            <Label htmlFor="to">To</Label>
+            <Label htmlFor="to">{t("to")}</Label>
             <Input
               id="to"
               placeholder="recipient@example.com"
@@ -42,7 +44,7 @@ export function NewMessageDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="cc">Cc</Label>
+            <Label htmlFor="cc">{t("cc")}</Label>
             <Input
               id="cc"
               placeholder="cc@example.com"
@@ -51,16 +53,16 @@ export function NewMessageDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="subject">Subject</Label>
+            <Label htmlFor="subject">{t("subject")}</Label>
             <Input
               id="subject"
-              placeholder="Enter subject"
+              placeholder={t("enterSubject")}
               className="text-foreground placeholder:text-muted-foreground"
             />
           </div>
 
           <div className="space-y-2">
-            <Label>Document Attachment</Label>
+            <Label>{t("attachDocument")}</Label>
             {attachedDocument ? (
               <div className="flex items-center justify-between p-2 border rounded-md bg-muted/50">
                 <div className="flex items-center gap-2">
@@ -85,7 +87,7 @@ export function NewMessageDialog({
                     htmlFor="document-upload"
                     className="relative cursor-pointer rounded-md font-medium text-primary hover:text-primary/80 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary"
                   >
-                    <span>Attach Document</span>
+                    <span>{t("attachDocument")}</span>
                     <input
                       id="document-upload"
                       name="document-upload"
@@ -101,10 +103,10 @@ export function NewMessageDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message">Message</Label>
+            <Label htmlFor="message">{t("message")}</Label>
             <Textarea
               id="message"
-              placeholder="Type your message here"
+              placeholder={t("typeMessage")}
               className="h-24 resize-none text-foreground placeholder:text-muted-foreground"
             />
           </div>
@@ -112,9 +114,9 @@ export function NewMessageDialog({
 
         <div className="flex justify-end gap-2 pt-2 border-t">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t("cancel")}
           </Button>
-          <Button>Send</Button>
+          <Button>{t("send")}</Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import {
   Clock,
   CheckCircle,
@@ -59,6 +60,8 @@ export function TaskDetailDialog({
   open,
   onOpenChange,
 }: TaskDetailDialogProps) {
+  const { t } = useLanguage();
+
   if (!task) return null;
 
   return (
@@ -70,9 +73,7 @@ export function TaskDetailDialog({
             <span
               className={`text-sm font-medium ${getActionColor(task.actionType)}`}
             >
-              {task.actionType.charAt(0).toUpperCase() +
-                task.actionType.slice(1)}{" "}
-              Needed
+              {t(task.actionType)}
             </span>
           </DialogTitle>
         </DialogHeader>
@@ -95,22 +96,22 @@ export function TaskDetailDialog({
               {task.status === "overdue" && (
                 <AlertCircle className="w-3 h-3 mr-1" />
               )}
-              {task.status.charAt(0).toUpperCase() + task.status.slice(1)}
+              {t(task.status)}
             </Badge>
             <Badge variant="outline" className="capitalize">
-              {task.priority}
+              {t(task.priority)}
             </Badge>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center gap-2 text-sm">
               <User className="w-4 h-4 text-muted-foreground" />
-              <span className="text-muted-foreground">Assignee:</span>
+              <span className="text-muted-foreground">{t("assignee")}:</span>
               <span>{task.assignee}</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Calendar className="w-4 h-4 text-muted-foreground" />
-              <span className="text-muted-foreground">Due Date:</span>
+              <span className="text-muted-foreground">{t("dueDate")}:</span>
               <span>{task.dueDate}</span>
             </div>
           </div>
@@ -145,16 +146,16 @@ export function TaskDetailDialog({
           <Separator />
 
           <div className="space-y-2">
-            <h3 className="font-medium">Description</h3>
+            <h3 className="font-medium">{t("description")}</h3>
             <p className="text-sm text-muted-foreground">
-              {task.description || "No description provided."}
+              {task.description || t("noDescription")}
             </p>
           </div>
 
           <Separator />
 
           <div className="space-y-4">
-            <h3 className="font-medium">Comments</h3>
+            <h3 className="font-medium">{t("comments")}</h3>
             {task.comments?.map((comment, index) => (
               <div key={index} className="bg-muted/50 rounded-lg p-3 space-y-2">
                 <div className="flex justify-between text-sm">
@@ -164,15 +165,15 @@ export function TaskDetailDialog({
                 <p className="text-sm">{comment.text}</p>
               </div>
             )) || (
-              <p className="text-sm text-muted-foreground">No comments yet.</p>
+              <p className="text-sm text-muted-foreground">{t("noComments")}</p>
             )}
           </div>
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
-              Close
+              {t("close")}
             </Button>
-            <Button>Update Status</Button>
+            <Button>{t("updateStatus")}</Button>
           </div>
         </div>
       </DialogContent>

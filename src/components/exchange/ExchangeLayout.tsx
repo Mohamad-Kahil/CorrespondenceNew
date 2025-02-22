@@ -10,10 +10,12 @@ import { MessageView } from "./MessageView";
 import { useParams, useNavigate } from "react-router-dom";
 import { messages } from "./data";
 import { Message } from "./types";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function ExchangeLayout() {
   const { folder = "inbox", messageId } = useParams();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const folderMessages = messages.filter((m) => m.folder === folder);
   const selectedMessage = messageId
@@ -27,10 +29,10 @@ export function ExchangeLayout() {
   return (
     <div className="min-h-screen">
       <header className="p-6 border-b">
-        <h1 className="text-2xl font-semibold">Document Exchange System</h1>
-        <p className="text-muted-foreground mt-2">
-          Process and manage document exchanges through our digital system
-        </p>
+        <h1 className="text-2xl font-semibold">
+          {t("documentExchangeSystem")}
+        </h1>
+        <p className="text-muted-foreground mt-2">{t("exchangeDescription")}</p>
       </header>
       <ResizablePanelGroup
         direction="horizontal"

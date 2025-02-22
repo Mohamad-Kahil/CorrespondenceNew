@@ -18,51 +18,39 @@ function App() {
     import.meta.env.VITE_TEMPO === "true" ? useRoutes(routes) : null;
 
   return (
-    <LanguageProvider>
-      <ThemeProvider>
-        <AuthProvider>
-          <Suspense
-            fallback={
-              <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-              </div>
-            }
-          >
-            {tempoRoutes}
-            <Routes>
-              <Route path="/login" element={<LoginPage />} />
-              <Route
-                path="/*"
-                element={
-                  <ProtectedRoute>
-                    <MainLayout>
-                      <Routes>
-                        <Route index element={<Home />} />
-                        <Route path="exchange" element={<ExchangeLayout />} />
-                        <Route
-                          path="exchange/:folder"
-                          element={<ExchangeLayout />}
-                        />
-                        <Route
-                          path="exchange/:folder/:messageId"
-                          element={<ExchangeLayout />}
-                        />
-                        <Route
-                          path="workflow"
-                          element={<WorkflowDashboard />}
-                        />
-                        <Route path="template" element={<TemplateLayout />} />
-                        <Route path="dispatch" element={<DispatchLayout />} />
-                      </Routes>
-                    </MainLayout>
-                  </ProtectedRoute>
-                }
-              />
-            </Routes>
-          </Suspense>
-        </AuthProvider>
-      </ThemeProvider>
-    </LanguageProvider>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+        </div>
+      }
+    >
+      {tempoRoutes}
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <MainLayout>
+                <Routes>
+                  <Route index element={<Home />} />
+                  <Route path="exchange" element={<ExchangeLayout />} />
+                  <Route path="exchange/:folder" element={<ExchangeLayout />} />
+                  <Route
+                    path="exchange/:folder/:messageId"
+                    element={<ExchangeLayout />}
+                  />
+                  <Route path="workflow" element={<WorkflowDashboard />} />
+                  <Route path="template" element={<TemplateLayout />} />
+                  <Route path="dispatch" element={<DispatchLayout />} />
+                </Routes>
+              </MainLayout>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Suspense>
   );
 }
 

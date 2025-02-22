@@ -43,26 +43,27 @@ export function ExchangeSidebar({ currentFolder }: ExchangeSidebarProps) {
               key={folder.path}
               variant={currentFolder === folder.path ? "secondary" : "ghost"}
               className={cn(
-                "w-full justify-between hover:text-primary",
+                "w-full hover:text-primary",
                 currentFolder === folder.path
                   ? "bg-secondary/50 text-primary font-medium"
                   : "text-foreground",
               )}
               asChild
             >
-              <Link to={`/exchange/${folder.path}`}>
+              <Link
+                to={`/exchange/${folder.path}`}
+                className={cn(
+                  "flex items-center justify-between",
+                  language === "ar" && "flex-row-reverse",
+                )}
+              >
                 <div
                   className={cn(
-                    "flex items-center",
-                    language === "ar" ? "flex-row-reverse" : "flex-row",
+                    "flex items-center gap-2",
+                    language === "ar" && "flex-row-reverse",
                   )}
                 >
-                  <folder.icon
-                    className={cn(
-                      "h-4 w-4",
-                      language === "ar" ? "ml-2" : "mr-2",
-                    )}
-                  />
+                  <folder.icon className="h-4 w-4" />
                   {t(folder.name)}
                 </div>
                 <span className="text-xs text-muted-foreground">

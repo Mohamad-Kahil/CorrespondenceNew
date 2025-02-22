@@ -44,6 +44,9 @@ export const translations = {
     recipient: "Recipient",
     preview: "Preview",
     content: "Content",
+    enterSubject: "Enter subject",
+    typeMessage: "Type your message here",
+    send: "Send",
 
     // System Titles
     documentIntakeSystem: "Document Intake System",
@@ -64,6 +67,29 @@ export const translations = {
     exchangeDescription:
       "Process and manage document exchanges through our digital system",
 
+    // Dialog & Workflow
+    owner: "Owner",
+    startDate: "Start Date",
+    overallProgress: "Overall Progress",
+    workflowSteps: "Workflow Steps",
+    updateStatus: "Update Status",
+    noComments: "No comments yet",
+    noDescription: "No description provided",
+
+    // Task Actions
+    review: "Review Needed",
+    approve: "Approval Needed",
+    comment: "Comment Needed",
+    process: "Processing Needed",
+
+    // Status
+    active: "Active",
+    paused: "Paused",
+    completed: "Completed",
+    pending: "Pending",
+    in_progress: "In Progress",
+    overdue: "Overdue",
+
     // Form Fields
     name: "Name",
     email: "Email",
@@ -82,12 +108,6 @@ export const translations = {
     attachments: "Attachments",
     comments: "Comments",
     loading: "Loading...",
-
-    // Statuses
-    pending: "Pending",
-    inProgress: "In Progress",
-    completed: "Completed",
-    cancelled: "Cancelled",
 
     // Priorities
     high: "High",
@@ -165,6 +185,9 @@ export const translations = {
     recipient: "المستلم",
     preview: "معاينة",
     content: "المحتوى",
+    enterSubject: "أدخل الموضوع",
+    typeMessage: "اكتب رسالتك هنا",
+    send: "إرسال",
 
     // System Titles
     documentIntakeSystem: "نظام استلام المستندات",
@@ -181,6 +204,29 @@ export const translations = {
       "معالجة وإدارة سير عمل المستندات من خلال نظامنا الرقمي",
     templateDescription: "معالجة وإدارة نماذج المستندات من خلال نظامنا الرقمي",
     exchangeDescription: "معالجة وإدارة تبادل المستندات من خلال نظامنا الرقمي",
+
+    // Dialog & Workflow
+    owner: "المالك",
+    startDate: "تاريخ البدء",
+    overallProgress: "التقدم الكلي",
+    workflowSteps: "خطوات سير العمل",
+    updateStatus: "تحديث الحالة",
+    noComments: "لا توجد تعليقات بعد",
+    noDescription: "لا يوجد وصف",
+
+    // Task Actions
+    review: "مراجعة مطلوبة",
+    approve: "موافقة مطلوبة",
+    comment: "تعليق مطلوب",
+    process: "معالجة مطلوبة",
+
+    // Status
+    active: "نشط",
+    paused: "متوقف مؤقتاً",
+    completed: "مكتمل",
+    pending: "قيد الانتظار",
+    in_progress: "قيد التنفيذ",
+    overdue: "متأخر",
 
     // Form Fields
     name: "الاسم",
@@ -200,12 +246,6 @@ export const translations = {
     attachments: "المرفقات",
     comments: "التعليقات",
     loading: "جاري التحميل...",
-
-    // Statuses
-    pending: "قيد الانتظار",
-    inProgress: "قيد التنفيذ",
-    completed: "مكتمل",
-    cancelled: "ملغي",
 
     // Priorities
     high: "عالي",

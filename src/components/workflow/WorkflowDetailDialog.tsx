@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
 import { Separator } from "../ui/separator";
 import { User, Calendar, CheckCircle2 } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 type Workflow = {
   id: string;
@@ -32,6 +33,8 @@ export function WorkflowDetailDialog({
   open,
   onOpenChange,
 }: WorkflowDetailDialogProps) {
+  const { t } = useLanguage();
+
   if (!workflow) return null;
 
   return (
@@ -52,27 +55,28 @@ export function WorkflowDetailDialog({
                     : "outline"
               }
             >
-              {workflow.status.charAt(0).toUpperCase() +
-                workflow.status.slice(1)}
+              {t(workflow.status)}
             </Badge>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div className="flex items-center gap-2 text-sm">
               <User className="w-4 h-4 text-muted-foreground" />
-              <span className="text-muted-foreground">Owner:</span>
+              <span className="text-muted-foreground">{t("owner")}:</span>
               <span>{workflow.owner}</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Calendar className="w-4 h-4 text-muted-foreground" />
-              <span className="text-muted-foreground">Start Date:</span>
+              <span className="text-muted-foreground">{t("startDate")}:</span>
               <span>{workflow.startDate}</span>
             </div>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Overall Progress</span>
+              <span className="text-muted-foreground">
+                {t("overallProgress")}
+              </span>
               <span>{workflow.progress}%</span>
             </div>
             <Progress value={workflow.progress} />
@@ -81,16 +85,16 @@ export function WorkflowDetailDialog({
           <Separator />
 
           <div className="space-y-2">
-            <h3 className="font-medium">Description</h3>
+            <h3 className="font-medium">{t("description")}</h3>
             <p className="text-sm text-muted-foreground">
-              {workflow.description || "No description provided."}
+              {workflow.description || t("noDescription")}
             </p>
           </div>
 
           <Separator />
 
           <div className="space-y-4">
-            <h3 className="font-medium">Workflow Steps</h3>
+            <h3 className="font-medium">{t("workflowSteps")}</h3>
             {workflow.steps?.map((step, index) => (
               <div
                 key={index}
@@ -117,7 +121,7 @@ export function WorkflowDetailDialog({
                     <p className="font-medium">{step.name}</p>
                     {step.assignee && (
                       <p className="text-sm text-muted-foreground">
-                        Assigned to: {step.assignee}
+                        {t("assignee")}: {step.assignee}
                       </p>
                     )}
                   </div>
@@ -131,7 +135,7 @@ export function WorkflowDetailDialog({
                         : "outline"
                   }
                 >
-                  {step.status.replace("_", " ")}
+                  {t(step.status)}
                 </Badge>
               </div>
             ))}
@@ -139,9 +143,9 @@ export function WorkflowDetailDialog({
 
           <div className="flex justify-end gap-2">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
-              Close
+              {t("close")}
             </Button>
-            <Button>Update Status</Button>
+            <Button>{t("updateStatus")}</Button>
           </div>
         </div>
       </DialogContent>

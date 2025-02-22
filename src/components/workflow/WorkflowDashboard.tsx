@@ -6,43 +6,46 @@ import { Progress } from "../ui/progress";
 import { TaskList } from "./TaskList";
 import { WorkflowList } from "./WorkflowList";
 import { NewWorkflow } from "./NewWorkflow";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 
-const stats = [
+const getStats = (t: (key: string) => string) => [
   {
-    label: "Active Workflows",
+    label: t("activeWorkflows"),
     value: "12",
     icon: Activity,
-    change: "+2 from last week",
+    change: `+2 ${t("fromLastWeek")}`,
     color: "text-blue-500",
   },
   {
-    label: "Pending Tasks",
+    label: t("pendingTasks"),
     value: "28",
     icon: Clock,
-    change: "-5 from last week",
+    change: `-5 ${t("fromLastWeek")}`,
     color: "text-yellow-500",
   },
   {
-    label: "Completed",
+    label: t("completedTasks"),
     value: "145",
     icon: CheckCircle,
-    change: "+18 this month",
+    change: `+18 ${t("thisMonth")}`,
     color: "text-green-500",
   },
 ];
 
 export function WorkflowDashboard() {
+  const { t, language } = useLanguage();
   return (
     <div className="p-6 space-y-6">
       <header className="p-6 border-b -mx-6 -mt-6 mb-6">
-        <h1 className="text-2xl font-semibold">Document Workflow System</h1>
-        <p className="text-muted-foreground mt-2">
-          Process and manage document workflows through our digital system
-        </p>
+        <h1 className="text-2xl font-semibold">
+          {t("documentWorkflowSystem")}
+        </h1>
+        <p className="text-muted-foreground mt-2">{t("workflowDescription")}</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {stats.map((stat) => (
+        {getStats(t).map((stat) => (
           <Card key={stat.label} className="p-6">
             <div className="flex justify-between items-start">
               <div>
@@ -63,11 +66,21 @@ export function WorkflowDashboard() {
         ))}
       </div>
 
-      <Tabs defaultValue="tasks" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="tasks">Tasks</TabsTrigger>
-          <TabsTrigger value="workflows">Workflows</TabsTrigger>
-          <TabsTrigger value="new">New Workflow</TabsTrigger>
+      <Tabs
+        defaultValue="tasks"
+        className="space-y-4"
+        dir={language === "ar" ? "rtl" : "ltr"}
+      >
+        <TabsList className="flex">
+          <TabsTrigger value="tasks">
+            {language === "ar" ? "المهام" : "Tasks"}
+          </TabsTrigger>
+          <TabsTrigger value="workflows">
+            {language === "ar" ? "سير العمل" : "Workflows"}
+          </TabsTrigger>
+          <TabsTrigger value="new">
+            {language === "ar" ? "سير عمل جديد" : "New Workflow"}
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="tasks" className="space-y-4">
           <TaskList />

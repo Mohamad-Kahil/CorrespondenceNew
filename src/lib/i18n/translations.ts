@@ -196,6 +196,16 @@ export const translations = {
     documentTemplateSystem: "نظام نماذج المستندات",
     documentExchangeSystem: "نظام تبادل المستندات",
 
+    // Workflow
+    tasks: "المهام",
+    workflows: "سير العمل",
+    newWorkflow: "سير عمل جديد",
+    activeWorkflows: "سير العمل النشط",
+    pendingTasks: "المهام المعلقة",
+    completedTasks: "المهام المكتملة",
+    fromLastWeek: "من الأسبوع الماضي",
+    thisMonth: "هذا الشهر",
+
     // System Descriptions
     intakeDescription: "معالجة وإدارة المستندات المادية من خلال نظامنا الرقمي",
     dispatchDescription:
@@ -270,6 +280,7 @@ export const translations = {
     delete: "حذف",
     view: "عرض",
     close: "إغلاق",
+    viewDetails: "عرض التفاصيل",
 
     // Validation Messages
     required: "هذا الحقل مطلوب",

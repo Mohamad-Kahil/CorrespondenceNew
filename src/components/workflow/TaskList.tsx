@@ -4,6 +4,8 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Clock, CheckCircle, AlertCircle, FileText } from "lucide-react";
 import { TaskDetailDialog } from "./TaskDetailDialog";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 
 type ActionType = "review" | "approve" | "comment" | "process";
 
@@ -97,6 +99,7 @@ const tasks: Task[] = [
 
 export function TaskList() {
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const { t, language } = useLanguage();
 
   return (
     <>
@@ -152,8 +155,9 @@ export function TaskList() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setSelectedTask(task)}
+                className={cn("gap-2", language === "ar" && "flex-row-reverse")}
               >
-                View Details
+                {t("viewDetails")}
               </Button>
             </div>
           </Card>

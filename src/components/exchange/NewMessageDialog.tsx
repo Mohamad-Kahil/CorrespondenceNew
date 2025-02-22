@@ -38,7 +38,7 @@ export function NewMessageDialog({
             <Label htmlFor="to">{t("to")}</Label>
             <Input
               id="to"
-              placeholder="recipient@example.com"
+              placeholder={t("selectRecipient")}
               className="text-foreground placeholder:text-muted-foreground"
             />
           </div>
@@ -47,7 +47,7 @@ export function NewMessageDialog({
             <Label htmlFor="cc">{t("cc")}</Label>
             <Input
               id="cc"
-              placeholder="cc@example.com"
+              placeholder={t("selectRecipient")}
               className="text-foreground placeholder:text-muted-foreground"
             />
           </div>

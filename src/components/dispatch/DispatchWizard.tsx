@@ -8,6 +8,7 @@ import DeliveryNoteForm from "./DeliveryNoteForm";
 import DocumentSelectionPanel from "./DocumentSelectionPanel";
 import BarcodeGenerator from "../BarcodeGenerator";
 import DeliveryConfirmation from "./DeliveryConfirmation";
+import StorageLocationGrid from "../StorageLocationGrid";
 
 interface DispatchWizardProps {
   onComplete?: (data: any) => void;
@@ -18,9 +19,9 @@ const getSteps = (t: (key: string) => string) => [
   { id: 1, name: t("recipientDetails") },
   { id: 2, name: t("documentSelection") },
   { id: 3, name: t("deliveryNote") },
-  { id: 4, name: t("generateBarcode") },
-  { id: 5, name: t("deliveryConfirmation") },
-  { id: 6, name: t("archive") },
+  { id: 4, name: t("deliveryConfirmation") },
+  { id: 5, name: t("archive") },
+  { id: 6, name: t("generateBarcode") },
 ];
 
 const DispatchWizard = ({
@@ -90,18 +91,6 @@ const DispatchWizard = ({
         );
       case 4:
         return (
-          <div className="flex justify-center">
-            <BarcodeGenerator
-              documentId="DISP-2024-001"
-              onGenerate={() => {
-                updateFormData("barcode", "DISP-2024-001");
-                handleNext();
-              }}
-            />
-          </div>
-        );
-      case 5:
-        return (
           <DeliveryConfirmation
             onConfirm={(data) => {
               updateFormData("deliveryConfirmation", data);
@@ -109,16 +98,26 @@ const DispatchWizard = ({
             }}
           />
         );
+      case 5:
+        return (
+          <StorageLocationGrid
+            onLocationSelect={(location) => {
+              updateFormData("archiveLocation", location);
+              handleNext();
+            }}
+          />
+        );
       case 6:
         return (
-          <Card className="p-6 bg-card border border-border">
-            <h2 className="text-2xl font-semibold mb-4 text-foreground">
-              {t("archive")}
-            </h2>
-            <Button onClick={() => onComplete(formData)}>
-              {t("completeDispatch")}
-            </Button>
-          </Card>
+          <div className="flex justify-center">
+            <BarcodeGenerator
+              documentId="DISP-2024-001"
+              onGenerate={() => {
+                updateFormData("barcode", "DISP-2024-001");
+                onComplete(formData);
+              }}
+            />
+          </div>
         );
       default:
         return null;

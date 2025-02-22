@@ -25,8 +25,8 @@ const DocumentIntakeWizard = ({
     { id: 2, name: t("documentClassification") },
     { id: 3, name: t("scanDocument") },
     { id: 4, name: t("metadata") },
-    { id: 5, name: t("generateBarcode") },
-    { id: 6, name: t("storageLocation") },
+    { id: 5, name: t("storageLocation") },
+    { id: 6, name: t("generateBarcode") },
   ];
 
   const [currentStep, setCurrentStep] = useState(initialStep);
@@ -150,6 +150,15 @@ const DocumentIntakeWizard = ({
         );
       case 5:
         return (
+          <StorageLocationGrid
+            onLocationSelect={(location) => {
+              updateFormData("storageLocation", location);
+              handleNext();
+            }}
+          />
+        );
+      case 6:
+        return (
           <div className="flex justify-center">
             <BarcodeGenerator
               documentId="DOC-2024-001"
@@ -159,15 +168,6 @@ const DocumentIntakeWizard = ({
               }}
             />
           </div>
-        );
-      case 6:
-        return (
-          <StorageLocationGrid
-            onLocationSelect={(location) => {
-              updateFormData("storageLocation", location);
-              handleNext();
-            }}
-          />
         );
       default:
         return null;

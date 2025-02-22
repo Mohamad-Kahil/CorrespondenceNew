@@ -129,10 +129,6 @@ const StorageLocationGrid = ({
   const handleUnitSelect = (unit: Unit) => {
     if (!unit.isAvailable) return;
     setSelectedUnit(unit);
-    if (selectedLocation && selectedStore) {
-      const address = `L${selectedLocation.number}S${selectedStore.number}U${unit.number}`;
-      onLocationSelect(address);
-    }
   };
 
   const LocationBox = ({ location }: { location: Location }) => (
@@ -315,13 +311,27 @@ const StorageLocationGrid = ({
 
       {selectedUnit && selectedLocation && selectedStore && (
         <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-          <p className="text-sm text-muted-foreground">
-            {t("selectedLocation")}:
-          </p>
-          <p className="text-lg font-mono font-bold mt-1">
-            L{selectedLocation.number}S{selectedStore.number}U
-            {selectedUnit.number}
-          </p>
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-sm text-muted-foreground">
+                {t("selectedLocation")}:
+              </p>
+              <p className="text-lg font-mono font-bold mt-1">
+                L{selectedLocation.number}S{selectedStore.number}U
+                {selectedUnit.number}
+              </p>
+            </div>
+            <Button
+              onClick={() =>
+                onLocationSelect(
+                  `L${selectedLocation.number}S${selectedStore.number}U${selectedUnit.number}`,
+                )
+              }
+              className="ml-4"
+            >
+              {t("selectedLocation")}
+            </Button>
+          </div>
         </div>
       )}
     </Card>

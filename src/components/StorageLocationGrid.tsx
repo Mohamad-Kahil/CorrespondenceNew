@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
@@ -9,53 +9,254 @@ import {
   TooltipTrigger,
 } from "./ui/tooltip";
 import { cn } from "../lib/utils";
-import { CheckCircle, XCircle } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Building2,
+  BoxIcon,
+  Archive,
+} from "lucide-react";
 
-interface StorageLocation {
+interface Location {
   id: string;
-  row: number;
-  column: number;
+  name: string;
+  number: string;
   isAvailable: boolean;
-  label: string;
+  stores: Store[];
+}
+
+interface Store {
+  id: string;
+  name: string;
+  number: string;
+  isAvailable: boolean;
+  units: Unit[];
+}
+
+interface Unit {
+  id: string;
+  name: string;
+  number: string;
+  isAvailable: boolean;
 }
 
 interface StorageLocationGridProps {
-  locations?: StorageLocation[];
-  onLocationSelect?: (location: StorageLocation) => void;
+  onLocationSelect?: (location: string) => void;
   selectedLocationId?: string;
 }
 
-const defaultLocations: StorageLocation[] = [
-  { id: "1", row: 0, column: 0, isAvailable: true, label: "A1" },
-  { id: "2", row: 0, column: 1, isAvailable: false, label: "A2" },
-  { id: "3", row: 0, column: 2, isAvailable: true, label: "A3" },
-  { id: "4", row: 1, column: 0, isAvailable: true, label: "B1" },
-  { id: "5", row: 1, column: 1, isAvailable: true, label: "B2" },
-  { id: "6", row: 1, column: 2, isAvailable: false, label: "B3" },
-  { id: "7", row: 2, column: 0, isAvailable: true, label: "C1" },
-  { id: "8", row: 2, column: 1, isAvailable: true, label: "C2" },
-  { id: "9", row: 2, column: 2, isAvailable: true, label: "C3" },
+// Mock data - in real app this would come from your backend
+const mockLocations: Location[] = [
+  {
+    id: "1",
+    name: "Main Building",
+    number: "01",
+    isAvailable: true,
+    stores: [
+      {
+        id: "1-1",
+        name: "Ground Floor",
+        number: "001",
+        isAvailable: true,
+        units: [
+          { id: "1-1-1", name: "Unit A", number: "0001", isAvailable: true },
+          { id: "1-1-2", name: "Unit B", number: "0002", isAvailable: false },
+        ],
+      },
+      {
+        id: "1-2",
+        name: "First Floor",
+        number: "002",
+        isAvailable: true,
+        units: [
+          { id: "1-2-1", name: "Unit C", number: "0003", isAvailable: true },
+          { id: "1-2-2", name: "Unit D", number: "0004", isAvailable: true },
+        ],
+      },
+    ],
+  },
+  {
+    id: "2",
+    name: "East Wing",
+    number: "02",
+    isAvailable: true,
+    stores: [
+      {
+        id: "2-1",
+        name: "Archive Room 1",
+        number: "003",
+        isAvailable: true,
+        units: [
+          { id: "2-1-1", name: "Unit E", number: "0005", isAvailable: true },
+          { id: "2-1-2", name: "Unit F", number: "0006", isAvailable: true },
+        ],
+      },
+    ],
+  },
+  {
+    id: "3",
+    name: "West Wing",
+    number: "03",
+    isAvailable: false,
+    stores: [],
+  },
 ];
 
 const StorageLocationGrid = ({
-  locations = defaultLocations,
   onLocationSelect = () => {},
   selectedLocationId = "",
 }: StorageLocationGridProps) => {
-  const { t, language } = useLanguage();
-  // Get the maximum row and column numbers to determine grid dimensions
-  const maxRow = Math.max(...locations.map((loc) => loc.row));
-  const maxColumn = Math.max(...locations.map((loc) => loc.column));
+  const { t } = useLanguage();
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null,
+  );
+  const [selectedStore, setSelectedStore] = useState<Store | null>(null);
+  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
 
-  // Create a 2D array to represent the grid
-  const grid = Array(maxRow + 1)
-    .fill(null)
-    .map(() => Array(maxColumn + 1).fill(null));
+  const handleLocationSelect = (location: Location) => {
+    if (!location.isAvailable) return;
+    setSelectedLocation(location);
+    setSelectedStore(null);
+    setSelectedUnit(null);
+  };
 
-  // Fill the grid with locations
-  locations.forEach((location) => {
-    grid[location.row][location.column] = location;
-  });
+  const handleStoreSelect = (store: Store) => {
+    if (!store.isAvailable) return;
+    setSelectedStore(store);
+    setSelectedUnit(null);
+  };
+
+  const handleUnitSelect = (unit: Unit) => {
+    if (!unit.isAvailable) return;
+    setSelectedUnit(unit);
+    if (selectedLocation && selectedStore) {
+      const address = `L${selectedLocation.number}S${selectedStore.number}U${unit.number}`;
+      onLocationSelect(address);
+    }
+  };
+
+  const LocationBox = ({ location }: { location: Location }) => (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "w-full h-24 p-4 relative flex flex-col items-start justify-between",
+              location.isAvailable
+                ? "hover:bg-primary/10 border-primary/20"
+                : "bg-muted cursor-not-allowed",
+              selectedLocation?.id === location.id && "ring-2 ring-primary",
+            )}
+            onClick={() => handleLocationSelect(location)}
+            disabled={!location.isAvailable}
+          >
+            <div className="flex items-center gap-2 w-full">
+              <Building2 className="h-4 w-4" />
+              <span className="font-semibold">{location.name}</span>
+            </div>
+            <div className="flex justify-between items-center w-full">
+              <span className="text-xs text-muted-foreground">
+                {location.stores.length} {t("stores")}
+              </span>
+              {location.isAvailable ? (
+                <CheckCircle className="h-4 w-4 text-green-500" />
+              ) : (
+                <XCircle className="h-4 w-4 text-red-500" />
+              )}
+            </div>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          {location.isAvailable
+            ? `${t("location")} ${location.name}`
+            : t("locationNotAvailable")}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+
+  const StoreBox = ({ store }: { store: Store }) => (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "w-full h-24 p-4 relative flex flex-col items-start justify-between",
+              store.isAvailable
+                ? "hover:bg-primary/10 border-primary/20"
+                : "bg-muted cursor-not-allowed",
+              selectedStore?.id === store.id && "ring-2 ring-primary",
+            )}
+            onClick={() => handleStoreSelect(store)}
+            disabled={!store.isAvailable}
+          >
+            <div className="flex items-center gap-2 w-full">
+              <BoxIcon className="h-4 w-4" />
+              <span className="font-semibold">{store.name}</span>
+            </div>
+            <div className="flex justify-between items-center w-full">
+              <span className="text-xs text-muted-foreground">
+                {store.units.length} {t("units")}
+              </span>
+              {store.isAvailable ? (
+                <CheckCircle className="h-4 w-4 text-green-500" />
+              ) : (
+                <XCircle className="h-4 w-4 text-red-500" />
+              )}
+            </div>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          {store.isAvailable
+            ? `${t("store")} ${store.name}`
+            : t("storeNotAvailable")}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+
+  const UnitBox = ({ unit }: { unit: Unit }) => (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "w-full h-24 p-4 relative flex flex-col items-start justify-between",
+              unit.isAvailable
+                ? "hover:bg-primary/10 border-primary/20"
+                : "bg-muted cursor-not-allowed",
+              selectedUnit?.id === unit.id && "ring-2 ring-primary",
+            )}
+            onClick={() => handleUnitSelect(unit)}
+            disabled={!unit.isAvailable}
+          >
+            <div className="flex items-center gap-2 w-full">
+              <Archive className="h-4 w-4" />
+              <span className="font-semibold">{unit.name}</span>
+            </div>
+            <div className="flex justify-between items-center w-full">
+              <span className="text-xs text-muted-foreground">
+                {unit.number}
+              </span>
+              {unit.isAvailable ? (
+                <CheckCircle className="h-4 w-4 text-green-500" />
+              ) : (
+                <XCircle className="h-4 w-4 text-red-500" />
+              )}
+            </div>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          {unit.isAvailable
+            ? `${t("unit")} ${unit.name}`
+            : t("unitNotAvailable")}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
 
   return (
     <Card className="p-6 bg-card border border-border">
@@ -66,65 +267,63 @@ const StorageLocationGrid = ({
         <p className="text-muted-foreground">{t("selectStorageLocation")}</p>
       </div>
 
-      <div className="grid gap-4">
-        {grid.map((row, rowIndex) => (
-          <div key={rowIndex} className="flex gap-4">
-            {row.map((location, colIndex) => (
-              <TooltipProvider key={`${rowIndex}-${colIndex}`}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-24 h-24 p-2 relative",
-                        location?.isAvailable
-                          ? "hover:bg-primary/10 border-primary/20"
-                          : "bg-muted cursor-not-allowed",
-                        location?.id === selectedLocationId &&
-                          "ring-2 ring-blue-500",
-                      )}
-                      onClick={() => {
-                        if (location?.isAvailable) {
-                          onLocationSelect(location);
-                        }
-                      }}
-                      disabled={!location?.isAvailable}
-                    >
-                      <div className="flex flex-col items-center justify-center">
-                        <span className="text-lg font-bold">
-                          {location?.label || "-"}
-                        </span>
-                        {location &&
-                          (location.isAvailable ? (
-                            <CheckCircle className="w-6 h-6 text-green-500 mt-2" />
-                          ) : (
-                            <XCircle className="w-6 h-6 text-red-500 mt-2" />
-                          ))}
-                      </div>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    {location
-                      ? `${t("location")} ${location.label} - ${location.isAvailable ? t("available") : t("occupied")}`
-                      : t("noLocation")}
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+      <div className="grid grid-cols-3 gap-6">
+        {/* Locations Section */}
+        <div className="space-y-4">
+          <h3 className="text-sm font-medium text-muted-foreground">
+            {t("locations")}
+          </h3>
+          <div className="space-y-2">
+            {mockLocations.map((location) => (
+              <LocationBox key={location.id} location={location} />
             ))}
           </div>
-        ))}
+        </div>
+
+        {/* Stores Section */}
+        <div className="space-y-4">
+          <h3 className="text-sm font-medium text-muted-foreground">
+            {t("stores")}
+          </h3>
+          <div className="space-y-2">
+            {selectedLocation?.stores.map((store) => (
+              <StoreBox key={store.id} store={store} />
+            )) || (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                {t("selectLocationFirst")}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Units Section */}
+        <div className="space-y-4">
+          <h3 className="text-sm font-medium text-muted-foreground">
+            {t("units")}
+          </h3>
+          <div className="space-y-2">
+            {selectedStore?.units.map((unit) => (
+              <UnitBox key={unit.id} unit={unit} />
+            )) || (
+              <p className="text-sm text-muted-foreground text-center py-4">
+                {t("selectStoreFirst")}
+              </p>
+            )}
+          </div>
+        </div>
       </div>
 
-      <div className="mt-4 flex gap-4 items-center text-sm text-gray-600">
-        <div className="flex items-center gap-2">
-          <CheckCircle className="w-4 h-4 text-green-500" />
-          <span>{t("available")}</span>
+      {selectedUnit && selectedLocation && selectedStore && (
+        <div className="mt-6 p-4 bg-muted/50 rounded-lg">
+          <p className="text-sm text-muted-foreground">
+            {t("selectedLocation")}:
+          </p>
+          <p className="text-lg font-mono font-bold mt-1">
+            L{selectedLocation.number}S{selectedStore.number}U
+            {selectedUnit.number}
+          </p>
         </div>
-        <div className="flex items-center gap-2">
-          <XCircle className="w-4 h-4 text-red-500" />
-          <span>{t("occupied")}</span>
-        </div>
-      </div>
+      )}
     </Card>
   );
 };

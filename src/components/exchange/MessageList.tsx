@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { Search } from "lucide-react";
 import { Message } from "./types";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface MessageListProps {
   messages: Message[];
@@ -16,14 +17,23 @@ export function MessageList({
   onMessageSelect,
   selectedMessageId,
 }: MessageListProps) {
+  const { language, t } = useLanguage();
   return (
     <div className="h-full flex flex-col border-r border-border">
       <div className="p-4 border-b border-border">
         <div className="relative">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search
+            className={cn(
+              "absolute top-2.5 h-4 w-4 text-muted-foreground",
+              language === "ar" ? "right-3" : "left-3",
+            )}
+          />
           <Input
-            placeholder="Search messages"
-            className="pl-9 text-foreground placeholder:text-muted-foreground"
+            placeholder={t("searchMessages")}
+            className={cn(
+              language === "ar" ? "pr-9" : "pl-9",
+              "text-foreground placeholder:text-muted-foreground",
+            )}
           />
         </div>
       </div>

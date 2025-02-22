@@ -4,14 +4,15 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Inbox, Send, Archive, Trash, PenBox } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { NewMessageDialog } from "./NewMessageDialog";
 
 const folders = [
-  { icon: Inbox, name: "Inbox", path: "inbox", count: 12 },
-  { icon: Send, name: "Sent", path: "sent", count: 24 },
-  { icon: PenBox, name: "Drafts", path: "drafts", count: 2 },
-  { icon: Archive, name: "Archive", path: "archive", count: 45 },
-  { icon: Trash, name: "Trash", path: "trash", count: 8 },
+  { icon: Inbox, name: "inbox", path: "inbox", count: 12 },
+  { icon: Send, name: "sent", path: "sent", count: 24 },
+  { icon: PenBox, name: "drafts", path: "drafts", count: 2 },
+  { icon: Archive, name: "archive", path: "archive", count: 45 },
+  { icon: Trash, name: "trash", path: "trash", count: 8 },
 ];
 
 interface ExchangeSidebarProps {
@@ -19,6 +20,7 @@ interface ExchangeSidebarProps {
 }
 
 export function ExchangeSidebar({ currentFolder }: ExchangeSidebarProps) {
+  const { language, t } = useLanguage();
   const [newMessageOpen, setNewMessageOpen] = useState(false);
 
   return (
@@ -28,7 +30,10 @@ export function ExchangeSidebar({ currentFolder }: ExchangeSidebarProps) {
         size="lg"
         onClick={() => setNewMessageOpen(true)}
       >
-        <PenBox className="mr-2 h-4 w-4" /> New Message
+        <PenBox
+          className={cn("h-4 w-4", language === "ar" ? "ml-2" : "mr-2")}
+        />
+        {t("newMessage")}
       </Button>
 
       <ScrollArea className="flex-1">
@@ -46,9 +51,19 @@ export function ExchangeSidebar({ currentFolder }: ExchangeSidebarProps) {
               asChild
             >
               <Link to={`/exchange/${folder.path}`}>
-                <div className="flex items-center">
-                  <folder.icon className="mr-2 h-4 w-4" />
-                  {folder.name}
+                <div
+                  className={cn(
+                    "flex items-center",
+                    language === "ar" ? "flex-row-reverse" : "flex-row",
+                  )}
+                >
+                  <folder.icon
+                    className={cn(
+                      "h-4 w-4",
+                      language === "ar" ? "ml-2" : "mr-2",
+                    )}
+                  />
+                  {t(folder.name)}
                 </div>
                 <span className="text-xs text-muted-foreground">
                   {folder.count}

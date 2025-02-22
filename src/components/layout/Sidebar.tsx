@@ -10,34 +10,36 @@ import {
   Moon,
   Sun,
   LogOut,
+  Languages,
 } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../ThemeProvider";
 import { useAuth } from "../auth/AuthProvider";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const menuItems = [
   {
-    name: "Inbound Document",
+    name: "inboundDocument",
     icon: InboxIcon,
     path: "/",
   },
   {
-    name: "Exchange System",
+    name: "exchangeSystem",
     icon: RefreshCcw,
     path: "/exchange",
   },
   {
-    name: "Workflow",
+    name: "workflow",
     icon: Workflow,
     path: "/workflow",
   },
   {
-    name: "Template",
+    name: "template",
     icon: FileText,
     path: "/template",
   },
   {
-    name: "Dispatch",
+    name: "dispatch",
     icon: Send,
     path: "/dispatch",
   },
@@ -48,6 +50,7 @@ export function Sidebar() {
   const { theme, setTheme } = useTheme();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { language, setLanguage, t } = useLanguage();
 
   const handleLogout = () => {
     logout();
@@ -55,23 +58,33 @@ export function Sidebar() {
   };
 
   return (
-    <div className="h-screen w-64 bg-card border-r border-border p-4 flex flex-col">
-      <div className="mb-8 flex justify-between items-center px-4">
+    <div className="h-screen w-64 bg-card border-x border-border p-4 flex flex-col">
+      <div className="mb-8 flex items-center justify-between px-4">
         <h2 className="text-lg font-semibold text-primary">
-          Document Management
+          {t("documentManagement")}
         </h2>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          {theme === "dark" ? (
-            <Sun className="h-4 w-4 text-primary" />
-          ) : (
-            <Moon className="h-4 w-4 text-primary" />
-          )}
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setLanguage(language === "en" ? "ar" : "en")}
+          >
+            <Languages className="h-4 w-4 text-primary" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          >
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4 text-primary" />
+            ) : (
+              <Moon className="h-4 w-4 text-primary" />
+            )}
+          </Button>
+        </div>
       </div>
 
       <div className="flex-1 space-y-2">
@@ -87,9 +100,9 @@ export function Sidebar() {
               )}
               asChild
             >
-              <Link to={item.path}>
+              <Link to={item.path} className="flex items-center w-full gap-2">
                 <item.icon className="h-4 w-4" />
-                {item.name}
+                {t(item.name)}
               </Link>
             </Button>
           );
@@ -98,16 +111,16 @@ export function Sidebar() {
 
       <div className="pt-4 border-t border-border space-y-2">
         <div className="px-4 py-2">
-          <p className="text-sm text-muted-foreground">Signed in as</p>
+          <p className="text-sm text-muted-foreground">{t("signedInAs")}</p>
           <p className="text-sm font-medium text-foreground">{user?.email}</p>
         </div>
         <Button
           variant="ghost"
-          className="w-full justify-start gap-2 text-destructive hover:text-destructive/80"
+          className="w-full gap-2 text-destructive hover:text-destructive/80"
           onClick={handleLogout}
         >
           <LogOut className="h-4 w-4" />
-          Sign Out
+          {t("signOut")}
         </Button>
       </div>
     </div>

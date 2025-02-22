@@ -1,6 +1,7 @@
 import React from "react";
 import { Sidebar } from "./Sidebar";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 export function MainLayout({
   children,
@@ -9,10 +10,13 @@ export function MainLayout({
   children: React.ReactNode;
   className?: string;
 }) {
+  const { language } = useLanguage();
+
   return (
     <div
+      dir={language === "ar" ? "rtl" : "ltr"}
       className={cn(
-        "flex min-h-screen bg-background overflow-hidden",
+        "min-h-screen bg-background overflow-hidden flex",
         className,
       )}
     >

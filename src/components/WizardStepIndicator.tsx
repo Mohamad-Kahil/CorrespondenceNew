@@ -44,8 +44,9 @@ const WizardStepIndicator = ({
 
       <div
         className={cn(
-          "grid",
-          `grid-cols-${steps.length}`,
+          "flex",
+          "justify-between",
+          "w-full",
           "gap-4",
           language === "ar" && "direction-rtl",
         )}

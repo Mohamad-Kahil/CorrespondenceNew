@@ -182,7 +182,9 @@ const DocumentIntakeWizard = ({
         onStepClick={setCurrentStep}
       />
 
-      <div className="mt-8">{renderStepContent()}</div>
+      <div className="mt-8 flex flex-col items-center">
+        {renderStepContent()}
+      </div>
 
       <div
         className={cn(

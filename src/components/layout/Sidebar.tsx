@@ -20,16 +20,6 @@ import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const menuItems = [
   {
-    name: "inboundDocument",
-    icon: InboxIcon,
-    path: "/",
-  },
-  {
-    name: "archiveStorage",
-    icon: Archive,
-    path: "/archive",
-  },
-  {
     name: "exchangeSystem",
     icon: RefreshCcw,
     path: "/exchange",
@@ -40,14 +30,24 @@ const menuItems = [
     path: "/workflow",
   },
   {
-    name: "template",
+    name: "templates",
     icon: FileText,
     path: "/template",
+  },
+  {
+    name: "inboundDocument",
+    icon: InboxIcon,
+    path: "/",
   },
   {
     name: "dispatch",
     icon: Send,
     path: "/dispatch",
+  },
+  {
+    name: "archiveStorage",
+    icon: Archive,
+    path: "/archive",
   },
 ];
 

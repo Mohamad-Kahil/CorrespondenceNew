@@ -16,7 +16,8 @@ export const translations = {
     signOut: "Sign Out",
 
     // Navigation
-    inboundDocument: "Inbound Document",
+    inboundDocument: "Inbound Documents",
+    templates: "Templates",
 
     // Workflow Section
     activeWorkflows: "Active Workflows",
@@ -225,6 +226,7 @@ export const translations = {
 
     // Navigation
     inboundDocument: "المستندات الواردة",
+    templates: "النماذج",
 
     // Workflow Section
     activeWorkflows: "سير العمل النشط",

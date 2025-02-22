@@ -28,7 +28,7 @@ export function NewMessageDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[80vh] overflow-hidden grid grid-rows-[auto,1fr,auto] gap-4">
+      <DialogContent className="max-w-2xl h-[90vh] overflow-hidden grid grid-rows-[auto,1fr,auto] gap-4">
         <DialogHeader>
           <DialogTitle>{t("newMessage")}</DialogTitle>
         </DialogHeader>
@@ -107,7 +107,7 @@ export function NewMessageDialog({
             <Textarea
               id="message"
               placeholder={t("typeMessage")}
-              className="h-24 resize-none text-foreground placeholder:text-muted-foreground"
+              className="h-48 resize-none text-foreground placeholder:text-muted-foreground"
             />
           </div>
         </div>

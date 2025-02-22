@@ -12,6 +12,7 @@ import { AuthProvider } from "./components/auth/AuthProvider";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { LoginPage } from "./components/auth/LoginPage";
 import { WorkflowDashboard } from "./components/workflow/WorkflowDashboard";
+import { ArchiveLayout } from "./components/archive/ArchiveLayout";
 
 function App() {
   const tempoRoutes =
@@ -25,31 +26,44 @@ function App() {
         </div>
       }
     >
-      {tempoRoutes}
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/*"
-          element={
-            <ProtectedRoute>
-              <MainLayout>
-                <Routes>
-                  <Route index element={<Home />} />
-                  <Route path="exchange" element={<ExchangeLayout />} />
-                  <Route path="exchange/:folder" element={<ExchangeLayout />} />
-                  <Route
-                    path="exchange/:folder/:messageId"
-                    element={<ExchangeLayout />}
-                  />
-                  <Route path="workflow" element={<WorkflowDashboard />} />
-                  <Route path="template" element={<TemplateLayout />} />
-                  <Route path="dispatch" element={<DispatchLayout />} />
-                </Routes>
-              </MainLayout>
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <LanguageProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            {tempoRoutes}
+            <Routes>
+              <Route path="/login" element={<LoginPage />} />
+              <Route
+                path="/*"
+                element={
+                  <ProtectedRoute>
+                    <MainLayout>
+                      <Routes>
+                        <Route index element={<Home />} />
+                        <Route path="exchange" element={<ExchangeLayout />} />
+                        <Route
+                          path="exchange/:folder"
+                          element={<ExchangeLayout />}
+                        />
+                        <Route
+                          path="exchange/:folder/:messageId"
+                          element={<ExchangeLayout />}
+                        />
+                        <Route
+                          path="workflow"
+                          element={<WorkflowDashboard />}
+                        />
+                        <Route path="template" element={<TemplateLayout />} />
+                        <Route path="dispatch" element={<DispatchLayout />} />
+                        <Route path="archive" element={<ArchiveLayout />} />
+                      </Routes>
+                    </MainLayout>
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </AuthProvider>
+        </ThemeProvider>
+      </LanguageProvider>
     </Suspense>
   );
 }

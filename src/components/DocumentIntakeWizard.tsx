@@ -6,6 +6,8 @@ import SenderDetailsForm from "./SenderDetailsForm";
 import DocumentPreviewPanel from "./DocumentPreviewPanel";
 import StorageLocationGrid from "./StorageLocationGrid";
 import BarcodeGenerator from "./BarcodeGenerator";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 
 interface DocumentIntakeWizardProps {
   onComplete?: (data: any) => void;
@@ -16,6 +18,17 @@ const DocumentIntakeWizard = ({
   onComplete = (data) => console.log("Wizard completed:", data),
   initialStep = 1,
 }: DocumentIntakeWizardProps) => {
+  const { t, language } = useLanguage();
+
+  const steps = [
+    { id: 1, name: t("senderDetails") },
+    { id: 2, name: t("documentClassification") },
+    { id: 3, name: t("scanDocument") },
+    { id: 4, name: t("metadata") },
+    { id: 5, name: t("generateBarcode") },
+    { id: 6, name: t("storageLocation") },
+  ];
+
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [formData, setFormData] = useState<any>({
     senderDetails: {},
@@ -62,7 +75,7 @@ const DocumentIntakeWizard = ({
         return (
           <Card className="p-6 bg-card border border-border">
             <h2 className="text-2xl font-semibold mb-4 text-foreground">
-              Document Classification
+              {t("documentClassification")}
             </h2>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -74,7 +87,7 @@ const DocumentIntakeWizard = ({
                     handleNext();
                   }}
                 >
-                  Invoice
+                  {t("invoice")}
                 </Button>
                 <Button
                   variant="outline"
@@ -84,7 +97,7 @@ const DocumentIntakeWizard = ({
                     handleNext();
                   }}
                 >
-                  Contract
+                  {t("contract")}
                 </Button>
                 <Button
                   variant="outline"
@@ -94,7 +107,7 @@ const DocumentIntakeWizard = ({
                     handleNext();
                   }}
                 >
-                  Report
+                  {t("report")}
                 </Button>
                 <Button
                   variant="outline"
@@ -104,7 +117,7 @@ const DocumentIntakeWizard = ({
                     handleNext();
                   }}
                 >
-                  Other
+                  {t("other")}
                 </Button>
               </div>
             </div>
@@ -114,14 +127,14 @@ const DocumentIntakeWizard = ({
         return (
           <DocumentPreviewPanel
             documentImage="https://images.unsplash.com/photo-1586941962765-d3896cc85ac8?w=800&auto=format&fit=crop"
-            ocrText="Sample OCR text for the scanned document will appear here."
+            ocrText={t("documentPreviewText")}
           />
         );
       case 4:
         return (
           <Card className="p-6 bg-card border border-border">
             <h2 className="text-2xl font-semibold mb-4 text-foreground">
-              Document Metadata
+              {t("documentMetadata")}
             </h2>
             <div className="space-y-4">
               <Button
@@ -130,7 +143,7 @@ const DocumentIntakeWizard = ({
                   handleNext();
                 }}
               >
-                Continue
+                {t("continue")}
               </Button>
             </div>
           </Card>
@@ -164,21 +177,35 @@ const DocumentIntakeWizard = ({
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
       <WizardStepIndicator
+        steps={steps}
         currentStep={currentStep}
         onStepClick={setCurrentStep}
       />
 
       <div className="mt-8">{renderStepContent()}</div>
 
-      <div className="flex justify-between mt-6">
+      <div
+        className={cn(
+          "flex justify-between mt-6",
+          language === "ar" && "flex-row-reverse",
+        )}
+      >
         <Button
           variant="outline"
           onClick={handleBack}
           disabled={currentStep === 1}
+          className={cn(language === "ar" && "flex-row-reverse gap-2")}
         >
-          Back
+          {t("back")}
         </Button>
-        {currentStep < 6 && <Button onClick={handleNext}>Skip</Button>}
+        {currentStep < 6 && (
+          <Button
+            onClick={handleNext}
+            className={cn(language === "ar" && "flex-row-reverse gap-2")}
+          >
+            {t("skip")}
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 const formSchema = z.object({
   senderName: z.string().min(2, "Name must be at least 2 characters"),
@@ -60,6 +61,7 @@ const SenderDetailsForm = ({
     notes: "",
   },
 }: SenderDetailsFormProps) => {
+  const { t, language } = useLanguage();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -75,9 +77,9 @@ const SenderDetailsForm = ({
               name="senderName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sender Name</FormLabel>
+                  <FormLabel>{t("senderName")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter sender's name" {...field} />
+                    <Input placeholder={t("enterSenderName")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -89,10 +91,10 @@ const SenderDetailsForm = ({
               name="senderEmail"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel>{t("senderEmail")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter sender's email"
+                      placeholder={t("enterSenderEmail")}
                       type="email"
                       {...field}
                     />
@@ -107,14 +109,14 @@ const SenderDetailsForm = ({
               name="senderDepartment"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Department</FormLabel>
+                  <FormLabel>{t("senderDepartment")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select department" />
+                        <SelectValue placeholder={t("selectDepartment")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -138,9 +140,11 @@ const SenderDetailsForm = ({
               name="referenceNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Reference Number (Optional)</FormLabel>
+                  <FormLabel>
+                    {t("referenceNumber")} ({t("optional")})
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter reference number" {...field} />
+                    <Input placeholder={t("enterReferenceNumber")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -152,12 +156,11 @@ const SenderDetailsForm = ({
               name="notes"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Additional Notes (Optional)</FormLabel>
+                  <FormLabel>
+                    {t("additionalNotes")} ({t("optional")})
+                  </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter any additional notes"
-                      {...field}
-                    />
+                    <Input placeholder={t("enterNotes")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -165,15 +168,20 @@ const SenderDetailsForm = ({
             />
           </div>
 
-          <div className="flex justify-end space-x-4">
+          <div
+            className={cn(
+              "flex gap-4",
+              language === "ar" ? "justify-start" : "justify-end",
+            )}
+          >
             <Button
               type="button"
               variant="outline"
               onClick={() => form.reset()}
             >
-              Reset
+              {t("reset")}
             </Button>
-            <Button type="submit">Continue</Button>
+            <Button type="submit">{t("continue")}</Button>
           </div>
         </form>
       </Form>

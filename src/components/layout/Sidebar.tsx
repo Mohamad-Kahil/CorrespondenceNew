@@ -11,6 +11,7 @@ import {
   Sun,
   LogOut,
   Languages,
+  Archive,
 } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../ThemeProvider";
@@ -22,6 +23,11 @@ const menuItems = [
     name: "inboundDocument",
     icon: InboxIcon,
     path: "/",
+  },
+  {
+    name: "archiveStorage",
+    icon: Archive,
+    path: "/archive",
   },
   {
     name: "exchangeSystem",

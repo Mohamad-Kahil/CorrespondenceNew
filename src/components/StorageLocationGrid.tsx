@@ -1,6 +1,7 @@
 import React from "react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import {
   Tooltip,
   TooltipContent,
@@ -41,6 +42,7 @@ const StorageLocationGrid = ({
   onLocationSelect = () => {},
   selectedLocationId = "",
 }: StorageLocationGridProps) => {
+  const { t, language } = useLanguage();
   // Get the maximum row and column numbers to determine grid dimensions
   const maxRow = Math.max(...locations.map((loc) => loc.row));
   const maxColumn = Math.max(...locations.map((loc) => loc.column));
@@ -59,11 +61,9 @@ const StorageLocationGrid = ({
     <Card className="p-6 bg-card border border-border">
       <div className="mb-4">
         <h2 className="text-2xl font-semibold text-foreground">
-          Storage Location Grid
+          {t("storageLocationGrid")}
         </h2>
-        <p className="text-muted-foreground">
-          Select an available storage location
-        </p>
+        <p className="text-muted-foreground">{t("selectStorageLocation")}</p>
       </div>
 
       <div className="grid gap-4">
@@ -105,8 +105,8 @@ const StorageLocationGrid = ({
                   </TooltipTrigger>
                   <TooltipContent>
                     {location
-                      ? `Location ${location.label} - ${location.isAvailable ? "Available" : "Occupied"}`
-                      : "No location"}
+                      ? `${t("location")} ${location.label} - ${location.isAvailable ? t("available") : t("occupied")}`
+                      : t("noLocation")}
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -118,11 +118,11 @@ const StorageLocationGrid = ({
       <div className="mt-4 flex gap-4 items-center text-sm text-gray-600">
         <div className="flex items-center gap-2">
           <CheckCircle className="w-4 h-4 text-green-500" />
-          <span>Available</span>
+          <span>{t("available")}</span>
         </div>
         <div className="flex items-center gap-2">
           <XCircle className="w-4 h-4 text-red-500" />
-          <span>Occupied</span>
+          <span>{t("occupied")}</span>
         </div>
       </div>
     </Card>

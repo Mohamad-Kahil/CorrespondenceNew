@@ -2,11 +2,12 @@ import React from "react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Progress } from "./ui/progress";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 
 interface Step {
   id: number;
   name: string;
-  status: "complete" | "current" | "upcoming";
+  status?: "complete" | "current" | "upcoming";
 }
 
 interface WizardStepIndicatorProps {
@@ -15,20 +16,13 @@ interface WizardStepIndicatorProps {
   onStepClick?: (step: number) => void;
 }
 
-const defaultSteps: Step[] = [
-  { id: 1, name: "Sender Details", status: "complete" },
-  { id: 2, name: "Document Classification", status: "current" },
-  { id: 3, name: "Scan Document", status: "upcoming" },
-  { id: 4, name: "Metadata", status: "upcoming" },
-  { id: 5, name: "Generate Barcode", status: "upcoming" },
-  { id: 6, name: "Storage Location", status: "upcoming" },
-];
-
-const WizardStepIndicator: React.FC<WizardStepIndicatorProps> = ({
-  steps = defaultSteps,
-  currentStep = 2,
+const WizardStepIndicator = ({
+  steps = [],
+  currentStep = 1,
   onStepClick = () => {},
-}) => {
+}: WizardStepIndicatorProps) => {
+  const { language } = useLanguage();
+
   const getStepStatus = (
     stepId: number,
   ): "complete" | "current" | "upcoming" => {
@@ -48,7 +42,14 @@ const WizardStepIndicator: React.FC<WizardStepIndicatorProps> = ({
     <div className="w-full bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border space-y-6">
       <Progress value={progressPercentage} className="h-2" />
 
-      <div className="grid grid-cols-6 gap-4">
+      <div
+        className={cn(
+          "grid",
+          `grid-cols-${steps.length}`,
+          "gap-4",
+          language === "ar" && "direction-rtl",
+        )}
+      >
         {updatedSteps.map((step) => (
           <button
             key={step.id}

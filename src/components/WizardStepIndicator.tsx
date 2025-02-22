@@ -1,0 +1,89 @@
+import React from "react";
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Progress } from "./ui/progress";
+
+interface Step {
+  id: number;
+  name: string;
+  status: "complete" | "current" | "upcoming";
+}
+
+interface WizardStepIndicatorProps {
+  steps?: Step[];
+  currentStep?: number;
+  onStepClick?: (step: number) => void;
+}
+
+const defaultSteps: Step[] = [
+  { id: 1, name: "Sender Details", status: "complete" },
+  { id: 2, name: "Document Classification", status: "current" },
+  { id: 3, name: "Scan Document", status: "upcoming" },
+  { id: 4, name: "Metadata", status: "upcoming" },
+  { id: 5, name: "Generate Barcode", status: "upcoming" },
+  { id: 6, name: "Storage Location", status: "upcoming" },
+];
+
+const WizardStepIndicator: React.FC<WizardStepIndicatorProps> = ({
+  steps = defaultSteps,
+  currentStep = 2,
+  onStepClick = () => {},
+}) => {
+  const getStepStatus = (
+    stepId: number,
+  ): "complete" | "current" | "upcoming" => {
+    if (stepId < currentStep) return "complete";
+    if (stepId === currentStep) return "current";
+    return "upcoming";
+  };
+
+  const updatedSteps = steps.map((step) => ({
+    ...step,
+    status: getStepStatus(step.id),
+  }));
+
+  const progressPercentage = ((currentStep - 1) / (steps.length - 1)) * 100;
+
+  return (
+    <div className="w-full bg-card/50 backdrop-blur-sm p-6 rounded-lg border border-border space-y-6">
+      <Progress value={progressPercentage} className="h-2" />
+
+      <div className="grid grid-cols-6 gap-4">
+        {updatedSteps.map((step) => (
+          <button
+            key={step.id}
+            onClick={() => onStepClick(step.id)}
+            className={cn(
+              "flex flex-col items-center p-2 rounded-lg transition-colors",
+              step.status === "complete" && "text-primary hover:bg-primary/5",
+              step.status === "current" && "text-primary hover:bg-primary/5",
+              step.status === "upcoming" && "text-gray-400 hover:bg-gray-50",
+            )}
+          >
+            <div className="relative mb-2">
+              {step.status === "complete" ? (
+                <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+                  <Check className="h-5 w-5 text-white" />
+                </div>
+              ) : (
+                <div
+                  className={cn(
+                    "h-8 w-8 rounded-full flex items-center justify-center text-sm font-medium",
+                    step.status === "current"
+                      ? "border-2 border-primary text-primary"
+                      : "border-2 border-gray-200 text-gray-400",
+                  )}
+                >
+                  {step.id}
+                </div>
+              )}
+            </div>
+            <span className="text-xs font-medium text-center">{step.name}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default WizardStepIndicator;

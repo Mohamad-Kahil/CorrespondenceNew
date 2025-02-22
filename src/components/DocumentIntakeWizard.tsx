@@ -25,7 +25,7 @@ const DocumentIntakeWizard = ({
     { id: 2, name: t("documentClassification") },
     { id: 3, name: t("scanDocument") },
     { id: 4, name: t("metadata") },
-    { id: 5, name: t("storageLocation") },
+    { id: 5, name: t("archive") },
     { id: 6, name: t("generateBarcode") },
   ];
 

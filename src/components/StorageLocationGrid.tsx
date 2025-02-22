@@ -256,12 +256,10 @@ const StorageLocationGrid = ({
 
   return (
     <Card className="p-6 bg-card border border-border">
-      <div className="mb-4">
-        <h2 className="text-2xl font-semibold text-foreground">
-          {t("storageLocationGrid")}
-        </h2>
-        <p className="text-muted-foreground">{t("selectStorageLocation")}</p>
-      </div>
+      <header className="p-6 border-b -mx-6 -mt-6 mb-6">
+        <h1 className="text-2xl font-semibold">{t("archiveStorage")}</h1>
+        <p className="text-muted-foreground mt-2">{t("archiveDescription")}</p>
+      </header>
 
       <div className="grid grid-cols-3 gap-6">
         {/* Locations Section */}

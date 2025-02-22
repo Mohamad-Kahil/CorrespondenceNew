@@ -6,6 +6,8 @@ import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 import {
   Form,
   FormControl,
@@ -45,6 +47,7 @@ const DeliveryNoteForm = ({
     packageDetails: "",
   },
 }: DeliveryNoteFormProps) => {
+  const { t, language } = useLanguage();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -60,24 +63,28 @@ const DeliveryNoteForm = ({
               name="deliveryType"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Delivery Type</FormLabel>
+                  <FormLabel>{t("deliveryType")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select delivery type" />
+                        <SelectValue placeholder={t("deliveryType")} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       <SelectItem value="standard">
-                        Standard Delivery
+                        {t("standardDelivery")}
                       </SelectItem>
-                      <SelectItem value="express">Express Delivery</SelectItem>
-                      <SelectItem value="courier">Courier Service</SelectItem>
+                      <SelectItem value="express">
+                        {t("expressDelivery")}
+                      </SelectItem>
+                      <SelectItem value="courier">
+                        {t("courierService")}
+                      </SelectItem>
                       <SelectItem value="registered">
-                        Registered Mail
+                        {t("registeredMail")}
                       </SelectItem>
                     </SelectContent>
                   </Select>
@@ -91,9 +98,11 @@ const DeliveryNoteForm = ({
               name="trackingNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Tracking Number (Optional)</FormLabel>
+                  <FormLabel>
+                    {t("trackingNumber")} ({t("optional")})
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter tracking number" {...field} />
+                    <Input placeholder={t("enterTrackingNumber")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -105,7 +114,7 @@ const DeliveryNoteForm = ({
               name="estimatedDeliveryDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Estimated Delivery Date</FormLabel>
+                  <FormLabel>{t("estimatedDeliveryDate")}</FormLabel>
                   <FormControl>
                     <Input type="date" {...field} />
                   </FormControl>
@@ -119,10 +128,10 @@ const DeliveryNoteForm = ({
               name="packageDetails"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Package Details</FormLabel>
+                  <FormLabel>{t("packageDetails")}</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter package contents and details"
+                      placeholder={t("enterPackageDetails")}
                       className="min-h-[100px]"
                       {...field}
                     />
@@ -137,10 +146,12 @@ const DeliveryNoteForm = ({
               name="specialInstructions"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Special Instructions (Optional)</FormLabel>
+                  <FormLabel>
+                    {t("specialInstructions")} ({t("optional")})
+                  </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Enter any special handling instructions"
+                      placeholder={t("enterSpecialInstructions")}
                       className="min-h-[100px]"
                       {...field}
                     />
@@ -151,15 +162,26 @@ const DeliveryNoteForm = ({
             />
           </div>
 
-          <div className="flex justify-end space-x-4">
+          <div
+            className={cn(
+              "flex gap-4",
+              language === "ar" ? "justify-start" : "justify-end",
+            )}
+          >
             <Button
               type="button"
               variant="outline"
               onClick={() => form.reset()}
+              className={cn(language === "ar" && "flex-row-reverse gap-2")}
             >
-              Reset
+              {t("reset")}
             </Button>
-            <Button type="submit">Continue</Button>
+            <Button
+              type="submit"
+              className={cn(language === "ar" && "flex-row-reverse gap-2")}
+            >
+              {t("continue")}
+            </Button>
           </div>
         </form>
       </Form>

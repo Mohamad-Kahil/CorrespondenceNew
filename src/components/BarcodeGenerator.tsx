@@ -2,6 +2,8 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import { Printer, RefreshCw } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 import {
   TooltipProvider,
   Tooltip,
@@ -20,10 +22,12 @@ const BarcodeGenerator = ({
   onGenerate = () => console.log("Generate barcode"),
   onPrint = () => console.log("Print barcode"),
 }: BarcodeGeneratorProps) => {
+  const { t, language } = useLanguage();
+
   return (
     <Card className="w-[400px] h-[300px] p-6 bg-card border border-border flex flex-col gap-4">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Barcode Generator</h3>
+        <h3 className="text-lg font-semibold">{t("generateBarcode")}</h3>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -37,7 +41,7 @@ const BarcodeGenerator = ({
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Regenerate barcode</p>
+              <p>{t("regenerateBarcode")}</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -66,9 +70,15 @@ const BarcodeGenerator = ({
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={onPrint} className="w-full">
-          <Printer className="mr-2 h-4 w-4" />
-          Print Barcode
+        <Button
+          onClick={onPrint}
+          className={cn(
+            "w-full",
+            language === "ar" && "flex-row-reverse gap-2",
+          )}
+        >
+          <Printer className="h-4 w-4" />
+          {t("printBarcode")}
         </Button>
       </div>
     </Card>

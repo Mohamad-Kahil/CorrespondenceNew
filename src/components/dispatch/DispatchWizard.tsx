@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import WizardStepIndicator from "../WizardStepIndicator";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 import DeliveryNoteForm from "./DeliveryNoteForm";
-import DocumentPreviewPanel from "../DocumentPreviewPanel";
+import DocumentSelectionPanel from "./DocumentSelectionPanel";
 import BarcodeGenerator from "../BarcodeGenerator";
 import DeliveryConfirmation from "./DeliveryConfirmation";
 
@@ -13,19 +14,21 @@ interface DispatchWizardProps {
   initialStep?: number;
 }
 
-const steps = [
-  { id: 1, name: "Recipient Details" },
-  { id: 2, name: "Document Selection" },
-  { id: 3, name: "Delivery Note" },
-  { id: 4, name: "Generate Barcode" },
-  { id: 5, name: "Delivery Confirmation" },
-  { id: 6, name: "Archive" },
+const getSteps = (t: (key: string) => string) => [
+  { id: 1, name: t("recipientDetails") },
+  { id: 2, name: t("documentSelection") },
+  { id: 3, name: t("deliveryNote") },
+  { id: 4, name: t("generateBarcode") },
+  { id: 5, name: t("deliveryConfirmation") },
+  { id: 6, name: t("archive") },
 ];
 
 const DispatchWizard = ({
   onComplete = (data) => console.log("Wizard completed:", data),
   initialStep = 1,
 }: DispatchWizardProps) => {
+  const { t } = useLanguage();
+  const steps = getSteps(t);
   const [currentStep, setCurrentStep] = useState(initialStep);
   const [formData, setFormData] = useState<any>({
     recipientDetails: {},
@@ -69,9 +72,11 @@ const DispatchWizard = ({
         );
       case 2:
         return (
-          <DocumentPreviewPanel
-            documentImage="https://images.unsplash.com/photo-1586941962765-d3896cc85ac8?w=800&auto=format&fit=crop"
-            ocrText="Sample document content will appear here."
+          <DocumentSelectionPanel
+            onDocumentSelect={(document) => {
+              updateFormData("selectedDocument", document);
+              handleNext();
+            }}
           />
         );
       case 3:
@@ -108,10 +113,10 @@ const DispatchWizard = ({
         return (
           <Card className="p-6 bg-card border border-border">
             <h2 className="text-2xl font-semibold mb-4 text-foreground">
-              Archive Document
+              {t("archive")}
             </h2>
             <Button onClick={() => onComplete(formData)}>
-              Complete Dispatch
+              {t("completeDispatch")}
             </Button>
           </Card>
         );
@@ -136,10 +141,10 @@ const DispatchWizard = ({
           onClick={handleBack}
           disabled={currentStep === 1}
         >
-          Back
+          {t("back")}
         </Button>
         {currentStep < steps.length && (
-          <Button onClick={handleNext}>Skip</Button>
+          <Button onClick={handleNext}>{t("skip")}</Button>
         )}
       </div>
     </div>

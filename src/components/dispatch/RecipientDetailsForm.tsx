@@ -5,6 +5,8 @@ import * as z from "zod";
 import { Card } from "../ui/card";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 import {
   Form,
   FormControl,
@@ -13,13 +15,20 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const formSchema = z.object({
   recipientName: z.string().min(2, "Name must be at least 2 characters"),
   recipientEmail: z.string().email("Invalid email address"),
   recipientPhone: z.string().min(10, "Please enter a valid phone number"),
   address: z.string().min(1, "Address is required"),
-  deliveryInstructions: z.string().optional(),
+  department: z.string().min(1, "Please select a department"),
 });
 
 interface RecipientDetailsFormProps {
@@ -34,9 +43,10 @@ const RecipientDetailsForm = ({
     recipientEmail: "",
     recipientPhone: "",
     address: "",
-    deliveryInstructions: "",
+    department: "",
   },
 }: RecipientDetailsFormProps) => {
+  const { t, language } = useLanguage();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues,
@@ -52,9 +62,9 @@ const RecipientDetailsForm = ({
               name="recipientName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Recipient Name</FormLabel>
+                  <FormLabel>{t("recipientName")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter recipient's name" {...field} />
+                    <Input placeholder={t("recipientName")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -66,10 +76,10 @@ const RecipientDetailsForm = ({
               name="recipientEmail"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address</FormLabel>
+                  <FormLabel>{t("email")}</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter recipient's email"
+                      placeholder={t("enterEmail")}
                       type="email"
                       {...field}
                     />
@@ -84,13 +94,40 @@ const RecipientDetailsForm = ({
               name="recipientPhone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>{t("phone")}</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Enter recipient's phone number"
-                      {...field}
-                    />
+                    <Input placeholder={t("phone")} {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="department"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("department")}</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder={t("department")} />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="hr">{t("hr")}</SelectItem>
+                      <SelectItem value="finance">{t("finance")}</SelectItem>
+                      <SelectItem value="it">{t("it")}</SelectItem>
+                      <SelectItem value="legal">{t("legal")}</SelectItem>
+                      <SelectItem value="operations">
+                        {t("operations")}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -101,26 +138,9 @@ const RecipientDetailsForm = ({
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Delivery Address</FormLabel>
+                  <FormLabel>{t("address")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter delivery address" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="deliveryInstructions"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Delivery Instructions (Optional)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Enter any special delivery instructions"
-                      {...field}
-                    />
+                    <Input placeholder={t("address")} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -128,15 +148,26 @@ const RecipientDetailsForm = ({
             />
           </div>
 
-          <div className="flex justify-end space-x-4">
+          <div
+            className={cn(
+              "flex gap-4",
+              language === "ar" ? "justify-start" : "justify-end",
+            )}
+          >
             <Button
               type="button"
               variant="outline"
               onClick={() => form.reset()}
+              className={cn(language === "ar" && "flex-row-reverse gap-2")}
             >
-              Reset
+              {t("reset")}
             </Button>
-            <Button type="submit">Continue</Button>
+            <Button
+              type="submit"
+              className={cn(language === "ar" && "flex-row-reverse gap-2")}
+            >
+              {t("continue")}
+            </Button>
           </div>
         </form>
       </Form>

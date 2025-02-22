@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -12,6 +13,7 @@ interface DeliveryConfirmationProps {
 }
 
 const DeliveryConfirmation = ({ onConfirm }: DeliveryConfirmationProps) => {
+  const { t } = useLanguage();
   const [scannedImage, setScannedImage] = useState<string>("");
   const [notes, setNotes] = useState("");
   const [signature, setSignature] = useState("");
@@ -37,15 +39,17 @@ const DeliveryConfirmation = ({ onConfirm }: DeliveryConfirmationProps) => {
       <Card className="p-6">
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Delivery Confirmation</h3>
+            <h3 className="text-lg font-semibold">
+              {t("deliveryConfirmation")}
+            </h3>
             <div className="space-x-2">
               <Button onClick={handleScan} variant="outline">
                 <Camera className="w-4 h-4 mr-2" />
-                Scan Document
+                {t("scanDocument")}
               </Button>
               <Button variant="outline">
                 <Upload className="w-4 h-4 mr-2" />
-                Upload
+                {t("uploadDocument")}
               </Button>
             </div>
           </div>
@@ -61,18 +65,18 @@ const DeliveryConfirmation = ({ onConfirm }: DeliveryConfirmationProps) => {
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label>Delivery Notes</Label>
+              <Label>{t("deliveryNotes")}</Label>
               <Textarea
-                placeholder="Enter any notes about the delivery"
+                placeholder={t("enterDeliveryNotes")}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Recipient Signature</Label>
+              <Label>{t("recipientSignature")}</Label>
               <Input
-                placeholder="Recipient's signature"
+                placeholder={t("recipientSignature")}
                 value={signature}
                 onChange={(e) => setSignature(e.target.value)}
               />
@@ -83,7 +87,7 @@ const DeliveryConfirmation = ({ onConfirm }: DeliveryConfirmationProps) => {
 
       <div className="flex justify-end">
         <Button onClick={handleConfirm} disabled={!scannedImage || !signature}>
-          Confirm Delivery
+          {t("confirmDelivery")}
         </Button>
       </div>
     </div>

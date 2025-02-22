@@ -2,25 +2,27 @@ import React from "react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { FileText, Mail, FileSpreadsheet } from "lucide-react";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 
-const templates = [
+const getTemplates = (t: (key: string) => string) => [
   {
     id: "formal-letter",
-    name: "Formal Letter",
+    name: t("formalLetter"),
     icon: FileText,
-    description: "Standard formal letterhead template",
+    description: t("formalLetterDesc"),
   },
   {
     id: "business-letter",
-    name: "Business Letter",
+    name: t("businessLetter"),
     icon: FileSpreadsheet,
-    description: "Professional business communication",
+    description: t("businessLetterDesc"),
   },
   {
     id: "memo",
-    name: "Internal Memo",
+    name: t("internalMemo"),
     icon: Mail,
-    description: "Internal communication template",
+    description: t("internalMemoDesc"),
   },
 ];
 
@@ -29,9 +31,15 @@ interface TemplateSelectorProps {
 }
 
 const TemplateSelector = ({ onSelect }: TemplateSelectorProps) => {
+  const { t, language } = useLanguage();
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {templates.map((template) => (
+    <div
+      className={cn(
+        "grid grid-cols-1 md:grid-cols-3 gap-6",
+        language === "ar" && "direction-rtl",
+      )}
+    >
+      {getTemplates(t).map((template) => (
         <Card
           key={template.id}
           className="p-6 hover:border-primary/50 cursor-pointer transition-colors"
@@ -45,8 +53,14 @@ const TemplateSelector = ({ onSelect }: TemplateSelectorProps) => {
             <p className="text-sm text-muted-foreground">
               {template.description}
             </p>
-            <Button variant="outline" className="w-full">
-              Use Template
+            <Button
+              variant="outline"
+              className={cn(
+                "w-full",
+                language === "ar" && "flex-row-reverse gap-2",
+              )}
+            >
+              {t("useTemplate")}
             </Button>
           </div>
         </Card>

@@ -5,6 +5,8 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { NewWorkflow } from "../workflow/NewWorkflow";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 
 interface LetterTemplateProps {
   type: "formal" | "business" | "memo";
@@ -12,6 +14,7 @@ interface LetterTemplateProps {
 }
 
 const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
+  const { t, language } = useLanguage();
   const [formData, setFormData] = useState({
     reference: "",
     date: "",
@@ -71,16 +74,16 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
           <div className="space-y-6">
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
-                <Label>Reference No.</Label>
+                <Label>{t("referenceNo")}</Label>
                 <Input
-                  placeholder="Enter reference number"
+                  placeholder={t("referenceNo")}
                   className="print:border-none"
                   value={formData.reference}
                   onChange={(e) => handleChange("reference", e.target.value)}
                 />
               </div>
               <div className="space-y-2">
-                <Label>Date</Label>
+                <Label>{t("date")}</Label>
                 <Input
                   type="date"
                   className="print:border-none"
@@ -92,9 +95,9 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
 
             {type !== "memo" && (
               <div className="space-y-2">
-                <Label>To</Label>
+                <Label>{t("to")}</Label>
                 <Input
-                  placeholder="Recipient's name"
+                  placeholder={t("recipientName")}
                   className="print:border-none"
                   value={formData.to}
                   onChange={(e) => handleChange("to", e.target.value)}
@@ -104,9 +107,9 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
 
             {type === "formal" && (
               <div className="space-y-2">
-                <Label>Title/Position</Label>
+                <Label>{t("recipientTitle")}</Label>
                 <Input
-                  placeholder="Recipient's title"
+                  placeholder={t("recipientTitle")}
                   className="print:border-none"
                   value={formData.title}
                   onChange={(e) => handleChange("title", e.target.value)}
@@ -115,9 +118,9 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
             )}
 
             <div className="space-y-2">
-              <Label>Subject</Label>
+              <Label>{t("subject")}</Label>
               <Input
-                placeholder="Letter subject"
+                placeholder={t("letterSubject")}
                 className="print:border-none"
                 value={formData.subject}
                 onChange={(e) => handleChange("subject", e.target.value)}
@@ -125,13 +128,11 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label>Body</Label>
+              <Label>{t("content")}</Label>
               <Textarea
-                placeholder={
-                  type === "memo"
-                    ? "Enter memo content"
-                    : "Enter letter content"
-                }
+                placeholder={t(
+                  type === "memo" ? "memoContent" : "letterContent",
+                )}
                 className="min-h-[200px] print:border-none"
                 value={formData.body}
                 onChange={(e) => handleChange("body", e.target.value)}
@@ -141,9 +142,9 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
             {type !== "memo" && (
               <>
                 <div className="space-y-2">
-                  <Label>Sender's Name</Label>
+                  <Label>{t("senderName")}</Label>
                   <Input
-                    placeholder="Your name"
+                    placeholder={t("yourName")}
                     className="print:border-none"
                     value={formData.senderName}
                     onChange={(e) => handleChange("senderName", e.target.value)}
@@ -151,9 +152,9 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Sender's Title</Label>
+                  <Label>{t("senderTitle")}</Label>
                   <Input
-                    placeholder="Your title"
+                    placeholder={t("yourTitle")}
                     className="print:border-none"
                     value={formData.senderTitle}
                     onChange={(e) =>
@@ -166,9 +167,9 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
 
             {type === "memo" && (
               <div className="space-y-2">
-                <Label>From</Label>
+                <Label>{t("from")}</Label>
                 <Input
-                  placeholder="Your department"
+                  placeholder={t("yourDepartment")}
                   className="print:border-none"
                   value={formData.department}
                   onChange={(e) => handleChange("department", e.target.value)}
@@ -178,18 +179,27 @@ const LetterTemplate = ({ type = "formal", onCancel }: LetterTemplateProps) => {
           </div>
         </Card>
 
-        <div className="flex justify-end gap-4 print:hidden">
+        <div
+          className={cn(
+            "flex gap-4 print:hidden",
+            language === "ar" ? "justify-start" : "justify-end",
+          )}
+        >
           <Button variant="outline" onClick={onCancel}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button variant="outline" onClick={handleReset}>
-            Reset
+            {t("reset")}
           </Button>
           <Button onClick={handlePrint}>
-            Print {type === "memo" ? "Memo" : "Letter"}
+            {t("print")} {type === "memo" ? t("memo") : t("letter")}
           </Button>
-          <Button onClick={() => setShowWorkflow(true)} variant="default">
-            Start Workflow
+          <Button
+            onClick={() => setShowWorkflow(true)}
+            variant="default"
+            className={cn(language === "ar" && "flex-row-reverse gap-2")}
+          >
+            {t("startWorkflow")}
           </Button>
         </div>
       </div>

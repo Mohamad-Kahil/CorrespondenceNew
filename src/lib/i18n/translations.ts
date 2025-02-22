@@ -67,6 +67,19 @@ export const translations = {
     exchangeDescription:
       "Process and manage document exchanges through our digital system",
 
+    // Templates
+    formalLetter: "Formal Letter",
+    businessLetter: "Business Letter",
+    internalMemo: "Internal Memo",
+    formalLetterDesc: "Standard formal letterhead template",
+    businessLetterDesc: "Professional business communication",
+    internalMemoDesc: "Internal communication template",
+    useTemplate: "Use Template",
+    startWorkflow: "Start Workflow",
+    print: "Print",
+    letter: "Letter",
+    memo: "Memo",
+
     // Dialog & Workflow
     owner: "Owner",
     startDate: "Start Date",
@@ -92,6 +105,17 @@ export const translations = {
 
     // Form Fields
     name: "Name",
+    referenceNo: "Reference No.",
+    recipientName: "Recipient's name",
+    recipientTitle: "Recipient's title",
+    letterSubject: "Letter subject",
+    letterContent: "Enter letter content",
+    memoContent: "Enter memo content",
+    senderName: "Sender's Name",
+    senderTitle: "Sender's Title",
+    yourName: "Your name",
+    yourTitle: "Your title",
+    yourDepartment: "Your department",
     email: "Email",
     phone: "Phone",
     address: "Address",
@@ -132,6 +156,7 @@ export const translations = {
     delete: "Delete",
     view: "View",
     close: "Close",
+    viewDetails: "View Details",
 
     // Validation Messages
     required: "This field is required",
@@ -196,16 +221,6 @@ export const translations = {
     documentTemplateSystem: "نظام نماذج المستندات",
     documentExchangeSystem: "نظام تبادل المستندات",
 
-    // Workflow
-    tasks: "المهام",
-    workflows: "سير العمل",
-    newWorkflow: "سير عمل جديد",
-    activeWorkflows: "سير العمل النشط",
-    pendingTasks: "المهام المعلقة",
-    completedTasks: "المهام المكتملة",
-    fromLastWeek: "من الأسبوع الماضي",
-    thisMonth: "هذا الشهر",
-
     // System Descriptions
     intakeDescription: "معالجة وإدارة المستندات المادية من خلال نظامنا الرقمي",
     dispatchDescription:
@@ -214,6 +229,19 @@ export const translations = {
       "معالجة وإدارة سير عمل المستندات من خلال نظامنا الرقمي",
     templateDescription: "معالجة وإدارة نماذج المستندات من خلال نظامنا الرقمي",
     exchangeDescription: "معالجة وإدارة تبادل المستندات من خلال نظامنا الرقمي",
+
+    // Templates
+    formalLetter: "خطاب رسمي",
+    businessLetter: "خطاب عمل",
+    internalMemo: "مذكرة داخلية",
+    formalLetterDesc: "نموذج خطاب رسمي مع ترويسة",
+    businessLetterDesc: "مراسلات مهنية للأعمال",
+    internalMemoDesc: "نموذج مراسلات داخلية",
+    useTemplate: "استخدام النموذج",
+    startWorkflow: "بدء سير العمل",
+    print: "طباعة",
+    letter: "خطاب",
+    memo: "مذكرة",
 
     // Dialog & Workflow
     owner: "المالك",
@@ -240,6 +268,17 @@ export const translations = {
 
     // Form Fields
     name: "الاسم",
+    referenceNo: "رقم المرجع",
+    recipientName: "اسم المستلم",
+    recipientTitle: "منصب المستلم",
+    letterSubject: "موضوع الخطاب",
+    letterContent: "أدخل محتوى الخطاب",
+    memoContent: "أدخل محتوى المذكرة",
+    senderName: "اسم المرسل",
+    senderTitle: "منصب المرسل",
+    yourName: "اسمك",
+    yourTitle: "منصبك",
+    yourDepartment: "قسمك",
     email: "البريد الإلكتروني",
     phone: "رقم الهاتف",
     address: "العنوان",

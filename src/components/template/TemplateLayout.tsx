@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import TemplateSelector from "./TemplateSelector";
 import LetterTemplate from "./LetterTemplate";
 import { Button } from "../ui/button";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
+import { cn } from "@/lib/utils";
 
 const TemplateLayout = () => {
+  const { t, language } = useLanguage();
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
   const handleCancel = () => {
@@ -23,10 +26,10 @@ const TemplateLayout = () => {
           <div className="max-w-4xl mx-auto p-6">
             <header className="p-6 border-b -mx-6 -mt-6 mb-6">
               <h1 className="text-2xl font-semibold">
-                Document Template System
+                {t("documentTemplateSystem")}
               </h1>
               <p className="text-muted-foreground mt-2">
-                Process and manage document templates through our digital system
+                {t("templateDescription")}
               </p>
             </header>
             <TemplateSelector onSelect={setSelectedTemplate} />

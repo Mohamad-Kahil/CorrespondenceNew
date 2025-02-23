@@ -20,70 +20,36 @@ type Workflow = {
   }[];
 };
 
-const workflows: Workflow[] = [
-  {
-    id: "1",
-    name: "Document Review Process",
-    status: "active",
-    progress: 65,
-    startDate: "2024-03-15",
-    owner: "John Doe",
-    description: "Standard document review workflow for legal documents.",
-    steps: [
-      {
-        name: "Initial Review",
-        status: "completed",
-        assignee: "Jane Smith",
-      },
-      {
-        name: "Legal Assessment",
-        status: "in_progress",
-        assignee: "John Doe",
-      },
-      {
-        name: "Final Approval",
-        status: "pending",
-        assignee: "Mike Johnson",
-      },
-    ],
-  },
-  {
-    id: "2",
-    name: "Contract Approval",
-    status: "completed",
-    progress: 100,
-    startDate: "2024-03-10",
-    owner: "Jane Smith",
-    description: "Contract approval workflow for vendor agreements.",
-    steps: [
-      {
-        name: "Draft Review",
-        status: "completed",
-        assignee: "John Doe",
-      },
-      {
-        name: "Legal Review",
-        status: "completed",
-        assignee: "Sarah Wilson",
-      },
-      {
-        name: "Executive Approval",
-        status: "completed",
-        assignee: "Mike Johnson",
-      },
-    ],
-  },
-];
+interface WorkflowListProps {
+  workflows: Workflow[];
+}
 
-export function WorkflowList() {
+export function WorkflowList({ workflows = [] }: WorkflowListProps) {
   const [selectedWorkflow, setSelectedWorkflow] = useState<Workflow | null>(
     null,
   );
 
+  // Convert saved workflow designs to display format
+  const displayWorkflows = workflows.map((workflow) => ({
+    id: workflow.id,
+    name: workflow.name,
+    status: "active",
+    progress: 0,
+    startDate: new Date().toISOString().split("T")[0],
+    owner: "Current User",
+    description: workflow.description,
+    steps:
+      workflow.tasks?.map((task) => ({
+        name: task.title,
+        status: "pending",
+        assignee: task.assignee,
+      })) || [],
+  }));
+
   return (
     <>
       <div className="space-y-4">
-        {workflows.map((workflow) => (
+        {displayWorkflows.map((workflow) => (
           <Card key={workflow.id} className="p-4">
             <div className="space-y-4">
               <div className="flex items-start justify-between">

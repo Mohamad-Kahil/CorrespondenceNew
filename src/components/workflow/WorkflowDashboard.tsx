@@ -35,6 +35,7 @@ const getStats = (t: (key: string) => string) => [
 
 export function WorkflowDashboard() {
   const { t, language } = useLanguage();
+
   return (
     <div className="p-6 space-y-6">
       <header className="p-6 border-b -mx-6 -mt-6 mb-6">
@@ -86,7 +87,7 @@ export function WorkflowDashboard() {
           <TaskList />
         </TabsContent>
         <TabsContent value="workflows" className="space-y-4">
-          <WorkflowList />
+          <WorkflowList workflows={[]} />
         </TabsContent>
         <TabsContent value="new">
           <NewWorkflow />

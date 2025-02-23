@@ -197,79 +197,109 @@ export function WorkflowDesigner() {
             className="absolute inset-0 pointer-events-none"
             style={{
               width: "100%",
-              height: `${gridRows * 96 + (gridRows - 1) * 16}px`,
-              zIndex: 1,
+              height: `${gridRows * 120}px`,
+              zIndex: 10,
             }}
-            preserveAspectRatio="xMidYMin slice"
           >
             {workflow.tasks.map((task) =>
               task.predecessors.map((predId) => {
                 const predTask = workflow.tasks.find((t) => t.id === predId);
                 if (!predTask) return null;
 
-                const startCol = predTask.position.col;
-                const endCol = task.position.col;
-                const startRow = predTask.position.row;
-                const endRow = task.position.row;
+                // Calculate grid cell size
+                const cellWidth =
+                  document.querySelector(".grid")?.getBoundingClientRect()
+                    .width / 5 || 200;
+                const cellHeight = 120;
+                const taskWidth = cellWidth * 0.8; // 80% of cell width
+                const taskHeight = 80; // Fixed task height
 
-                // Calculate grid cell size (assuming 16px gap)
-                const cellWidth = 20; // 100% / 5 columns = 20%
-                const cellHeight = 96; // Height of cell including padding
-                const gap = 16;
+                // Calculate center points
+                const startCenterX = (predTask.position.col + 0.5) * cellWidth;
+                const startCenterY = predTask.position.row * cellHeight + 60;
+                const endCenterX = (task.position.col + 0.5) * cellWidth;
+                const endCenterY = task.position.row * cellHeight + 60;
 
-                // Calculate start and end points
-                const startX = startCol * cellWidth + cellWidth * 0.8; // End of start task
-                const endX = endCol * cellWidth + cellWidth * 0.2; // Start of end task
-                const startY = startRow * (cellHeight + gap) + cellHeight / 2;
-                const endY = endRow * (cellHeight + gap) + cellHeight / 2;
+                // Calculate task box boundaries
+                const startLeft = startCenterX - taskWidth / 2;
+                const startRight = startCenterX + taskWidth / 2;
+                const startTop = startCenterY - taskHeight / 2;
+                const startBottom = startCenterY + taskHeight / 2;
 
-                // Adjust control points for smoother curves
-                const controlPointOffset = Math.abs(endX - startX) * 0.5;
+                const endLeft = endCenterX - taskWidth / 2;
+                const endRight = endCenterX + taskWidth / 2;
+                const endTop = endCenterY - taskHeight / 2;
+                const endBottom = endCenterY + taskHeight / 2;
 
-                // Calculate control points for the curve
-                const midX = (startX + endX) / 2;
+                // Determine start and end points based on relative positions
+                let startX, startY, endX, endY;
+
+                // Determine start point (from predecessor)
+                if (predTask.position.row < task.position.row) {
+                  // If predecessor is above, start from bottom
+                  startX = startCenterX;
+                  startY = startBottom;
+                } else if (predTask.position.row > task.position.row) {
+                  // If predecessor is below, start from top
+                  startX = startCenterX;
+                  startY = startTop;
+                } else {
+                  // If on same row, start from left or right
+                  if (predTask.position.col < task.position.col) {
+                    startX = startRight;
+                    startY = startCenterY;
+                  } else {
+                    startX = startLeft;
+                    startY = startCenterY;
+                  }
+                }
+
+                // Determine end point (to current task)
+                if (predTask.position.row < task.position.row) {
+                  // If predecessor is above, end at top
+                  endX = endCenterX;
+                  endY = endTop;
+                } else if (predTask.position.row > task.position.row) {
+                  // If predecessor is below, end at bottom
+                  endX = endCenterX;
+                  endY = endBottom;
+                } else {
+                  // If on same row, end at left or right
+                  if (predTask.position.col < task.position.col) {
+                    endX = endLeft;
+                    endY = endCenterY;
+                  } else {
+                    endX = endRight;
+                    endY = endCenterY;
+                  }
+                }
+
+                // Calculate control points
+                const midY = (startY + endY) / 2;
 
                 return (
                   <path
                     key={`${predId}-${task.id}`}
-                    d={`M ${startX}% ${startY} C ${startX + controlPointOffset}% ${startY}, ${endX - controlPointOffset}% ${endY}, ${endX}% ${endY}`}
-                    fill="none"
-                    stroke="currentColor"
+                    d={`M ${startX} ${startY} C ${startX} ${midY} ${endX} ${midY} ${endX} ${endY}`}
+                    stroke="#0ea5e9"
                     strokeWidth="2"
-                    className="text-primary"
-                    markerEnd="url(#arrowhead)"
+                    fill="none"
                   />
                 );
               }),
             )}
-            <defs>
-              <marker
-                id="arrowhead"
-                markerWidth="10"
-                markerHeight="7"
-                refX="9"
-                refY="3.5"
-                orient="auto"
-              >
-                <polygon
-                  points="0 0, 10 3.5, 0 7"
-                  fill="currentColor"
-                  className="text-primary"
-                />
-              </marker>
-            </defs>
           </svg>
 
           <div
-            className="grid grid-cols-5 gap-4 relative"
-            style={{ minHeight: `${gridRows * 96}px` }}
+            className="grid grid-cols-5 relative"
+            style={{ minHeight: `${gridRows * 120}px` }}
           >
             {Array.from({ length: gridRows }).map((_, row) =>
               Array.from({ length: 5 }).map((_, col) => (
                 <div
                   key={`${row}-${col}`}
                   className={cn(
-                    "h-24 border border-dashed border-border/50 rounded-lg",
+                    "h-[120px]",
                     "transition-all duration-200",
                     draggedTask && "hover:border-primary hover:border-solid",
                   )}
@@ -306,8 +336,8 @@ export function WorkflowDesigner() {
                         onDragStart={() => setDraggedTask(task)}
                         onDragEnd={() => setDraggedTask(null)}
                         className={cn(
-                          "p-3 rounded-lg border shadow-sm bg-card transition-all w-4/5 mx-auto",
-                          "hover:shadow-md hover:border-primary/50 cursor-move h-[84px] overflow-hidden",
+                          "p-3 rounded-lg border-[#0ea5e9] border shadow-sm bg-background transition-all w-4/5 mx-auto mt-5",
+                          "hover:shadow-md hover:border-primary/50 cursor-move h-[80px] overflow-hidden",
                         )}
                       >
                         <div className="flex justify-between items-start gap-4">

@@ -12,6 +12,7 @@ import {
   LogOut,
   Languages,
   Archive,
+  Settings2,
 } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../ThemeProvider";
@@ -28,6 +29,11 @@ const menuItems = [
     name: "workflow",
     icon: Workflow,
     path: "/workflow",
+  },
+  {
+    name: "workflowDesign",
+    icon: Settings2,
+    path: "/workflow/design",
   },
   {
     name: "templates",

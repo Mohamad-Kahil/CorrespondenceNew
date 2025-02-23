@@ -12,6 +12,7 @@ import { AuthProvider } from "./components/auth/AuthProvider";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { LoginPage } from "./components/auth/LoginPage";
 import { WorkflowDashboard } from "./components/workflow/WorkflowDashboard";
+import { WorkflowDesigner } from "./components/workflow/WorkflowDesigner";
 import { ArchiveLayout } from "./components/archive/ArchiveLayout";
 
 function App() {
@@ -57,6 +58,10 @@ function App() {
                         <Route
                           path="workflow"
                           element={<WorkflowDashboard />}
+                        />
+                        <Route
+                          path="workflow/design"
+                          element={<WorkflowDesigner />}
                         />
                         <Route path="template" element={<TemplateLayout />} />
                         <Route path="dispatch" element={<DispatchLayout />} />

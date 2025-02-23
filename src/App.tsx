@@ -15,8 +15,14 @@ import { WorkflowDashboard } from "./components/workflow/WorkflowDashboard";
 import { ArchiveLayout } from "./components/archive/ArchiveLayout";
 
 function App() {
+  // Handle Tempo routes
   const tempoRoutes =
     import.meta.env.VITE_TEMPO === "true" ? useRoutes(routes) : null;
+
+  // Make sure we have a default route
+  if (window.location.pathname === "/" && !import.meta.env.VITE_TEMPO) {
+    window.location.href = "/login";
+  }
 
   return (
     <Suspense

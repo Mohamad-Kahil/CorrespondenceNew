@@ -8,7 +8,11 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { AuthProvider } from "./components/auth/AuthProvider";
 
 import { TempoDevtools } from "tempo-devtools";
-TempoDevtools.init();
+
+// Initialize Tempo before rendering
+if (import.meta.env.VITE_TEMPO === "true") {
+  TempoDevtools.init();
+}
 
 const basename = import.meta.env.BASE_URL;
 

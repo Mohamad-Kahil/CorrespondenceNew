@@ -37,7 +37,7 @@ interface Task {
   assignee?: string;
   dueDate?: string;
   description?: string;
-  nextTasks: string[];
+  predecessors: string[];
   position: GridPosition;
 }
 
@@ -51,16 +51,24 @@ interface WorkflowDesign {
 
 export function WorkflowDesigner() {
   const { t } = useLanguage();
-  const [workflow, setWorkflow] = useState<WorkflowDesign>({
-    id: "new",
-    name: "",
-    description: "",
-    tasks: [],
+  const [workflow, setWorkflow] = useState<WorkflowDesign>(() => {
+    const startTask: Task = {
+      id: "task-1",
+      title: "Start",
+      type: "start",
+      predecessors: [],
+      position: { row: 0, col: 2 },
+    };
+    return {
+      id: "new",
+      name: "",
+      description: "",
+      tasks: [startTask],
+      startTaskId: startTask.id,
+    };
   });
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isTaskDialogOpen, setIsTaskDialogOpen] = useState(false);
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [connectingTask, setConnectingTask] = useState<Task | null>(null);
   const [gridRows, setGridRows] = useState(4);
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
 
@@ -85,16 +93,18 @@ export function WorkflowDesigner() {
   };
 
   const handleAddTask = () => {
+    const isFirstTask = workflow.tasks.length === 0;
     const newTask: Task = {
       id: `task-${workflow.tasks.length + 1}`,
-      title: `Task ${workflow.tasks.length + 1}`,
-      type: "start",
-      nextTasks: [],
+      title: isFirstTask ? "Start" : `Task ${workflow.tasks.length + 1}`,
+      type: isFirstTask ? "start" : "assess",
+      predecessors: [],
       position: getNextAvailablePosition(),
     };
     setWorkflow((prev) => ({
       ...prev,
       tasks: [...prev.tasks, newTask],
+      startTaskId: isFirstTask ? newTask.id : prev.startTaskId,
     }));
     setSelectedTask(newTask);
     setIsTaskDialogOpen(true);
@@ -111,26 +121,13 @@ export function WorkflowDesigner() {
   const handleTaskDelete = (taskId: string) => {
     setWorkflow((prev) => ({
       ...prev,
-      tasks: prev.tasks.filter((t) => t.id !== taskId),
+      tasks: prev.tasks
+        .filter((t) => t.id !== taskId)
+        .map((t) => ({
+          ...t,
+          predecessors: t.predecessors.filter((p) => p !== taskId),
+        })),
     }));
-  };
-
-  const handleConnect = (task: Task) => {
-    if (!isConnecting) {
-      setIsConnecting(true);
-      setConnectingTask(task);
-    } else if (connectingTask && connectingTask.id !== task.id) {
-      setWorkflow((prev) => ({
-        ...prev,
-        tasks: prev.tasks.map((t) =>
-          t.id === connectingTask.id
-            ? { ...t, nextTasks: [...t.nextTasks, task.id] }
-            : t,
-        ),
-      }));
-      setIsConnecting(false);
-      setConnectingTask(null);
-    }
   };
 
   const handleSave = () => {
@@ -150,17 +147,6 @@ export function WorkflowDesigner() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              onClick={() => setIsConnecting(!isConnecting)}
-              className={cn(
-                "gap-2",
-                isConnecting && "bg-primary/10 text-primary",
-              )}
-            >
-              <Link2 className="h-4 w-4" />
-              {isConnecting ? t("connecting") : t("connect")}
-            </Button>
             <Button onClick={handleAddTask} className="gap-2">
               <Plus className="h-4 w-4" />
               {t("addTask")}
@@ -206,104 +192,169 @@ export function WorkflowDesigner() {
       </Card>
 
       <Card className="p-6">
-        <div className="grid grid-cols-5 gap-4" style={{ minHeight: "600px" }}>
-          {Array.from({ length: gridRows }).map((_, row) =>
-            Array.from({ length: 5 }).map((_, col) => (
-              <div
-                key={`${row}-${col}`}
-                className={cn(
-                  "h-24 border border-dashed border-border/50 rounded-lg",
-                  "transition-all duration-200",
-                  draggedTask && "hover:border-primary hover:border-solid",
-                )}
-                onDragOver={(e) => {
-                  e.preventDefault();
-                  e.currentTarget.classList.add(
-                    "border-primary",
-                    "border-solid",
-                  );
-                }}
-                onDragLeave={(e) => {
-                  e.currentTarget.classList.remove(
-                    "border-primary",
-                    "border-solid",
-                  );
-                }}
-                onDrop={(e) => {
-                  e.preventDefault();
-                  if (draggedTask) {
-                    const updatedTask = {
-                      ...draggedTask,
-                      position: { row, col },
-                    };
-                    handleTaskUpdate(updatedTask);
-                    setDraggedTask(null);
-                  }
-                }}
+        <div className="relative">
+          <svg
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              width: "100%",
+              height: `${gridRows * 96 + (gridRows - 1) * 16}px`,
+              zIndex: 1,
+            }}
+            preserveAspectRatio="xMidYMin slice"
+          >
+            {workflow.tasks.map((task) =>
+              task.predecessors.map((predId) => {
+                const predTask = workflow.tasks.find((t) => t.id === predId);
+                if (!predTask) return null;
+
+                const startCol = predTask.position.col;
+                const endCol = task.position.col;
+                const startRow = predTask.position.row;
+                const endRow = task.position.row;
+
+                // Calculate grid cell size (assuming 16px gap)
+                const cellWidth = 20; // 100% / 5 columns = 20%
+                const cellHeight = 96; // Height of cell including padding
+                const gap = 16;
+
+                // Calculate start and end points
+                const startX = startCol * cellWidth + cellWidth * 0.8; // End of start task
+                const endX = endCol * cellWidth + cellWidth * 0.2; // Start of end task
+                const startY = startRow * (cellHeight + gap) + cellHeight / 2;
+                const endY = endRow * (cellHeight + gap) + cellHeight / 2;
+
+                // Adjust control points for smoother curves
+                const controlPointOffset = Math.abs(endX - startX) * 0.5;
+
+                // Calculate control points for the curve
+                const midX = (startX + endX) / 2;
+
+                return (
+                  <path
+                    key={`${predId}-${task.id}`}
+                    d={`M ${startX}% ${startY} C ${startX + controlPointOffset}% ${startY}, ${endX - controlPointOffset}% ${endY}, ${endX}% ${endY}`}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="text-primary"
+                    markerEnd="url(#arrowhead)"
+                  />
+                );
+              }),
+            )}
+            <defs>
+              <marker
+                id="arrowhead"
+                markerWidth="10"
+                markerHeight="7"
+                refX="9"
+                refY="3.5"
+                orient="auto"
               >
-                {workflow.tasks.map((task) =>
-                  task.position.row === row && task.position.col === col ? (
-                    <div
-                      key={task.id}
-                      draggable
-                      onDragStart={() => setDraggedTask(task)}
-                      onDragEnd={() => setDraggedTask(null)}
-                      className={cn(
-                        "p-4 rounded-lg border shadow-sm bg-card transition-all w-4/5 mx-auto",
-                        "hover:shadow-md hover:border-primary/50 cursor-move",
-                        isConnecting &&
-                          !connectingTask &&
-                          "cursor-pointer hover:ring-2 hover:ring-primary hover:ring-offset-background hover:ring-offset-2",
-                        isConnecting &&
-                          connectingTask?.id !== task.id &&
-                          "cursor-pointer hover:ring-2 hover:ring-primary hover:ring-offset-background hover:ring-offset-2",
-                        connectingTask?.id === task.id &&
-                          "ring-2 ring-primary ring-offset-background ring-offset-2",
-                      )}
-                      onClick={() => isConnecting && handleConnect(task)}
-                    >
-                      <div className="flex justify-between items-start gap-4">
-                        <div>
-                          <h3 className="font-medium text-foreground">
-                            {task.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {t(task.type)}
-                            {task.assignee && ` • ${task.assignee}`}
-                          </p>
-                        </div>
-                        <div className="flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedTask(task);
-                              setIsTaskDialogOpen(true);
-                            }}
-                          >
-                            <Settings2 className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 hover:text-destructive"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleTaskDelete(task.id);
-                            }}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
+                <polygon
+                  points="0 0, 10 3.5, 0 7"
+                  fill="currentColor"
+                  className="text-primary"
+                />
+              </marker>
+            </defs>
+          </svg>
+
+          <div
+            className="grid grid-cols-5 gap-4 relative"
+            style={{ minHeight: `${gridRows * 96}px` }}
+          >
+            {Array.from({ length: gridRows }).map((_, row) =>
+              Array.from({ length: 5 }).map((_, col) => (
+                <div
+                  key={`${row}-${col}`}
+                  className={cn(
+                    "h-24 border border-dashed border-border/50 rounded-lg",
+                    "transition-all duration-200",
+                    draggedTask && "hover:border-primary hover:border-solid",
+                  )}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    e.currentTarget.classList.add(
+                      "border-primary",
+                      "border-solid",
+                    );
+                  }}
+                  onDragLeave={(e) => {
+                    e.currentTarget.classList.remove(
+                      "border-primary",
+                      "border-solid",
+                    );
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    if (draggedTask) {
+                      const updatedTask = {
+                        ...draggedTask,
+                        position: { row, col },
+                      };
+                      handleTaskUpdate(updatedTask);
+                      setDraggedTask(null);
+                    }
+                  }}
+                >
+                  {workflow.tasks.map((task) =>
+                    task.position.row === row && task.position.col === col ? (
+                      <div
+                        key={task.id}
+                        draggable
+                        onDragStart={() => setDraggedTask(task)}
+                        onDragEnd={() => setDraggedTask(null)}
+                        className={cn(
+                          "p-3 rounded-lg border shadow-sm bg-card transition-all w-4/5 mx-auto",
+                          "hover:shadow-md hover:border-primary/50 cursor-move h-[84px] overflow-hidden",
+                        )}
+                      >
+                        <div className="flex justify-between items-start gap-4">
+                          <div>
+                            <h3 className="font-medium text-foreground">
+                              {task.title}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {t(task.type)}
+                              {task.assignee && ` • ${task.assignee}`}
+                            </p>
+                          </div>
+                          <div className="flex gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedTask(task);
+                                setIsTaskDialogOpen(true);
+                              }}
+                            >
+                              <Settings2 className="h-4 w-4" />
+                            </Button>
+                            {task.type !== "start" && (
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 hover:text-destructive"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleTaskDelete(task.id);
+                                }}
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : null,
-                )}
-              </div>
-            )),
-          )}
+                    ) : null,
+                  )}
+                </div>
+              )),
+            )}
+          </div>
         </div>
       </Card>
 
@@ -342,20 +393,58 @@ export function WorkflowDesigner() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="start">{t("start")}</SelectItem>
-                    <SelectItem value="comment">{t("comment")}</SelectItem>
-                    <SelectItem value="report">{t("report")}</SelectItem>
-                    <SelectItem value="assess">{t("assess")}</SelectItem>
-                    <SelectItem value="decision">{t("decision")}</SelectItem>
-                    <SelectItem value="generate_reply">
-                      {t("generateReply")}
-                    </SelectItem>
-                    <SelectItem value="deliver">{t("deliver")}</SelectItem>
-                    <SelectItem value="terminate">{t("terminate")}</SelectItem>
-                    <SelectItem value="escalate">{t("escalate")}</SelectItem>
+                    {selectedTask.type === "start" ? (
+                      <SelectItem value="start">{t("start")}</SelectItem>
+                    ) : (
+                      <>
+                        <SelectItem value="comment">{t("comment")}</SelectItem>
+                        <SelectItem value="report">{t("report")}</SelectItem>
+                        <SelectItem value="assess">{t("assess")}</SelectItem>
+                        <SelectItem value="decision">
+                          {t("decision")}
+                        </SelectItem>
+                        <SelectItem value="generate_reply">
+                          {t("generateReply")}
+                        </SelectItem>
+                        <SelectItem value="deliver">{t("deliver")}</SelectItem>
+                        <SelectItem value="terminate">
+                          {t("terminate")}
+                        </SelectItem>
+                        <SelectItem value="escalate">
+                          {t("escalate")}
+                        </SelectItem>
+                      </>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
+
+              {selectedTask.type !== "start" && (
+                <div className="space-y-2">
+                  <Label className="text-foreground">Predecessor Tasks</Label>
+                  <Select
+                    value={selectedTask.predecessors[0] || ""}
+                    onValueChange={(value) => {
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, predecessors: [value] } : null,
+                      );
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select predecessor task" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {workflow.tasks
+                        .filter((t) => t.id !== selectedTask.id)
+                        .map((task) => (
+                          <SelectItem key={task.id} value={task.id}>
+                            Task {task.id.split("-")[1]}
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
 
               <div className="space-y-2">
                 <Label className="text-foreground">{t("assignee")}</Label>

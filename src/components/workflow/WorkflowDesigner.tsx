@@ -21,6 +21,25 @@ interface GridPosition {
   col: number;
 }
 
+interface TaskRecord {
+  id: string;
+  taskType: string;
+  taskTitle: string;
+  gridRow: number;
+  gridColumn: number;
+  department: string;
+  assignee1: string;
+  assignee2: string;
+  escalateTo: string;
+  predecessor1: string | null;
+  predecessor2: string | null;
+  predecessorLogic: "AND" | "OR";
+  duration: number | null;
+  startDate: string | null;
+  edDate: string | null;
+  description: string;
+}
+
 interface Task {
   id: string;
   title: string;
@@ -56,6 +75,31 @@ interface WorkflowDesign {
 }
 
 export function WorkflowDesigner() {
+  const [taskRecords, setTaskRecords] = useState<TaskRecord[]>(() => {
+    // Initialize with default start task
+    const currentDate = new Date().toISOString().split("T")[0];
+    return [
+      {
+        id: "task-1",
+        taskType: "start",
+        taskTitle: "Workflow Start",
+        gridRow: 1,
+        gridColumn: 3,
+        department: "Department",
+        assignee1: "Manager",
+        assignee2: "",
+        escalateTo: "",
+        predecessor1: null,
+        predecessor2: null,
+        predecessorLogic: "OR",
+        duration: null,
+        startDate: currentDate,
+        edDate: null,
+        description: "This is the start of the workflow",
+      },
+    ];
+  });
+  const [showSummary, setShowSummary] = useState(false);
   const { t } = useLanguage();
   const [workflow, setWorkflow] = useState<WorkflowDesign>(() => {
     const startTask: Task = {
@@ -118,6 +162,38 @@ export function WorkflowDesigner() {
   };
 
   const handleTaskUpdate = (updatedTask: Task) => {
+    // Update task records when a task is updated
+    const taskRecord: TaskRecord = {
+      id: updatedTask.id,
+      taskType: updatedTask.type,
+      taskTitle: updatedTask.title,
+      gridRow: updatedTask.position.row + 1,
+      gridColumn: updatedTask.position.col + 1,
+      department: updatedTask.department || "",
+      assignee1: updatedTask.assignee || "",
+      assignee2: updatedTask.assignee2 || "",
+      escalateTo: updatedTask.escalateTo || "",
+      predecessor1: updatedTask.predecessors[0] || null,
+      predecessor2: updatedTask.predecessors[1] || null,
+      predecessorLogic: updatedTask.predecessorLogic || "OR",
+      duration: updatedTask.duration || null,
+      startDate: updatedTask.startDate || null,
+      edDate: updatedTask.dueDate || null,
+      description: updatedTask.description || "",
+    };
+
+    setTaskRecords((prev) => {
+      const index = prev.findIndex((r) => r.id === taskRecord.id);
+      if (index >= 0) {
+        // Update existing record
+        const newRecords = [...prev];
+        newRecords[index] = taskRecord;
+        return newRecords;
+      } else {
+        // Add new record
+        return [...prev, taskRecord];
+      }
+    });
     setWorkflow((prev) => ({
       ...prev,
       tasks: prev.tasks.map((t) => (t.id === updatedTask.id ? updatedTask : t)),
@@ -138,7 +214,9 @@ export function WorkflowDesigner() {
   };
 
   const handleSave = () => {
+    setShowSummary(true);
     console.log("Saving workflow:", workflow);
+    console.log("Task records:", taskRecords);
   };
 
   return (
@@ -752,6 +830,91 @@ export function WorkflowDesigner() {
               </div>
             </div>
           )}
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showSummary} onOpenChange={setShowSummary}>
+        <DialogContent className="max-w-[80vw] max-h-[80vh] overflow-auto">
+          <DialogHeader>
+            <DialogTitle>Workflow Tasks Summary</DialogTitle>
+          </DialogHeader>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-border">
+              <thead>
+                <tr className="bg-muted">
+                  <th className="p-2 border border-border">Task Type</th>
+                  <th className="p-2 border border-border">Title</th>
+                  <th className="p-2 border border-border">Row</th>
+                  <th className="p-2 border border-border">Column</th>
+                  <th className="p-2 border border-border">Department</th>
+                  <th className="p-2 border border-border">Assignee 1</th>
+                  <th className="p-2 border border-border">Assignee 2</th>
+                  <th className="p-2 border border-border">Escalate To</th>
+                  <th className="p-2 border border-border">Predecessor 1</th>
+                  <th className="p-2 border border-border">Predecessor 2</th>
+                  <th className="p-2 border border-border">Logic</th>
+                  <th className="p-2 border border-border">Duration</th>
+                  <th className="p-2 border border-border">Start Date</th>
+                  <th className="p-2 border border-border">E.D. Date</th>
+                  <th className="p-2 border border-border">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {taskRecords.map((record, index) => (
+                  <tr key={index} className="hover:bg-muted/50">
+                    <td className="p-2 border border-border">
+                      {record.taskType}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.taskTitle}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.gridRow}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.gridColumn}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.department}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.assignee1}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.assignee2}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.escalateTo}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.predecessor1 || "-"}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.predecessor2 || "-"}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.predecessorLogic}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.duration || "-"}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.startDate || "-"}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.edDate || "-"}
+                    </td>
+                    <td className="p-2 border border-border">
+                      {record.description}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="flex justify-end mt-4">
+            <Button onClick={() => setShowSummary(false)}>{t("close")}</Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

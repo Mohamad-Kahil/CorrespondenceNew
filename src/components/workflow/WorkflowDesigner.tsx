@@ -40,6 +40,7 @@ interface Task {
   dueDate?: string;
   description?: string;
   predecessors: string[];
+  predecessorLogic?: "AND" | "OR";
   position: GridPosition;
 }
 
@@ -527,31 +528,88 @@ export function WorkflowDesigner() {
                   </Select>
                 </div>
 
+                {/* Third Row */}
                 {selectedTask.type !== "start" && (
-                  <div className="space-y-2">
-                    <Label>{t("predecessors")}</Label>
-                    <Select
-                      value={selectedTask.predecessors[0] || ""}
-                      onValueChange={(value) => {
-                        setSelectedTask((prev) =>
-                          prev ? { ...prev, predecessors: [value] } : null,
-                        );
-                      }}
-                    >
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select predecessor task" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {workflow.tasks
-                          .filter((t) => t.id !== selectedTask.id)
-                          .map((task) => (
-                            <SelectItem key={task.id} value={task.id}>
-                              Task {task.id.split("-")[1]}
-                            </SelectItem>
-                          ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                  <>
+                    <div className="space-y-2">
+                      <Label>Predecessor 1</Label>
+                      <Select
+                        value={selectedTask.predecessors[0] || ""}
+                        onValueChange={(value) => {
+                          const newPreds = [
+                            ...(selectedTask.predecessors || []),
+                          ];
+                          newPreds[0] = value;
+                          setSelectedTask((prev) =>
+                            prev ? { ...prev, predecessors: newPreds } : null,
+                          );
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select predecessor task" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {workflow.tasks
+                            .filter((t) => t.id !== selectedTask.id)
+                            .map((task) => (
+                              <SelectItem key={task.id} value={task.id}>
+                                Task {task.id.split("-")[1]}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Predecessor 2</Label>
+                      <Select
+                        value={selectedTask.predecessors[1] || ""}
+                        onValueChange={(value) => {
+                          const newPreds = [
+                            ...(selectedTask.predecessors || []),
+                          ];
+                          newPreds[1] = value;
+                          setSelectedTask((prev) =>
+                            prev ? { ...prev, predecessors: newPreds } : null,
+                          );
+                        }}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select predecessor task" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {workflow.tasks
+                            .filter((t) => t.id !== selectedTask.id)
+                            .map((task) => (
+                              <SelectItem key={task.id} value={task.id}>
+                                Task {task.id.split("-")[1]}
+                              </SelectItem>
+                            ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Label>Predecessor Logic</Label>
+                      <Button
+                        variant="outline"
+                        className="w-full"
+                        onClick={() => {
+                          setSelectedTask((prev) =>
+                            prev
+                              ? {
+                                  ...prev,
+                                  predecessorLogic:
+                                    prev.predecessorLogic === "AND"
+                                      ? "OR"
+                                      : "AND",
+                                }
+                              : null,
+                          );
+                        }}
+                      >
+                        {selectedTask.predecessorLogic || "AND"}
+                      </Button>
+                    </div>
+                  </>
                 )}
 
                 <div className="space-y-2">

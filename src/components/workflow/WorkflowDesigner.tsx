@@ -35,6 +35,8 @@ interface Task {
     | "terminate"
     | "escalate";
   assignee?: string;
+  assignee2?: string;
+  escalateTo?: string;
   dueDate?: string;
   description?: string;
   predecessors: string[];
@@ -100,6 +102,7 @@ export function WorkflowDesigner() {
       type: isFirstTask ? "start" : "assess",
       predecessors: [],
       position: getNextAvailablePosition(),
+      escalateTo: "manager", // Set default escalateTo value
     };
     setWorkflow((prev) => ({
       ...prev,
@@ -454,6 +457,76 @@ export function WorkflowDesigner() {
                   />
                 </div>
 
+                {/* Second Row */}
+                <div className="space-y-2">
+                  <Label>{t("assignee")} 1</Label>
+                  <Select
+                    value={selectedTask.assignee || ""}
+                    onValueChange={(value) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, assignee: value } : null,
+                      )
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("selectAssignee")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="user1">{t("user")} 1</SelectItem>
+                      <SelectItem value="user2">{t("user")} 2</SelectItem>
+                      <SelectItem value="user3">{t("user")} 3</SelectItem>
+                      <SelectItem value="user4">{t("user")} 4</SelectItem>
+                      <SelectItem value="user5">{t("user")} 5</SelectItem>
+                      <SelectItem value="manager">{t("manager")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>{t("assignee")} 2</Label>
+                  <Select
+                    value={selectedTask.assignee2 || ""}
+                    onValueChange={(value) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, assignee2: value } : null,
+                      )
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("selectAssignee")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="user1">{t("user")} 1</SelectItem>
+                      <SelectItem value="user2">{t("user")} 2</SelectItem>
+                      <SelectItem value="user3">{t("user")} 3</SelectItem>
+                      <SelectItem value="user4">{t("user")} 4</SelectItem>
+                      <SelectItem value="user5">{t("user")} 5</SelectItem>
+                      <SelectItem value="manager">{t("manager")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Escalate To</Label>
+                  <Select
+                    value={selectedTask.escalateTo || "manager"}
+                    onValueChange={(value) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, escalateTo: value } : null,
+                      )
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="manager">Manager</SelectItem>
+                      <SelectItem value="manager1">Manager 1</SelectItem>
+                      <SelectItem value="manager2">Manager 2</SelectItem>
+                      <SelectItem value="supervisor">Supervisor</SelectItem>
+                      <SelectItem value="director">Director</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
                 {selectedTask.type !== "start" && (
                   <div className="space-y-2">
                     <Label>{t("predecessors")}</Label>
@@ -480,30 +553,6 @@ export function WorkflowDesigner() {
                     </Select>
                   </div>
                 )}
-
-                <div className="space-y-2">
-                  <Label>{t("assignee")}</Label>
-                  <Select
-                    value={selectedTask.assignee || ""}
-                    onValueChange={(value) =>
-                      setSelectedTask((prev) =>
-                        prev ? { ...prev, assignee: value } : null,
-                      )
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder={t("selectAssignee")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="user1">{t("user")} 1</SelectItem>
-                      <SelectItem value="user2">{t("user")} 2</SelectItem>
-                      <SelectItem value="user3">{t("user")} 3</SelectItem>
-                      <SelectItem value="user4">{t("user")} 4</SelectItem>
-                      <SelectItem value="user5">{t("user")} 5</SelectItem>
-                      <SelectItem value="manager">{t("manager")}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
 
                 <div className="space-y-2">
                   <Label>{t("dueDate")}</Label>

@@ -1,0 +1,90 @@
+{
+  "1-1-1": {
+    "activities": [
+      {
+        "id": "1",
+        "userId": "john.smith@company.com",
+        "userName": "John Smith",
+        "action": "view",
+        "timestamp": "2024-03-25T09:30:00Z",
+        "details": "Viewed document in digital archive"
+      },
+      {
+        "id": "2",
+        "userId": "sarah.johnson@company.com",
+        "userName": "Sarah Johnson",
+        "action": "forward",
+        "timestamp": "2024-03-25T10:15:00Z",
+        "details": "Forwarded to finance@company.com"
+      },
+      {
+        "id": "3",
+        "userId": "michael.chen@company.com",
+        "userName": "Michael Chen",
+        "action": "workflow_start",
+        "timestamp": "2024-03-25T11:00:00Z",
+        "details": "Started approval workflow #WF-2024-001"
+      }
+    ]
+  },
+  "1-1-2": {
+    "activities": [
+      {
+        "id": "4",
+        "userId": "emily.brown@company.com",
+        "userName": "Emily Brown",
+        "action": "view",
+        "timestamp": "2024-03-26T14:20:00Z",
+        "details": "Viewed document in digital archive"
+      },
+      {
+        "id": "5",
+        "userId": "emily.brown@company.com",
+        "userName": "Emily Brown",
+        "action": "download",
+        "timestamp": "2024-03-26T14:25:00Z",
+        "details": "Downloaded document"
+      }
+    ]
+  },
+  "1-2-1": {
+    "activities": [
+      {
+        "id": "6",
+        "userId": "david.wilson@company.com",
+        "userName": "David Wilson",
+        "action": "create_version",
+        "timestamp": "2024-03-27T09:15:00Z",
+        "details": "Created new version V2"
+      },
+      {
+        "id": "7",
+        "userId": "lisa.anderson@company.com",
+        "userName": "Lisa Anderson",
+        "action": "comment",
+        "timestamp": "2024-03-27T10:30:00Z",
+        "details": "Added comment: 'Please review the updated sections'"
+      }
+    ]
+  },
+  "2-2-1": {
+    "activities": [
+      {
+        "id": "8",
+        "userId": "robert.taylor@company.com",
+        "userName": "Robert Taylor",
+        "action": "view",
+        "timestamp": "2024-03-28T15:45:00Z",
+        "details": "Viewed document in digital archive"
+      },
+      {
+        "id": "9",
+        "userId": "jennifer.martinez@company.com",
+        "userName": "Jennifer Martinez",
+        "action": "print",
+        "timestamp": "2024-03-28T16:00:00Z",
+        "details": "Printed document"
+      }
+    ]
+  }
+}

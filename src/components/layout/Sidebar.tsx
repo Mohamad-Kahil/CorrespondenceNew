@@ -56,6 +56,11 @@ const menuItems = [
     path: "/archive",
   },
   {
+    name: "digitalArchive",
+    icon: FileText,
+    path: "/digital-archive",
+  },
+  {
     name: "systemAccess",
     icon: Settings2,
     path: "/system-access",

@@ -14,6 +14,7 @@ import { LoginPage } from "./components/auth/LoginPage";
 import { WorkflowDashboard } from "./components/workflow/WorkflowDashboard";
 import { WorkflowDesigner } from "./components/workflow/WorkflowDesigner";
 import { ArchiveLayout } from "./components/archive/ArchiveLayout";
+import { DigitalArchiveLayout } from "./components/digital-archive/DigitalArchiveLayout";
 import { SystemAccessLayout } from "./components/system-access/SystemAccessLayout";
 
 function App() {
@@ -68,6 +69,10 @@ function App() {
                           <Route path="template" element={<TemplateLayout />} />
                           <Route path="dispatch" element={<DispatchLayout />} />
                           <Route path="archive" element={<ArchiveLayout />} />
+                          <Route
+                            path="digital-archive"
+                            element={<DigitalArchiveLayout />}
+                          />
                           <Route
                             path="system-access"
                             element={<SystemAccessLayout />}

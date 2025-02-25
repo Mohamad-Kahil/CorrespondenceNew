@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "../ui/card";
+import { useLanguage } from "@/lib/i18n/LanguageContext";
 import {
   Table,
   TableBody,
@@ -24,11 +25,11 @@ const employees = [
     department: "Executive",
     securityLevel: "5",
     access: {
-      Executive: "Top Secret",
-      Finance: "Top Secret",
-      Technology: "Top Secret",
-      "Human Resources": "Top Secret",
-      Operations: "Top Secret",
+      executive: "Top Secret",
+      finance: "Top Secret",
+      technology: "Top Secret",
+      humanResources: "Top Secret",
+      operations: "Top Secret",
     },
   },
   {
@@ -38,11 +39,11 @@ const employees = [
     department: "Finance",
     securityLevel: "4",
     access: {
-      Executive: "Secret",
-      Finance: "Top Secret",
-      Technology: "Secret",
-      "Human Resources": "Secret",
-      Operations: "Secret",
+      executive: "Secret",
+      finance: "Top Secret",
+      technology: "Secret",
+      humanResources: "Secret",
+      operations: "Secret",
     },
   },
   {
@@ -52,11 +53,11 @@ const employees = [
     department: "Technology",
     securityLevel: "4",
     access: {
-      Executive: "Secret",
-      Finance: "Secret",
-      Technology: "Top Secret",
-      "Human Resources": "Secret",
-      Operations: "Secret",
+      executive: "Secret",
+      finance: "Secret",
+      technology: "Top Secret",
+      humanResources: "Secret",
+      operations: "Secret",
     },
   },
   {
@@ -66,11 +67,11 @@ const employees = [
     department: "Human Resources",
     securityLevel: "4",
     access: {
-      Executive: "Secret",
-      Finance: "Secret",
-      Technology: "Secret",
-      "Human Resources": "Top Secret",
-      Operations: "Secret",
+      executive: "Secret",
+      finance: "Secret",
+      technology: "Secret",
+      humanResources: "Top Secret",
+      operations: "Secret",
     },
   },
   {
@@ -80,11 +81,11 @@ const employees = [
     department: "Finance",
     securityLevel: "3",
     access: {
-      Executive: "Confidential",
-      Finance: "Secret",
-      Technology: "Confidential",
-      "Human Resources": "Confidential",
-      Operations: "Confidential",
+      executive: "Confidential",
+      finance: "Secret",
+      technology: "Confidential",
+      humanResources: "Confidential",
+      operations: "Confidential",
     },
   },
   {
@@ -94,11 +95,11 @@ const employees = [
     department: "Technology",
     securityLevel: "3",
     access: {
-      Executive: "Confidential",
-      Finance: "Confidential",
-      Technology: "Secret",
-      "Human Resources": "Confidential",
-      Operations: "Confidential",
+      executive: "Confidential",
+      finance: "Confidential",
+      technology: "Secret",
+      humanResources: "Confidential",
+      operations: "Confidential",
     },
   },
   {
@@ -108,11 +109,11 @@ const employees = [
     department: "Human Resources",
     securityLevel: "3",
     access: {
-      Executive: "Confidential",
-      Finance: "Confidential",
-      Technology: "Confidential",
-      "Human Resources": "Secret",
-      Operations: "Confidential",
+      executive: "Confidential",
+      finance: "Confidential",
+      technology: "Confidential",
+      humanResources: "Secret",
+      operations: "Confidential",
     },
   },
   {
@@ -122,11 +123,11 @@ const employees = [
     department: "Operations",
     securityLevel: "3",
     access: {
-      Executive: "Confidential",
-      Finance: "Confidential",
-      Technology: "Confidential",
-      "Human Resources": "Confidential",
-      Operations: "Confidential",
+      executive: "Confidential",
+      finance: "Confidential",
+      technology: "Confidential",
+      humanResources: "Confidential",
+      operations: "Confidential",
     },
   },
   {
@@ -136,11 +137,11 @@ const employees = [
     department: "Operations",
     securityLevel: "3",
     access: {
-      Executive: "Confidential",
-      Finance: "Confidential",
-      Technology: "Confidential",
-      "Human Resources": "Confidential",
-      Operations: "Secret",
+      executive: "Confidential",
+      finance: "Confidential",
+      technology: "Confidential",
+      humanResources: "Confidential",
+      operations: "Secret",
     },
   },
   {
@@ -150,11 +151,11 @@ const employees = [
     department: "Finance",
     securityLevel: "2",
     access: {
-      Executive: "Confidential",
-      Finance: "Confidential",
-      Technology: "Confidential",
-      "Human Resources": "Confidential",
-      Operations: "Confidential",
+      executive: "Confidential",
+      finance: "Confidential",
+      technology: "Confidential",
+      humanResources: "Confidential",
+      operations: "Confidential",
     },
   },
   {
@@ -164,21 +165,21 @@ const employees = [
     department: "Technology",
     securityLevel: "2",
     access: {
-      Executive: "Confidential",
-      Finance: "Confidential",
-      Technology: "Confidential",
-      "Human Resources": "Confidential",
-      Operations: "Confidential",
+      executive: "Confidential",
+      finance: "Confidential",
+      technology: "Confidential",
+      humanResources: "Confidential",
+      operations: "Confidential",
     },
   },
 ];
 
 const departments = [
-  "Executive",
-  "Finance",
-  "Technology",
-  "Human Resources",
-  "Operations",
+  "executive",
+  "finance",
+  "technology",
+  "humanResources",
+  "operations",
 ];
 
 const accessLevels = [
@@ -190,6 +191,8 @@ const accessLevels = [
 ];
 
 export function AuthorizationMatrix() {
+  const { t } = useLanguage();
+
   const handleAccessChange = (
     employeeId: string,
     department: string,
@@ -211,9 +214,11 @@ export function AuthorizationMatrix() {
               <TableHead>Position</TableHead>
               <TableHead>Department</TableHead>
               <TableHead>Security Level</TableHead>
-              {departments.map((dept) => (
-                <TableHead key={dept}>{dept}</TableHead>
-              ))}
+              <TableHead>Executive</TableHead>
+              <TableHead>Finance</TableHead>
+              <TableHead>Technology</TableHead>
+              <TableHead>Human Resources</TableHead>
+              <TableHead>Operations</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

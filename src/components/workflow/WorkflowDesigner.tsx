@@ -74,7 +74,7 @@ export function WorkflowDesigner() {
   });
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isTaskDialogOpen, setIsTaskDialogOpen] = useState(false);
-  const [gridRows, setGridRows] = useState(4);
+  const [gridRows, setGridRows] = useState(3);
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
 
   const getNextAvailablePosition = (): GridPosition => {
@@ -342,13 +342,55 @@ export function WorkflowDesigner() {
                         onDragStart={() => setDraggedTask(task)}
                         onDragEnd={() => setDraggedTask(null)}
                         className={cn(
-                          "p-3 rounded-lg border-[#0ea5e9] border shadow-sm bg-background transition-all w-4/5 mx-auto mt-5",
-                          "hover:shadow-md hover:border-primary/50 cursor-move h-[80px] overflow-hidden",
+                          "p-3 rounded-lg border shadow-sm transition-all w-4/5 mx-auto mt-5",
+                          "hover:shadow-md cursor-move h-[80px] overflow-hidden",
+                          // Task type-based background colors
+                          task.type === "start" &&
+                            "bg-blue-100 border-blue-300 dark:bg-blue-900/50 dark:border-blue-700",
+                          task.type === "comment" &&
+                            "bg-gray-100 border-gray-300 dark:bg-gray-900/50 dark:border-gray-700",
+                          task.type === "report" &&
+                            "bg-purple-100 border-purple-300 dark:bg-purple-900/50 dark:border-purple-700",
+                          task.type === "assess" &&
+                            "bg-green-100 border-green-300 dark:bg-green-900/50 dark:border-green-700",
+                          task.type === "decision" &&
+                            "bg-yellow-100 border-yellow-300 dark:bg-yellow-900/50 dark:border-yellow-700",
+                          task.type === "generate_reply" &&
+                            "bg-indigo-100 border-indigo-300 dark:bg-indigo-900/50 dark:border-indigo-700",
+                          task.type === "deliver" &&
+                            "bg-pink-100 border-pink-300 dark:bg-pink-900/50 dark:border-pink-700",
+                          task.type === "terminate" &&
+                            "bg-red-100 border-red-300 dark:bg-red-900/50 dark:border-red-700",
+                          task.type === "escalate" &&
+                            "bg-orange-100 border-orange-300 dark:bg-orange-900/50 dark:border-orange-700",
                         )}
                       >
                         <div className="flex justify-between items-start gap-4">
                           <div>
-                            <h3 className="font-medium text-foreground">
+                            <h3
+                              className={cn(
+                                "font-medium",
+                                // Task type-based text colors
+                                task.type === "start" &&
+                                  "text-blue-700 dark:text-blue-300",
+                                task.type === "comment" &&
+                                  "text-gray-700 dark:text-gray-300",
+                                task.type === "report" &&
+                                  "text-purple-700 dark:text-purple-300",
+                                task.type === "assess" &&
+                                  "text-green-700 dark:text-green-300",
+                                task.type === "decision" &&
+                                  "text-yellow-700 dark:text-yellow-300",
+                                task.type === "generate_reply" &&
+                                  "text-indigo-700 dark:text-indigo-300",
+                                task.type === "deliver" &&
+                                  "text-pink-700 dark:text-pink-300",
+                                task.type === "terminate" &&
+                                  "text-red-700 dark:text-red-300",
+                                task.type === "escalate" &&
+                                  "text-orange-700 dark:text-orange-300",
+                              )}
+                            >
                               {task.title}
                             </h3>
                             <p className="text-sm text-muted-foreground">

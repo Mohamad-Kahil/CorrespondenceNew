@@ -1,5 +1,22 @@
 export const translations = {
   en: {
+    // System Access
+    systemAccess: "System Access",
+    systemAccessDesc: "Manage employee access and organizational structure",
+    organizationalChart: "Organizational Chart",
+    employeeRecords: "Employee Records",
+    employeeSecurity: "Employee Security",
+    authorization: "Authorization",
+    employeeId: "Employee ID",
+    securityLevel: "Security Level",
+    department: "Department",
+    position: "Position",
+    actions: "Actions",
+    picture: "Picture",
+    mobile: "Mobile",
+    email: "Email",
+    name: "Name",
+
     // Auth
     welcomeBack: "Welcome Back",
     signInToAccount: "Sign in to your account",
@@ -137,7 +154,6 @@ export const translations = {
     workflowDesigner: "Workflow Designer",
     workflowDesignerDesc: "Design and configure custom workflows",
     workflowName: "Workflow Name",
-    workflowDescription: "Description",
     enterWorkflowName: "Enter workflow name",
     enterWorkflowDescription: "Enter workflow description",
     addTask: "Add Task",
@@ -243,6 +259,23 @@ export const translations = {
     searchMessages: "Search messages...",
   },
   ar: {
+    // System Access
+    systemAccess: "صلاحيات النظام",
+    systemAccessDesc: "إدارة صلاحيات الموظفين والهيكل التنظيمي",
+    organizationalChart: "الهيكل التنظيمي",
+    employeeRecords: "سجلات الموظفين",
+    employeeSecurity: "أمن الموظفين",
+    authorization: "التفويض",
+    employeeId: "رقم الموظف",
+    securityLevel: "مستوى الأمان",
+    department: "القسم",
+    position: "المنصب",
+    actions: "الإجراءات",
+    picture: "الصورة",
+    mobile: "الجوال",
+    email: "البريد الإلكتروني",
+    name: "الاسم",
+
     // Auth
     welcomeBack: "مرحباً بعودتك",
     signInToAccount: "تسجيل الدخول إلى حسابك",
@@ -380,7 +413,6 @@ export const translations = {
     workflowDesigner: "مصمم سير العمل",
     workflowDesignerDesc: "تصميم وتكوين مسارات العمل المخصصة",
     workflowName: "اسم سير العمل",
-    workflowDescription: "الوصف",
     enterWorkflowName: "أدخل اسم سير العمل",
     enterWorkflowDescription: "أدخل وصف سير العمل",
     addTask: "إضافة مهمة",

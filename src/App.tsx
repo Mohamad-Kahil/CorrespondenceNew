@@ -14,6 +14,7 @@ import { LoginPage } from "./components/auth/LoginPage";
 import { WorkflowDashboard } from "./components/workflow/WorkflowDashboard";
 import { WorkflowDesigner } from "./components/workflow/WorkflowDesigner";
 import { ArchiveLayout } from "./components/archive/ArchiveLayout";
+import { SystemAccessLayout } from "./components/system-access/SystemAccessLayout";
 
 function App() {
   // Handle Tempo routes
@@ -42,33 +43,39 @@ function App() {
               <Route
                 path="/*"
                 element={
-                  <ProtectedRoute>
-                    <MainLayout>
-                      <Routes>
-                        <Route index element={<Home />} />
-                        <Route path="exchange" element={<ExchangeLayout />} />
-                        <Route
-                          path="exchange/:folder"
-                          element={<ExchangeLayout />}
-                        />
-                        <Route
-                          path="exchange/:folder/:messageId"
-                          element={<ExchangeLayout />}
-                        />
-                        <Route
-                          path="workflow"
-                          element={<WorkflowDashboard />}
-                        />
-                        <Route
-                          path="workflow/design"
-                          element={<WorkflowDesigner />}
-                        />
-                        <Route path="template" element={<TemplateLayout />} />
-                        <Route path="dispatch" element={<DispatchLayout />} />
-                        <Route path="archive" element={<ArchiveLayout />} />
-                      </Routes>
-                    </MainLayout>
-                  </ProtectedRoute>
+                  <LanguageProvider>
+                    <ProtectedRoute>
+                      <MainLayout>
+                        <Routes>
+                          <Route index element={<Home />} />
+                          <Route path="exchange" element={<ExchangeLayout />} />
+                          <Route
+                            path="exchange/:folder"
+                            element={<ExchangeLayout />}
+                          />
+                          <Route
+                            path="exchange/:folder/:messageId"
+                            element={<ExchangeLayout />}
+                          />
+                          <Route
+                            path="workflow"
+                            element={<WorkflowDashboard />}
+                          />
+                          <Route
+                            path="workflow/design"
+                            element={<WorkflowDesigner />}
+                          />
+                          <Route path="template" element={<TemplateLayout />} />
+                          <Route path="dispatch" element={<DispatchLayout />} />
+                          <Route path="archive" element={<ArchiveLayout />} />
+                          <Route
+                            path="system-access"
+                            element={<SystemAccessLayout />}
+                          />
+                        </Routes>
+                      </MainLayout>
+                    </ProtectedRoute>
+                  </LanguageProvider>
                 }
               />
             </Routes>

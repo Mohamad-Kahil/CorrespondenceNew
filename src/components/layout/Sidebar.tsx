@@ -55,6 +55,11 @@ const menuItems = [
     icon: Archive,
     path: "/archive",
   },
+  {
+    name: "systemAccess",
+    icon: Settings2,
+    path: "/system-access",
+  },
 ];
 
 export function Sidebar() {

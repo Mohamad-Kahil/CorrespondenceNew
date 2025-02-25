@@ -37,6 +37,8 @@ interface Task {
   assignee?: string;
   assignee2?: string;
   escalateTo?: string;
+  duration?: number;
+  startDate?: string;
   dueDate?: string;
   description?: string;
   predecessors: string[];
@@ -612,8 +614,37 @@ export function WorkflowDesigner() {
                   </>
                 )}
 
+                {/* Fourth Row */}
                 <div className="space-y-2">
-                  <Label>{t("dueDate")}</Label>
+                  <Label>Task Duration (days)</Label>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={selectedTask.duration || ""}
+                    onChange={(e) =>
+                      setSelectedTask((prev) =>
+                        prev
+                          ? { ...prev, duration: parseInt(e.target.value) }
+                          : null,
+                      )
+                    }
+                    placeholder="Enter days"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Start Date</Label>
+                  <Input
+                    type="date"
+                    value={selectedTask.startDate || ""}
+                    onChange={(e) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, startDate: e.target.value } : null,
+                      )
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>E.D. Date</Label>
                   <Input
                     type="date"
                     value={selectedTask.dueDate || ""}

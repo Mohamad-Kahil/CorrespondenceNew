@@ -34,6 +34,7 @@ interface Task {
     | "deliver"
     | "terminate"
     | "escalate";
+  department?: string;
   assignee?: string;
   assignee2?: string;
   escalateTo?: string;
@@ -354,11 +355,11 @@ export function WorkflowDesigner() {
                           task.type === "assess" &&
                             "bg-green-100 border-green-300 dark:bg-green-900/50 dark:border-green-700",
                           task.type === "decision" &&
-                            "bg-yellow-100 border-yellow-300 dark:bg-yellow-900/50 dark:border-yellow-700",
+                            "bg-pink-100 border-pink-300 dark:bg-pink-900/50 dark:border-pink-700",
                           task.type === "generate_reply" &&
                             "bg-indigo-100 border-indigo-300 dark:bg-indigo-900/50 dark:border-indigo-700",
                           task.type === "deliver" &&
-                            "bg-pink-100 border-pink-300 dark:bg-pink-900/50 dark:border-pink-700",
+                            "bg-yellow-100 border-yellow-300 dark:bg-yellow-900/50 dark:border-yellow-700",
                           task.type === "terminate" &&
                             "bg-red-100 border-red-300 dark:bg-red-900/50 dark:border-red-700",
                           task.type === "escalate" &&
@@ -380,11 +381,11 @@ export function WorkflowDesigner() {
                                 task.type === "assess" &&
                                   "text-green-700 dark:text-green-300",
                                 task.type === "decision" &&
-                                  "text-yellow-700 dark:text-yellow-300",
+                                  "text-pink-700 dark:text-pink-300",
                                 task.type === "generate_reply" &&
                                   "text-indigo-700 dark:text-indigo-300",
                                 task.type === "deliver" &&
-                                  "text-pink-700 dark:text-pink-300",
+                                  "text-yellow-700 dark:text-yellow-300",
                                 task.type === "terminate" &&
                                   "text-red-700 dark:text-red-300",
                                 task.type === "escalate" &&
@@ -396,6 +397,7 @@ export function WorkflowDesigner() {
                             <p className="text-sm text-muted-foreground">
                               {t(task.type)}
                               {task.assignee && ` • ${task.assignee}`}
+                              {task.department && ` • ${t(task.department)}`}
                             </p>
                           </div>
                           <div className="flex gap-1">
@@ -490,7 +492,7 @@ export function WorkflowDesigner() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="col-span-2">
+                <div>
                   <Label>{t("taskTitle")}</Label>
                   <Input
                     value={selectedTask.title}
@@ -500,6 +502,30 @@ export function WorkflowDesigner() {
                       )
                     }
                   />
+                </div>
+                <div>
+                  <Label>{t("department")}</Label>
+                  <Select
+                    value={selectedTask.department || ""}
+                    onValueChange={(value) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, department: value } : null,
+                      )
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("selectDepartment")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="hr">{t("hr")}</SelectItem>
+                      <SelectItem value="finance">{t("finance")}</SelectItem>
+                      <SelectItem value="it">{t("it")}</SelectItem>
+                      <SelectItem value="legal">{t("legal")}</SelectItem>
+                      <SelectItem value="operations">
+                        {t("operations")}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
 
                 {/* Second Row */}
@@ -698,7 +724,7 @@ export function WorkflowDesigner() {
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div className="col-span-3 space-y-2">
                   <Label>{t("description")}</Label>
                   <Textarea
                     value={selectedTask.description || ""}

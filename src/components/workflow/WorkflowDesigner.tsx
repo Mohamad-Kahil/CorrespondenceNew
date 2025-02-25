@@ -396,133 +396,139 @@ export function WorkflowDesigner() {
             </DialogTitle>
           </DialogHeader>
           {selectedTask && (
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label className="text-foreground">{t("taskTitle")}</Label>
-                <Input
-                  value={selectedTask.title}
-                  onChange={(e) =>
-                    setSelectedTask((prev) =>
-                      prev ? { ...prev, title: e.target.value } : null,
-                    )
-                  }
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label className="text-foreground">{t("taskType")}</Label>
-                <Select
-                  value={selectedTask.type}
-                  onValueChange={(value: Task["type"]) =>
-                    setSelectedTask((prev) =>
-                      prev ? { ...prev, type: value } : null,
-                    )
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {selectedTask.type === "start" ? (
-                      <SelectItem value="start">{t("start")}</SelectItem>
-                    ) : (
-                      <>
-                        <SelectItem value="comment">{t("comment")}</SelectItem>
-                        <SelectItem value="report">{t("report")}</SelectItem>
-                        <SelectItem value="assess">{t("assess")}</SelectItem>
-                        <SelectItem value="decision">
-                          {t("decision")}
-                        </SelectItem>
-                        <SelectItem value="generate_reply">
-                          {t("generateReply")}
-                        </SelectItem>
-                        <SelectItem value="deliver">{t("deliver")}</SelectItem>
-                        <SelectItem value="terminate">
-                          {t("terminate")}
-                        </SelectItem>
-                        <SelectItem value="escalate">
-                          {t("escalate")}
-                        </SelectItem>
-                      </>
-                    )}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {selectedTask.type !== "start" && (
-                <div className="space-y-2">
-                  <Label className="text-foreground">Predecessor Tasks</Label>
+            <div className="space-y-6">
+              <div className="grid grid-cols-3 gap-4">
+                {/* First Row */}
+                <div>
+                  <Label>{t("taskType")}</Label>
                   <Select
-                    value={selectedTask.predecessors[0] || ""}
-                    onValueChange={(value) => {
+                    value={selectedTask.type}
+                    onValueChange={(value: Task["type"]) =>
                       setSelectedTask((prev) =>
-                        prev ? { ...prev, predecessors: [value] } : null,
-                      );
-                    }}
+                        prev ? { ...prev, type: value } : null,
+                      )
+                    }
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select predecessor task" />
+                      <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      {workflow.tasks
-                        .filter((t) => t.id !== selectedTask.id)
-                        .map((task) => (
-                          <SelectItem key={task.id} value={task.id}>
-                            Task {task.id.split("-")[1]}
+                      {selectedTask.type === "start" ? (
+                        <SelectItem value="start">{t("start")}</SelectItem>
+                      ) : (
+                        <>
+                          <SelectItem value="comment">
+                            {t("comment")}
                           </SelectItem>
-                        ))}
+                          <SelectItem value="report">{t("report")}</SelectItem>
+                          <SelectItem value="assess">{t("assess")}</SelectItem>
+                          <SelectItem value="decision">
+                            {t("decision")}
+                          </SelectItem>
+                          <SelectItem value="generate_reply">
+                            {t("generateReply")}
+                          </SelectItem>
+                          <SelectItem value="deliver">
+                            {t("deliver")}
+                          </SelectItem>
+                          <SelectItem value="terminate">
+                            {t("terminate")}
+                          </SelectItem>
+                          <SelectItem value="escalate">
+                            {t("escalate")}
+                          </SelectItem>
+                        </>
+                      )}
                     </SelectContent>
                   </Select>
                 </div>
-              )}
+                <div className="col-span-2">
+                  <Label>{t("taskTitle")}</Label>
+                  <Input
+                    value={selectedTask.title}
+                    onChange={(e) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, title: e.target.value } : null,
+                      )
+                    }
+                  />
+                </div>
 
-              <div className="space-y-2">
-                <Label className="text-foreground">{t("assignee")}</Label>
-                <Select
-                  value={selectedTask.assignee || ""}
-                  onValueChange={(value) =>
-                    setSelectedTask((prev) =>
-                      prev ? { ...prev, assignee: value } : null,
-                    )
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("selectAssignee")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="user1">{t("user")} 1</SelectItem>
-                    <SelectItem value="user2">{t("user")} 2</SelectItem>
-                    <SelectItem value="user3">{t("user")} 3</SelectItem>
-                    <SelectItem value="user4">{t("user")} 4</SelectItem>
-                    <SelectItem value="user5">{t("user")} 5</SelectItem>
-                    <SelectItem value="manager">{t("manager")}</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                {selectedTask.type !== "start" && (
+                  <div className="space-y-2">
+                    <Label>{t("predecessors")}</Label>
+                    <Select
+                      value={selectedTask.predecessors[0] || ""}
+                      onValueChange={(value) => {
+                        setSelectedTask((prev) =>
+                          prev ? { ...prev, predecessors: [value] } : null,
+                        );
+                      }}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select predecessor task" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {workflow.tasks
+                          .filter((t) => t.id !== selectedTask.id)
+                          .map((task) => (
+                            <SelectItem key={task.id} value={task.id}>
+                              Task {task.id.split("-")[1]}
+                            </SelectItem>
+                          ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
 
-              <div className="space-y-2">
-                <Label className="text-foreground">{t("dueDate")}</Label>
-                <Input
-                  type="date"
-                  value={selectedTask.dueDate || ""}
-                  onChange={(e) =>
-                    setSelectedTask((prev) =>
-                      prev ? { ...prev, dueDate: e.target.value } : null,
-                    )
-                  }
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label>{t("assignee")}</Label>
+                  <Select
+                    value={selectedTask.assignee || ""}
+                    onValueChange={(value) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, assignee: value } : null,
+                      )
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder={t("selectAssignee")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="user1">{t("user")} 1</SelectItem>
+                      <SelectItem value="user2">{t("user")} 2</SelectItem>
+                      <SelectItem value="user3">{t("user")} 3</SelectItem>
+                      <SelectItem value="user4">{t("user")} 4</SelectItem>
+                      <SelectItem value="user5">{t("user")} 5</SelectItem>
+                      <SelectItem value="manager">{t("manager")}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div className="space-y-2">
-                <Label className="text-foreground">{t("description")}</Label>
-                <Textarea
-                  value={selectedTask.description || ""}
-                  onChange={(e) =>
-                    setSelectedTask((prev) =>
-                      prev ? { ...prev, description: e.target.value } : null,
-                    )
-                  }
-                />
+                <div className="space-y-2">
+                  <Label>{t("dueDate")}</Label>
+                  <Input
+                    type="date"
+                    value={selectedTask.dueDate || ""}
+                    onChange={(e) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, dueDate: e.target.value } : null,
+                      )
+                    }
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>{t("description")}</Label>
+                  <Textarea
+                    value={selectedTask.description || ""}
+                    onChange={(e) =>
+                      setSelectedTask((prev) =>
+                        prev ? { ...prev, description: e.target.value } : null,
+                      )
+                    }
+                  />
+                </div>
               </div>
 
               <div className="flex justify-end gap-2">

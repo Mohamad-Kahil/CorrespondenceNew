@@ -6,7 +6,7 @@ import { Label } from "../ui/label";
 import { Textarea } from "../ui/textarea";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { cn } from "@/lib/utils";
-import { Plus, Save, Settings2, Link2, X } from "lucide-react";
+import { Plus, Save, Settings2, Link2, X, Upload } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import {
   Select,
@@ -73,6 +73,9 @@ interface WorkflowDesign {
   tasks: Task[];
   startTaskId?: string;
 }
+
+import workflow1Data from "@/data/workflow1.json?raw";
+import workflow2Data from "@/data/workflow2.json?raw";
 
 export function WorkflowDesigner() {
   const [taskRecords, setTaskRecords] = useState<TaskRecord[]>(() => {
@@ -213,6 +216,43 @@ export function WorkflowDesigner() {
     }));
   };
 
+  const handleLoadWorkflow = async (workflowId: string) => {
+    const workflowData = JSON.parse(
+      workflowId === "workflow1" ? workflow1Data : workflow2Data,
+    );
+
+    // Update workflow name and description
+    setWorkflow((prev) => ({
+      ...prev,
+      name: workflowData.name,
+      description: workflowData.description,
+      tasks: workflowData.tasks.map((task) => ({
+        id: task.id,
+        title: task.taskTitle,
+        type: task.taskType as Task["type"],
+        department: task.department,
+        assignee: task.assignee1,
+        assignee2: task.assignee2,
+        escalateTo: task.escalateTo,
+        duration: task.duration,
+        startDate: task.startDate,
+        dueDate: task.edDate,
+        description: task.description,
+        predecessors: [task.predecessor1, task.predecessor2].filter(
+          (p): p is string => p !== null,
+        ),
+        predecessorLogic: task.predecessorLogic as "AND" | "OR",
+        position: {
+          row: task.gridRow - 1,
+          col: task.gridColumn - 1,
+        },
+      })),
+    }));
+
+    // Update task records
+    setTaskRecords(workflowData.tasks);
+  };
+
   const handleSave = () => {
     setShowSummary(true);
     console.log("Saving workflow:", workflow);
@@ -232,6 +272,19 @@ export function WorkflowDesigner() {
             </p>
           </div>
           <div className="flex gap-2">
+            <Select onValueChange={(value) => handleLoadWorkflow(value)}>
+              <SelectTrigger className="w-[250px]">
+                <SelectValue placeholder="Load Workflow Template" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="workflow1">
+                  Document Approval Workflow
+                </SelectItem>
+                <SelectItem value="workflow2">
+                  Employee Onboarding Workflow
+                </SelectItem>
+              </SelectContent>
+            </Select>
             <Button onClick={handleAddTask} className="gap-2">
               <Plus className="h-4 w-4" />
               {t("addTask")}

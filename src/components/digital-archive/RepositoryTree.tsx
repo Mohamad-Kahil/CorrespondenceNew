@@ -5,6 +5,11 @@ import { Input } from "../ui/input";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { cn } from "@/lib/utils";
 import {
+  SECURITY_LEVELS,
+  AUTHORIZATION_LEVELS,
+} from "@/lib/constants/security";
+import { Badge } from "../ui/badge";
+import {
   ChevronRight,
   ChevronDown,
   FolderIcon,
@@ -12,11 +17,15 @@ import {
   Plus,
   Search,
   FolderOpen,
+  Shield,
 } from "lucide-react";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "../ui/context-menu";
 
@@ -33,6 +42,8 @@ type RepositoryItem = {
     reference?: string;
   };
   imagePath?: string;
+  securityLevel?: 1 | 2 | 3 | 4 | 5;
+  authorizationLevel?: "T" | "S" | "C" | "R" | "U";
 };
 
 const mockData: RepositoryItem[] = [
@@ -40,17 +51,20 @@ const mockData: RepositoryItem[] = [
     id: "1",
     name: "ABC Company",
     type: "folder",
+    securityLevel: 4,
     children: [
       {
         id: "1-1",
         name: "Inbound",
         type: "folder",
+        securityLevel: 5,
         children: [
           {
             id: "1-1-1",
             name: "Business Letter.jpg",
             type: "document",
             documentType: "inbound",
+            authorizationLevel: "T",
             metadata: {
               date: "2024-03-25",
               sender: "ABC Company",
@@ -63,6 +77,7 @@ const mockData: RepositoryItem[] = [
             name: "Formal Letter.jpg",
             type: "document",
             documentType: "inbound",
+            authorizationLevel: "S",
             metadata: {
               date: "2024-03-27",
               sender: "ABC Company",
@@ -76,12 +91,14 @@ const mockData: RepositoryItem[] = [
         id: "1-2",
         name: "Outbound",
         type: "folder",
+        securityLevel: 4,
         children: [
           {
             id: "1-2-1",
             name: "Internal Memo.jpg",
             type: "document",
             documentType: "outbound",
+            authorizationLevel: "C",
             metadata: {
               date: "2024-03-26",
               recipient: "ABC Company",
@@ -97,23 +114,27 @@ const mockData: RepositoryItem[] = [
     id: "2",
     name: "XYZ Corporation",
     type: "folder",
+    securityLevel: 3,
     children: [
       {
         id: "2-1",
         name: "Inbound",
         type: "folder",
+        securityLevel: 3,
         children: [],
       },
       {
         id: "2-2",
         name: "Outbound",
         type: "folder",
+        securityLevel: 3,
         children: [
           {
             id: "2-2-1",
             name: "Response Letter.jpg",
             type: "document",
             documentType: "outbound",
+            authorizationLevel: "R",
             metadata: {
               date: "2024-03-29",
               recipient: "XYZ Corporation",
@@ -159,6 +180,12 @@ export function RepositoryTree({ onDocumentSelect }: RepositoryTreeProps) {
                 "flex items-center py-1 px-2 rounded-sm cursor-pointer",
                 isSelected && "bg-primary/10",
                 !isSelected && "hover:bg-muted/50",
+                item.type === "folder" &&
+                  item.securityLevel &&
+                  SECURITY_LEVELS[item.securityLevel].color,
+                item.type === "folder" &&
+                  item.securityLevel &&
+                  SECURITY_LEVELS[item.securityLevel].borderColor,
               )}
               style={{ paddingLeft: `${level * 12 + 4}px` }}
               onClick={() => {
@@ -198,7 +225,23 @@ export function RepositoryTree({ onDocumentSelect }: RepositoryTreeProps) {
               ) : (
                 <FileIcon className="h-4 w-4 text-muted-foreground mr-2" />
               )}
-              <span className="text-sm">{item.name}</span>
+              <span className="text-sm flex-1">{item.name}</span>
+              {item.type === "folder" && item.securityLevel && (
+                <Badge variant="outline" className="ml-2">
+                  {item.securityLevel}
+                </Badge>
+              )}
+              {item.type === "document" && item.authorizationLevel && (
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    "ml-2",
+                    AUTHORIZATION_LEVELS[item.authorizationLevel].badge,
+                  )}
+                >
+                  {item.authorizationLevel}
+                </Badge>
+              )}
             </div>
           </ContextMenuTrigger>
           <ContextMenuContent>
@@ -208,6 +251,31 @@ export function RepositoryTree({ onDocumentSelect }: RepositoryTreeProps) {
                   <Plus className="h-4 w-4 mr-2" />
                   {t("newFolder")}
                 </ContextMenuItem>
+                <ContextMenuSub>
+                  <ContextMenuSubTrigger>
+                    <Shield className="h-4 w-4 mr-2" />
+                    {t("securityLevel")}
+                  </ContextMenuSubTrigger>
+                  <ContextMenuSubContent>
+                    {Object.entries(SECURITY_LEVELS).map(([level, config]) => (
+                      <ContextMenuItem
+                        key={level}
+                        disabled={parseInt(level) < (item.securityLevel || 1)}
+                        onClick={() => {
+                          // Here you would update the security level in your backend
+                          console.log(
+                            `Setting security level ${level} for folder ${item.id}`,
+                          );
+                        }}
+                      >
+                        <div
+                          className={`h-3 w-3 rounded-full ${config.color} mr-2`}
+                        />
+                        {config.label}
+                      </ContextMenuItem>
+                    ))}
+                  </ContextMenuSubContent>
+                </ContextMenuSub>
                 {(item.name === "Inbound" || item.name === "Outbound") && (
                   <ContextMenuItem>
                     <Plus className="h-4 w-4 mr-2" />
@@ -222,6 +290,32 @@ export function RepositoryTree({ onDocumentSelect }: RepositoryTreeProps) {
                 <ContextMenuItem>{t("forward")}</ContextMenuItem>
                 <ContextMenuItem>{t("startWorkflow")}</ContextMenuItem>
                 <ContextMenuItem>{t("createVersion")}</ContextMenuItem>
+                <ContextMenuSub>
+                  <ContextMenuSubTrigger>
+                    <Shield className="h-4 w-4 mr-2" />
+                    {t("authorizationLevel")}
+                  </ContextMenuSubTrigger>
+                  <ContextMenuSubContent>
+                    {Object.entries(AUTHORIZATION_LEVELS).map(
+                      ([level, config]) => (
+                        <ContextMenuItem
+                          key={level}
+                          onClick={() => {
+                            // Here you would update the authorization level in your backend
+                            console.log(
+                              `Setting authorization level ${level} for document ${item.id}`,
+                            );
+                          }}
+                        >
+                          <Badge variant="outline" className={config.badge}>
+                            {level}
+                          </Badge>
+                          <span className="ml-2">{config.label}</span>
+                        </ContextMenuItem>
+                      ),
+                    )}
+                  </ContextMenuSubContent>
+                </ContextMenuSub>
               </>
             )}
           </ContextMenuContent>

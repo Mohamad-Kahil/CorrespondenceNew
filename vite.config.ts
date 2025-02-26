@@ -5,23 +5,72 @@ import { tempo } from "tempo-devtools/dist/vite";
 
 const conditionalPlugins: [string, Record<string, any>][] = [];
 
-// @ts-ignore
-if (process.env.TEMPO === "true") {
+// Add Tempo plugins in development
+const isDev = process.env.NODE_ENV !== "production";
+if (isDev) {
   conditionalPlugins.push(["tempo-devtools/swc", {}]);
 }
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === "development" ? "/" : process.env.VITE_BASE_PATH || "/",
+  // Ensure we have a clean production build
+  clearScreen: false,
+  // Enable minification and optimization for production
+  build: {
+    outDir: "dist",
+    minify: "terser",
+    sourcemap: false,
+    cssMinify: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: [
+            "react",
+            "react-dom",
+            "react-router-dom",
+            "lucide-react",
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-select",
+            "@radix-ui/react-tabs",
+          ],
+        },
+        // Ensure clean chunk names
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash][extname]",
+      },
+    },
+  },
+  base: isDev ? "/" : process.env.VITE_BASE_PATH || "/",
   optimizeDeps: {
-    entries: ["src/main.tsx", "src/tempobook/**/*"],
+    entries: ["src/main.tsx"],
+    exclude: ["src/tempobook"],
+  },
+  build: {
+    outDir: "dist",
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: [
+            "react",
+            "react-dom",
+            "react-router-dom",
+            "lucide-react",
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-select",
+            "@radix-ui/react-tabs",
+          ],
+        },
+      },
+    },
   },
   plugins: [
     react({
-      plugins: conditionalPlugins,
+      plugins: isDev ? conditionalPlugins : [],
     }),
-    tempo(),
-  ],
+    isDev ? tempo() : null,
+  ].filter(Boolean),
   resolve: {
     preserveSymlinks: true,
     alias: {
@@ -30,6 +79,6 @@ export default defineConfig({
   },
   server: {
     // @ts-ignore
-    allowedHosts: true,
-  }
+    allowedHosts: isDev ? true : undefined,
+  },
 });

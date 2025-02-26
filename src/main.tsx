@@ -9,8 +9,8 @@ import { AuthProvider } from "./components/auth/AuthProvider";
 
 import { TempoDevtools } from "tempo-devtools";
 
-// Initialize Tempo before rendering
-if (import.meta.env.VITE_TEMPO === "true") {
+// Initialize Tempo only in development
+if (import.meta.env.DEV) {
   TempoDevtools.init();
 }
 

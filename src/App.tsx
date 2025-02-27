@@ -11,6 +11,10 @@ import { AuthProvider } from "./components/auth/AuthProvider";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { LoginPage } from "./components/auth/LoginPage";
 import { WorkflowDashboard } from "./components/workflow/WorkflowDashboard";
+import { WorkflowDesigner } from "./components/workflow/WorkflowDesigner";
+import { ArchiveLayout } from "./components/archive/ArchiveLayout";
+import { DigitalArchiveLayout } from "./components/digital-archive/DigitalArchiveLayout";
+import { SystemAccessLayout } from "./components/system-access/SystemAccessLayout";
 
 function App() {
   const tempoRoutes =

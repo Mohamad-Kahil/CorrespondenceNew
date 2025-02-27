@@ -14,12 +14,12 @@ interface DispatchWizardProps {
 }
 
 const steps = [
-  { id: 1, name: "Recipient Details" },
-  { id: 2, name: "Document Selection" },
-  { id: 3, name: "Delivery Note" },
-  { id: 4, name: "Generate Barcode" },
-  { id: 5, name: "Delivery Confirmation" },
-  { id: 6, name: "Archive" },
+  { id: 1, name: "Recipient Details", status: "complete" as const },
+  { id: 2, name: "Document Selection", status: "current" as const },
+  { id: 3, name: "Delivery Note", status: "upcoming" as const },
+  { id: 4, name: "Generate Barcode", status: "upcoming" as const },
+  { id: 5, name: "Delivery Confirmation", status: "upcoming" as const },
+  { id: 6, name: "Archive", status: "upcoming" as const },
 ];
 
 const DispatchWizard = ({

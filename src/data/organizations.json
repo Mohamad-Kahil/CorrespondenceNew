@@ -1,0 +1,173 @@
+{
+  "organizations": [
+    {
+      "id": "ORG-001",
+      "name": "Ministry of Interior",
+      "shortName": "MOI",
+      "type": "Ministry",
+      "region": "Kuwait",
+      "parentOrganization": null,
+      "securityClassification": "Top Secret",
+      "designatedPersonnel": [
+        {
+          "id": "PER-00123",
+          "fullName": "Ahmed Al-Sabah",
+          "position": "Director",
+          "department": "International Relations",
+          "contact": {
+            "primaryEmail": "ahmed.alsabah@moi.gov.kw",
+            "secondaryEmail": "ahmed.alsabah@gmail.com",
+            "phone": "+965-2222-3333",
+            "mobile": "+965-9999-8888",
+            "fax": "+965-2222-4444"
+          },
+          "officeAddressRef": "ADDR-001",
+          "accessLevel": {
+            "securityClearance": "5",
+            "authorizationLevel": "Top Secret",
+            "systemRoles": ["Admin", "Approver"]
+          },
+          "status": "Active"
+        },
+        {
+          "id": "PER-00124",
+          "fullName": "Fatima Al-Rashid",
+          "position": "Deputy Director",
+          "department": "International Relations",
+          "contact": {
+            "primaryEmail": "fatima.alrashid@moi.gov.kw",
+            "secondaryEmail": "",
+            "phone": "+965-2222-3334",
+            "mobile": "+965-9999-7777",
+            "fax": "+965-2222-4444"
+          },
+          "officeAddressRef": "ADDR-001",
+          "accessLevel": {
+            "securityClearance": "4",
+            "authorizationLevel": "Secret",
+            "systemRoles": ["Approver"]
+          },
+          "status": "Active"
+        }
+      ],
+      "officeAddresses": [
+        {
+          "id": "ADDR-001",
+          "name": "Headquarters",
+          "fullAddress": "Block 1, Street 2, Building 3, Floor 4, Kuwait City, Kuwait",
+          "contact": {
+            "phone": "+965-2222-3333"
+          }
+        },
+        {
+          "id": "ADDR-002",
+          "name": "Regional Office",
+          "fullAddress": "Block 5, Street 6, Building 7, Floor 2, Jahra, Kuwait",
+          "contact": {
+            "phone": "+965-2222-5555"
+          }
+        }
+      ],
+      "additionalInformation": {
+        "preferredLanguage": "Arabic",
+        "timeZone": "Kuwait/Riyadh",
+        "businessHours": "Sunday-Thursday: 08:00-16:00",
+        "notes": "Main government ministry responsible for internal security and law enforcement in Kuwait."
+      }
+    },
+    {
+      "id": "ORG-002",
+      "name": "Ministry of Defense",
+      "shortName": "MOD",
+      "type": "Ministry",
+      "region": "Saudi Arabia",
+      "parentOrganization": null,
+      "securityClassification": "Top Secret",
+      "designatedPersonnel": [
+        {
+          "id": "PER-00125",
+          "fullName": "Mohammed Al-Saud",
+          "position": "Director",
+          "department": "International Cooperation",
+          "contact": {
+            "primaryEmail": "mohammed.alsaud@mod.gov.sa",
+            "secondaryEmail": "",
+            "phone": "+966-1111-2222",
+            "mobile": "+966-5555-6666",
+            "fax": "+966-1111-3333"
+          },
+          "officeAddressRef": "ADDR-003",
+          "accessLevel": {
+            "securityClearance": "5",
+            "authorizationLevel": "Top Secret",
+            "systemRoles": ["Admin", "Approver"]
+          },
+          "status": "Active"
+        }
+      ],
+      "officeAddresses": [
+        {
+          "id": "ADDR-003",
+          "name": "Headquarters",
+          "fullAddress": "King Abdulaziz Road, Riyadh, Saudi Arabia",
+          "contact": {
+            "phone": "+966-1111-2222"
+          }
+        }
+      ],
+      "additionalInformation": {
+        "preferredLanguage": "Arabic",
+        "timeZone": "Kuwait/Riyadh",
+        "businessHours": "Sunday-Thursday: 07:30-15:30",
+        "notes": "Ministry responsible for defense affairs in Saudi Arabia."
+      }
+    },
+    {
+      "id": "ORG-003",
+      "name": "Kuwait Oil Company",
+      "shortName": "KOC",
+      "type": "Corporation",
+      "region": "Kuwait",
+      "parentOrganization": null,
+      "securityClassification": "Confidential",
+      "designatedPersonnel": [
+        {
+          "id": "PER-00126",
+          "fullName": "Khalid Al-Mutairi",
+          "position": "CEO",
+          "department": "Executive Office",
+          "contact": {
+            "primaryEmail": "khalid.almutairi@koc.com.kw",
+            "secondaryEmail": "",
+            "phone": "+965-3333-4444",
+            "mobile": "+965-9999-1111",
+            "fax": "+965-3333-5555"
+          },
+          "officeAddressRef": "ADDR-004",
+          "accessLevel": {
+            "securityClearance": "4",
+            "authorizationLevel": "Confidential",
+            "systemRoles": ["Admin"]
+          },
+          "status": "Active"
+        }
+      ],
+      "officeAddresses": [
+        {
+          "id": "ADDR-004",
+          "name": "Headquarters",
+          "fullAddress": "Ahmad Al-Jaber Street, Kuwait City, Kuwait",
+          "contact": {
+            "phone": "+965-3333-4444"
+          }
+        }
+      ],
+      "additionalInformation": {
+        "preferredLanguage": "English",
+        "timeZone": "Kuwait/Riyadh",
+        "businessHours": "Sunday-Thursday: 07:00-15:00",
+        "notes": "Kuwait's national oil company responsible for oil and gas exploration and production."
+      }
+    }
+  ]
+}

@@ -14,6 +14,7 @@ import {
   Archive,
   Settings2,
   User,
+  Building2,
 } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../ThemeProvider";
@@ -70,6 +71,11 @@ const menuItems = [
     name: "employeeProfiles",
     icon: User,
     path: "/employee-profiles",
+  },
+  {
+    name: "organizations",
+    icon: Building2,
+    path: "/organizations",
   },
 ];
 

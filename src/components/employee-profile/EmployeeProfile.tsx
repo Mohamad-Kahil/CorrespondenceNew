@@ -54,7 +54,7 @@ export function EmployeeProfile({ employeeId }: EmployeeProfileProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" dir={t("direction")}>
       <Card className="p-6">
         <div className="flex items-start gap-6">
           <Avatar className="h-24 w-24">
@@ -111,14 +111,26 @@ export function EmployeeProfile({ employeeId }: EmployeeProfileProps) {
         </div>
       </Card>
 
-      <Tabs defaultValue="personal" className="space-y-4">
+      <Tabs defaultValue="personal" className="space-y-4" dir={t("direction")}>
         <TabsList className="grid grid-cols-6 w-full">
-          <TabsTrigger value="personal">Personal Info</TabsTrigger>
-          <TabsTrigger value="education">Education</TabsTrigger>
-          <TabsTrigger value="experience">Experience</TabsTrigger>
-          <TabsTrigger value="performance">Performance & Skills</TabsTrigger>
-          <TabsTrigger value="access">Access Level</TabsTrigger>
-          <TabsTrigger value="hr">HR & Administrative</TabsTrigger>
+          <TabsTrigger value="personal">
+            {t("personalInfo") || "Personal Info"}
+          </TabsTrigger>
+          <TabsTrigger value="education">
+            {t("education") || "Education"}
+          </TabsTrigger>
+          <TabsTrigger value="experience">
+            {t("experience") || "Experience"}
+          </TabsTrigger>
+          <TabsTrigger value="performance">
+            {t("performanceAndSkills") || "Performance & Skills"}
+          </TabsTrigger>
+          <TabsTrigger value="access">
+            {t("accessLevel") || "Access Level"}
+          </TabsTrigger>
+          <TabsTrigger value="hr">
+            {t("hrAdmin") || "HR & Administrative"}
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="personal">

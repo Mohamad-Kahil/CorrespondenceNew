@@ -12,8 +12,9 @@ import {
   TableRow,
 } from "../ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Search } from "lucide-react";
+import { Search, UserPlus } from "lucide-react";
 import employeeData from "@/data/employees.json";
+import { AddEmployeeDialog } from "./AddEmployeeDialog";
 
 interface EmployeeTableProps {
   onSelectEmployee: (employeeId: string) => void;
@@ -28,6 +29,7 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
   const [groupedEmployees, setGroupedEmployees] = useState<
     Record<string, Employee[]>
   >({});
+  const [isAddEmployeeOpen, setIsAddEmployeeOpen] = useState(false);
 
   useEffect(() => {
     // Load employees from the JSON file
@@ -49,6 +51,22 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
     setGroupedEmployees(grouped);
   }, []);
 
+  const handleAddEmployee = (newEmployee: Employee) => {
+    // In a real application, this would make an API call to add the employee
+    // For now, we'll just update the local state
+    const updatedEmployees = [...employees, newEmployee];
+    setEmployees(updatedEmployees);
+
+    // Update grouped employees
+    const department = newEmployee.experience.department;
+    const updatedGrouped = { ...groupedEmployees };
+    if (!updatedGrouped[department]) {
+      updatedGrouped[department] = [];
+    }
+    updatedGrouped[department].push(newEmployee);
+    setGroupedEmployees(updatedGrouped);
+  };
+
   // Filter employees based on search query
   const filteredEmployees =
     searchQuery.trim() === ""
@@ -65,17 +83,25 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
         );
 
   return (
-    <Card className="p-6">
+    <Card className="p-6" dir={t("direction")}>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold">Employee Directory</h2>
-        <div className="relative w-64">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search employees..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
-          />
+        <h2 className="text-xl font-semibold">
+          {t("employeeDirectory") || "Employee Directory"}
+        </h2>
+        <div className="flex items-center gap-4">
+          <div className="relative w-64">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder={t("searchEmployees") || "Search employees..."}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9"
+            />
+          </div>
+          <Button onClick={() => setIsAddEmployeeOpen(true)} className="gap-2">
+            <UserPlus className="h-4 w-4" />
+            {t("addEmployee") || "Add Employee"}
+          </Button>
         </div>
       </div>
 
@@ -84,11 +110,11 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Employee ID</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Department</TableHead>
-              <TableHead>Position</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead>{t("employeeId") || "Employee ID"}</TableHead>
+              <TableHead>{t("name") || "Name"}</TableHead>
+              <TableHead>{t("department") || "Department"}</TableHead>
+              <TableHead>{t("position") || "Position"}</TableHead>
+              <TableHead>{t("actions") || "Actions"}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -116,7 +142,8 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
                       {employee.personalInfo.preferredName !==
                         employee.personalInfo.fullName && (
                         <div className="text-sm text-muted-foreground">
-                          Preferred: {employee.personalInfo.preferredName}
+                          {t("preferredName") || "Preferred"}:{" "}
+                          {employee.personalInfo.preferredName}
                         </div>
                       )}
                     </div>
@@ -130,7 +157,7 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
                     size="sm"
                     onClick={() => onSelectEmployee(employee.id)}
                   >
-                    View Profile
+                    {t("viewDetails") || "View Profile"}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -144,15 +171,16 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
             ([department, departmentEmployees]) => (
               <div key={department} className="space-y-4">
                 <h3 className="text-lg font-medium border-b pb-2">
-                  {department} Department
+                  {t(department) || department}{" "}
+                  {t("department") || "Department"}
                 </h3>
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>Employee ID</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Position</TableHead>
-                      <TableHead>Actions</TableHead>
+                      <TableHead>{t("employeeId") || "Employee ID"}</TableHead>
+                      <TableHead>{t("name") || "Name"}</TableHead>
+                      <TableHead>{t("position") || "Position"}</TableHead>
+                      <TableHead>{t("actions") || "Actions"}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -180,7 +208,7 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
                               {employee.personalInfo.preferredName !==
                                 employee.personalInfo.fullName && (
                                 <div className="text-sm text-muted-foreground">
-                                  Preferred:{" "}
+                                  {t("preferredName") || "Preferred"}:{" "}
                                   {employee.personalInfo.preferredName}
                                 </div>
                               )}
@@ -196,7 +224,7 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
                             size="sm"
                             onClick={() => onSelectEmployee(employee.id)}
                           >
-                            View Profile
+                            {t("viewDetails") || "View Profile"}
                           </Button>
                         </TableCell>
                       </TableRow>
@@ -208,6 +236,12 @@ export function EmployeeTable({ onSelectEmployee }: EmployeeTableProps) {
           )}
         </div>
       )}
+
+      <AddEmployeeDialog
+        open={isAddEmployeeOpen}
+        onOpenChange={setIsAddEmployeeOpen}
+        onAddEmployee={handleAddEmployee}
+      />
     </Card>
   );
 }

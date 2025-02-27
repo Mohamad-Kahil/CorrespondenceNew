@@ -1,0 +1,529 @@
+{
+  "employees": [
+    {
+      "id": "EMP001",
+      "personalInfo": {
+        "fullName": "John Smith",
+        "preferredName": "Johnny",
+        "dateOfBirth": "1985-06-15",
+        "gender": "Male",
+        "contact": {
+          "email": "john.smith@company.com",
+          "mobile": "+1-555-123-4567",
+          "phone": "+1-555-987-6543",
+          "address": "123 Main Street, Apt 4B",
+          "city": "Chicago",
+          "country": "United States",
+          "postCode": "60601"
+        },
+        "emergencyContact": {
+          "name": "Sarah Smith",
+          "relationship": "Spouse",
+          "description": "Wife, works at Memorial Hospital",
+          "mobile": "+1-555-765-4321",
+          "phone": "+1-555-234-5678"
+        },
+        "profilePhoto": "https://api.dicebear.com/7.x/avataaars/svg?seed=JohnSmith"
+      },
+      "education": {
+        "highestDegree": "Master of Business Administration",
+        "institution": "Harvard Business School",
+        "graduationYear": 2010,
+        "major": "Business Administration",
+        "additionalCertifications": [
+          {
+            "name": "Project Management Professional (PMP)",
+            "issuer": "Project Management Institute",
+            "year": 2012
+          },
+          {
+            "name": "Six Sigma Black Belt",
+            "issuer": "American Society for Quality",
+            "year": 2015
+          }
+        ]
+      },
+      "experience": {
+        "currentPosition": "Chief Executive Officer",
+        "department": "Executive",
+        "hireDate": "2015-03-01",
+        "employmentType": "Full-time",
+        "manager": null,
+        "previousExperience": [
+          {
+            "title": "Chief Operations Officer",
+            "company": "Tech Innovations Inc.",
+            "startDate": "2012-05-01",
+            "endDate": "2015-02-28",
+            "duties": "Oversaw all operational activities, managed a team of 50+ employees, increased operational efficiency by 30%"
+          },
+          {
+            "title": "Senior Director of Operations",
+            "company": "Global Solutions Ltd.",
+            "startDate": "2008-07-15",
+            "endDate": "2012-04-30",
+            "duties": "Led operational strategy, implemented cost-saving measures, managed cross-functional teams"
+          }
+        ]
+      },
+      "accessLevel": {
+        "securityClearance": 5,
+        "authorizationLevel": "Top Secret",
+        "systemRoles": ["Admin", "Super User", "Approver"],
+        "lastAccessReview": "2023-12-15"
+      },
+      "performanceAndSkills": {
+        "performanceReviews": [
+          {
+            "date": "2023-01-15",
+            "rating": "Exceeds Expectations",
+            "comments": "Exceptional leadership during company restructuring. Successfully led the organization through challenging market conditions."
+          },
+          {
+            "date": "2022-01-15",
+            "rating": "Exceeds Expectations",
+            "comments": "Outstanding strategic vision and execution. Drove company growth by 25% year-over-year."
+          }
+        ],
+        "skills": ["Strategic Planning", "Leadership", "Business Development", "Financial Management", "Public Speaking", "Negotiation"],
+        "trainingCompleted": [
+          {
+            "name": "Executive Leadership Program",
+            "date": "2021-09-10"
+          },
+          {
+            "name": "Advanced Negotiation Techniques",
+            "date": "2020-06-22"
+          }
+        ]
+      },
+      "hrAndAdministrative": {
+        "salary": 350000,
+        "benefits": ["Health Insurance", "Life Insurance", "401(k) Matching", "Stock Options", "Executive Compensation Package"],
+        "status": "Active",
+        "terminationDate": null,
+        "notes": "Key decision maker for all strategic initiatives. Prefers early morning meetings."
+      }
+    },
+    {
+      "id": "EMP002",
+      "personalInfo": {
+        "fullName": "Sarah Johnson",
+        "preferredName": "Sarah",
+        "dateOfBirth": "1988-09-23",
+        "gender": "Female",
+        "contact": {
+          "email": "sarah.johnson@company.com",
+          "mobile": "+1-555-234-5678",
+          "phone": "+1-555-876-5432",
+          "address": "456 Park Avenue, Suite 7C",
+          "city": "New York",
+          "country": "United States",
+          "postCode": "10022"
+        },
+        "emergencyContact": {
+          "name": "Michael Johnson",
+          "relationship": "Spouse",
+          "description": "Husband, works remotely for a tech company",
+          "mobile": "+1-555-345-6789",
+          "phone": "+1-555-456-7890"
+        },
+        "profilePhoto": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahJohnson"
+      },
+      "education": {
+        "highestDegree": "Master of Science in Finance",
+        "institution": "New York University",
+        "graduationYear": 2012,
+        "major": "Finance",
+        "additionalCertifications": [
+          {
+            "name": "Chartered Financial Analyst (CFA)",
+            "issuer": "CFA Institute",
+            "year": 2014
+          },
+          {
+            "name": "Certified Public Accountant (CPA)",
+            "issuer": "American Institute of CPAs",
+            "year": 2013
+          }
+        ]
+      },
+      "experience": {
+        "currentPosition": "Chief Financial Officer",
+        "department": "Finance",
+        "hireDate": "2016-07-15",
+        "employmentType": "Full-time",
+        "manager": "EMP001",
+        "previousExperience": [
+          {
+            "title": "Finance Director",
+            "company": "Investment Partners LLC",
+            "startDate": "2014-03-01",
+            "endDate": "2016-07-14",
+            "duties": "Managed financial planning and analysis, oversaw a team of 15 financial analysts, implemented new financial reporting systems"
+          },
+          {
+            "title": "Senior Financial Analyst",
+            "company": "Global Banking Corp",
+            "startDate": "2012-06-01",
+            "endDate": "2014-02-28",
+            "duties": "Conducted financial analysis, prepared reports for executive leadership, participated in budget planning"
+          }
+        ]
+      },
+      "accessLevel": {
+        "securityClearance": 4,
+        "authorizationLevel": "Secret",
+        "systemRoles": ["Admin", "Finance System Admin", "Approver"],
+        "lastAccessReview": "2023-11-20"
+      },
+      "performanceAndSkills": {
+        "performanceReviews": [
+          {
+            "date": "2023-01-20",
+            "rating": "Exceeds Expectations",
+            "comments": "Exceptional financial leadership. Successfully implemented cost-saving measures that resulted in 15% reduction in operational expenses."
+          },
+          {
+            "date": "2022-01-20",
+            "rating": "Meets Expectations",
+            "comments": "Solid financial management and reporting. Maintained accurate financial records and provided timely insights to executive team."
+          }
+        ],
+        "skills": ["Financial Analysis", "Budgeting", "Forecasting", "Risk Management", "Strategic Planning", "Team Leadership"],
+        "trainingCompleted": [
+          {
+            "name": "Advanced Financial Modeling",
+            "date": "2022-03-15"
+          },
+          {
+            "name": "Executive Leadership for Finance Professionals",
+            "date": "2021-08-05"
+          }
+        ]
+      },
+      "hrAndAdministrative": {
+        "salary": 275000,
+        "benefits": ["Health Insurance", "Life Insurance", "401(k) Matching", "Stock Options"],
+        "status": "Active",
+        "terminationDate": null,
+        "notes": "Excellent at financial forecasting. Prefers detailed reports and data-driven decision making."
+      }
+    },
+    {
+      "id": "EMP003",
+      "personalInfo": {
+        "fullName": "Michael Chen",
+        "preferredName": "Mike",
+        "dateOfBirth": "1990-03-12",
+        "gender": "Male",
+        "contact": {
+          "email": "michael.chen@company.com",
+          "mobile": "+1-555-345-6789",
+          "phone": "+1-555-765-4321",
+          "address": "789 Tech Boulevard, Unit 12",
+          "city": "San Francisco",
+          "country": "United States",
+          "postCode": "94105"
+        },
+        "emergencyContact": {
+          "name": "Jennifer Chen",
+          "relationship": "Spouse",
+          "description": "Wife, works as a UX designer",
+          "mobile": "+1-555-456-7890",
+          "phone": "+1-555-567-8901"
+        },
+        "profilePhoto": "https://api.dicebear.com/7.x/avataaars/svg?seed=MichaelChen"
+      },
+      "education": {
+        "highestDegree": "Ph.D. in Computer Science",
+        "institution": "Stanford University",
+        "graduationYear": 2015,
+        "major": "Artificial Intelligence",
+        "additionalCertifications": [
+          {
+            "name": "AWS Certified Solutions Architect",
+            "issuer": "Amazon Web Services",
+            "year": 2017
+          },
+          {
+            "name": "Google Cloud Professional Architect",
+            "issuer": "Google",
+            "year": 2018
+          }
+        ]
+      },
+      "experience": {
+        "currentPosition": "Chief Technology Officer",
+        "department": "Technology",
+        "hireDate": "2017-02-01",
+        "employmentType": "Full-time",
+        "manager": "EMP001",
+        "previousExperience": [
+          {
+            "title": "VP of Engineering",
+            "company": "TechStart Innovations",
+            "startDate": "2015-06-01",
+            "endDate": "2017-01-31",
+            "duties": "Led engineering department of 75+ developers, architected cloud-based solutions, implemented agile methodologies"
+          },
+          {
+            "title": "Senior Software Architect",
+            "company": "Future Technologies Inc.",
+            "startDate": "2013-09-01",
+            "endDate": "2015-05-31",
+            "duties": "Designed and implemented scalable software architectures, mentored junior developers, led technical design reviews"
+          }
+        ]
+      },
+      "accessLevel": {
+        "securityClearance": 4,
+        "authorizationLevel": "Secret",
+        "systemRoles": ["Admin", "Tech System Admin", "Developer"],
+        "lastAccessReview": "2023-12-05"
+      },
+      "performanceAndSkills": {
+        "performanceReviews": [
+          {
+            "date": "2023-01-25",
+            "rating": "Exceeds Expectations",
+            "comments": "Outstanding technical leadership. Successfully led the migration to cloud infrastructure, resulting in 40% improvement in system performance."
+          },
+          {
+            "date": "2022-01-25",
+            "rating": "Exceeds Expectations",
+            "comments": "Exceptional innovation and technical vision. Implemented AI-driven solutions that increased operational efficiency by 25%."
+          }
+        ],
+        "skills": ["Cloud Architecture", "AI/Machine Learning", "Software Development", "System Design", "Team Leadership", "Strategic Planning"],
+        "trainingCompleted": [
+          {
+            "name": "Advanced AI and Machine Learning",
+            "date": "2022-05-20"
+          },
+          {
+            "name": "Cloud Security and Compliance",
+            "date": "2021-11-10"
+          }
+        ]
+      },
+      "hrAndAdministrative": {
+        "salary": 280000,
+        "benefits": ["Health Insurance", "Life Insurance", "401(k) Matching", "Stock Options", "Technology Stipend"],
+        "status": "Active",
+        "terminationDate": null,
+        "notes": "Highly innovative and technically skilled. Prefers flexible working hours and remote work options."
+      }
+    },
+    {
+      "id": "EMP004",
+      "personalInfo": {
+        "fullName": "Emily Brown",
+        "preferredName": "Em",
+        "dateOfBirth": "1992-11-08",
+        "gender": "Female",
+        "contact": {
+          "email": "emily.brown@company.com",
+          "mobile": "+1-555-456-7890",
+          "phone": "+1-555-654-3210",
+          "address": "321 HR Avenue, Suite 5",
+          "city": "Boston",
+          "country": "United States",
+          "postCode": "02108"
+        },
+        "emergencyContact": {
+          "name": "Robert Brown",
+          "relationship": "Father",
+          "description": "Retired, lives nearby",
+          "mobile": "+1-555-567-8901",
+          "phone": "+1-555-678-9012"
+        },
+        "profilePhoto": "https://api.dicebear.com/7.x/avataaars/svg?seed=EmilyBrown"
+      },
+      "education": {
+        "highestDegree": "Master of Human Resources Management",
+        "institution": "Cornell University",
+        "graduationYear": 2016,
+        "major": "Human Resources",
+        "additionalCertifications": [
+          {
+            "name": "Senior Professional in Human Resources (SPHR)",
+            "issuer": "HR Certification Institute",
+            "year": 2018
+          },
+          {
+            "name": "Society for Human Resource Management - Senior Certified Professional (SHRM-SCP)",
+            "issuer": "SHRM",
+            "year": 2019
+          }
+        ]
+      },
+      "experience": {
+        "currentPosition": "HR Director",
+        "department": "Human Resources",
+        "hireDate": "2018-04-15",
+        "employmentType": "Full-time",
+        "manager": "EMP001",
+        "previousExperience": [
+          {
+            "title": "HR Manager",
+            "company": "Global Enterprises Inc.",
+            "startDate": "2016-07-01",
+            "endDate": "2018-04-14",
+            "duties": "Managed HR operations, developed and implemented HR policies, oversaw recruitment and onboarding processes"
+          },
+          {
+            "title": "HR Specialist",
+            "company": "Eastern Consulting Group",
+            "startDate": "2014-05-15",
+            "endDate": "2016-06-30",
+            "duties": "Handled employee relations, assisted with benefits administration, supported recruitment efforts"
+          }
+        ]
+      },
+      "accessLevel": {
+        "securityClearance": 3,
+        "authorizationLevel": "Confidential",
+        "systemRoles": ["HR Admin", "Approver"],
+        "lastAccessReview": "2023-11-10"
+      },
+      "performanceAndSkills": {
+        "performanceReviews": [
+          {
+            "date": "2023-01-30",
+            "rating": "Exceeds Expectations",
+            "comments": "Excellent HR leadership. Successfully implemented new employee wellness program that increased employee satisfaction by 20%."
+          },
+          {
+            "date": "2022-01-30",
+            "rating": "Meets Expectations",
+            "comments": "Solid HR management. Effectively handled employee relations issues and maintained compliance with labor regulations."
+          }
+        ],
+        "skills": ["Employee Relations", "Talent Acquisition", "Performance Management", "Benefits Administration", "Conflict Resolution", "Policy Development"],
+        "trainingCompleted": [
+          {
+            "name": "Advanced Employment Law",
+            "date": "2022-09-12"
+          },
+          {
+            "name": "Diversity, Equity, and Inclusion in the Workplace",
+            "date": "2021-06-30"
+          }
+        ]
+      },
+      "hrAndAdministrative": {
+        "salary": 180000,
+        "benefits": ["Health Insurance", "Life Insurance", "401(k) Matching", "Professional Development Allowance"],
+        "status": "Active",
+        "terminationDate": null,
+        "notes": "Excellent at employee relations and conflict resolution. Advocates for employee wellness initiatives."
+      }
+    },
+    {
+      "id": "EMP005",
+      "personalInfo": {
+        "fullName": "David Wilson",
+        "preferredName": "Dave",
+        "dateOfBirth": "1987-07-25",
+        "gender": "Male",
+        "contact": {
+          "email": "david.wilson@company.com",
+          "mobile": "+1-555-567-8901",
+          "phone": "+1-555-543-2109",
+          "address": "567 Security Street, Apt 3D",
+          "city": "Dallas",
+          "country": "United States",
+          "postCode": "75201"
+        },
+        "emergencyContact": {
+          "name": "Lisa Wilson",
+          "relationship": "Spouse",
+          "description": "Wife, works as a teacher",
+          "mobile": "+1-555-678-9012",
+          "phone": "+1-555-789-0123"
+        },
+        "profilePhoto": "https://api.dicebear.com/7.x/avataaars/svg?seed=DavidWilson"
+      },
+      "education": {
+        "highestDegree": "Master of Science in Cybersecurity",
+        "institution": "Georgia Institute of Technology",
+        "graduationYear": 2013,
+        "major": "Cybersecurity",
+        "additionalCertifications": [
+          {
+            "name": "Certified Information Systems Security Professional (CISSP)",
+            "issuer": "(ISC)²",
+            "year": 2015
+          },
+          {
+            "name": "Certified Ethical Hacker (CEH)",
+            "issuer": "EC-Council",
+            "year": 2014
+          }
+        ]
+      },
+      "experience": {
+        "currentPosition": "Security Manager",
+        "department": "Operations",
+        "hireDate": "2019-01-10",
+        "employmentType": "Full-time",
+        "manager": "EMP001",
+        "previousExperience": [
+          {
+            "title": "Information Security Officer",
+            "company": "Secure Systems Inc.",
+            "startDate": "2016-03-15",
+            "endDate": "2019-01-09",
+            "duties": "Managed information security program, conducted security assessments, implemented security controls, responded to security incidents"
+          },
+          {
+            "title": "Security Analyst",
+            "company": "CyberDefense LLC",
+            "startDate": "2013-08-01",
+            "endDate": "2016-03-14",
+            "duties": "Monitored security systems, analyzed security threats, conducted vulnerability assessments, developed security protocols"
+          }
+        ]
+      },
+      "accessLevel": {
+        "securityClearance": 3,
+        "authorizationLevel": "Confidential",
+        "systemRoles": ["Security Admin", "Approver"],
+        "lastAccessReview": "2023-12-01"
+      },
+      "performanceAndSkills": {
+        "performanceReviews": [
+          {
+            "date": "2023-02-05",
+            "rating": "Meets Expectations",
+            "comments": "Solid security management. Effectively maintained security protocols and responded promptly to potential security threats."
+          },
+          {
+            "date": "2022-02-05",
+            "rating": "Exceeds Expectations",
+            "comments": "Outstanding security leadership. Implemented new security measures that significantly reduced security incidents by 35%."
+          }
+        ],
+        "skills": ["Cybersecurity", "Risk Assessment", "Security Protocols", "Incident Response", "Vulnerability Management", "Security Training"],
+        "trainingCompleted": [
+          {
+            "name": "Advanced Threat Detection and Response",
+            "date": "2022-11-15"
+          },
+          {
+            "name": "Cloud Security Architecture",
+            "date": "2021-04-20"
+          }
+        ]
+      },
+      "hrAndAdministrative": {
+        "salary": 165000,
+        "benefits": ["Health Insurance", "Life Insurance", "401(k) Matching", "Security Certification Allowance"],
+        "status": "Active",
+        "terminationDate": null,
+        "notes": "Detail-oriented and thorough in security assessments. Prefers structured work environment and clear protocols."
+      }
+    }
+  ]
+}

@@ -13,6 +13,7 @@ import {
   Languages,
   Archive,
   Settings2,
+  User,
 } from "lucide-react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import { useTheme } from "../ThemeProvider";
@@ -64,6 +65,11 @@ const menuItems = [
     name: "systemAccess",
     icon: Settings2,
     path: "/system-access",
+  },
+  {
+    name: "employeeProfiles",
+    icon: User,
+    path: "/employee-profiles",
   },
 ];
 

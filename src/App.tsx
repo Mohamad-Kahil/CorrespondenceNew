@@ -16,6 +16,7 @@ import { WorkflowDesigner } from "./components/workflow/WorkflowDesigner";
 import { ArchiveLayout } from "./components/archive/ArchiveLayout";
 import { DigitalArchiveLayout } from "./components/digital-archive/DigitalArchiveLayout";
 import { SystemAccessLayout } from "./components/system-access/SystemAccessLayout";
+import { EmployeeProfileLayout } from "./components/employee-profile/EmployeeProfileLayout";
 
 function App() {
   // Handle Tempo routes
@@ -75,6 +76,10 @@ function App() {
                         <Route
                           path="system-access"
                           element={<SystemAccessLayout />}
+                        />
+                        <Route
+                          path="employee-profiles"
+                          element={<EmployeeProfileLayout />}
                         />
                       </Routes>
                     </MainLayout>

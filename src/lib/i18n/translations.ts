@@ -3,6 +3,8 @@ export const translations = {
     // System Access
     systemAccess: "System Access",
     systemAccessDesc: "Manage employee access and organizational structure",
+    employeeProfiles: "Employee Profiles",
+    employeeProfilesDesc: "View and manage employee information and profiles",
     organizationalChart: "Organizational Chart",
     employeeRecords: "Employee Records",
     employeeSecurity: "Employee Security",
@@ -286,6 +288,8 @@ export const translations = {
     // System Access
     systemAccess: "صلاحيات النظام",
     systemAccessDesc: "إدارة صلاحيات الموظفين والهيكل التنظيمي",
+    employeeProfiles: "ملفات الموظفين",
+    employeeProfilesDesc: "عرض وإدارة معلومات وملفات الموظفين",
     organizationalChart: "الهيكل التنظيمي",
     employeeRecords: "سجلات الموظفين",
     employeeSecurity: "أمن الموظفين",

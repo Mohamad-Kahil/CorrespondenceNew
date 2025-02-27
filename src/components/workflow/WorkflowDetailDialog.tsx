@@ -7,20 +7,7 @@ import { Separator } from "../ui/separator";
 import { User, Calendar, CheckCircle2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 
-type Workflow = {
-  id: string;
-  name: string;
-  status: "active" | "completed" | "paused";
-  progress: number;
-  startDate: string;
-  owner: string;
-  description?: string;
-  steps?: {
-    name: string;
-    status: "completed" | "in_progress" | "pending";
-    assignee?: string;
-  }[];
-};
+import { Workflow } from "./types";
 
 interface WorkflowDetailDialogProps {
   workflow: Workflow | null;

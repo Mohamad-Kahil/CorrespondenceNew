@@ -46,25 +46,7 @@ export default defineConfig({
     entries: ["src/main.tsx"],
     exclude: ["src/tempobook"],
   },
-  build: {
-    outDir: "dist",
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: [
-            "react",
-            "react-dom",
-            "react-router-dom",
-            "lucide-react",
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-select",
-            "@radix-ui/react-tabs",
-          ],
-        },
-      },
-    },
-  },
+
   plugins: [
     react({
       plugins: isDev ? conditionalPlugins : [],

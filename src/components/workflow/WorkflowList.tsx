@@ -4,21 +4,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
 import { WorkflowDetailDialog } from "./WorkflowDetailDialog";
-
-type Workflow = {
-  id: string;
-  name: string;
-  status: "active" | "completed" | "paused";
-  progress: number;
-  startDate: string;
-  owner: string;
-  description?: string;
-  steps?: {
-    name: string;
-    status: "completed" | "in_progress" | "pending";
-    assignee?: string;
-  }[];
-};
+import { Workflow } from "./types";
 
 interface WorkflowListProps {
   workflows: Workflow[];
@@ -30,10 +16,10 @@ export function WorkflowList({ workflows = [] }: WorkflowListProps) {
   );
 
   // Convert saved workflow designs to display format
-  const displayWorkflows = workflows.map((workflow) => ({
+  const displayWorkflows: Workflow[] = workflows.map((workflow) => ({
     id: workflow.id,
     name: workflow.name,
-    status: "active" as const,
+    status: "active",
     progress: 0,
     startDate: new Date().toISOString().split("T")[0],
     owner: "Current User",

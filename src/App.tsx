@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { useRoutes, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
-import routes from "tempo-routes";
+import routes from "./tempo-routes";
 import { MainLayout } from "./components/layout/MainLayout";
 import DispatchLayout from "./components/dispatch/DispatchLayout";
 import TemplateLayout from "./components/template/TemplateLayout";
@@ -44,43 +44,41 @@ function App() {
               <Route
                 path="/*"
                 element={
-                  <LanguageProvider>
-                    <ProtectedRoute>
-                      <MainLayout>
-                        <Routes>
-                          <Route index element={<Home />} />
-                          <Route path="exchange" element={<ExchangeLayout />} />
-                          <Route
-                            path="exchange/:folder"
-                            element={<ExchangeLayout />}
-                          />
-                          <Route
-                            path="exchange/:folder/:messageId"
-                            element={<ExchangeLayout />}
-                          />
-                          <Route
-                            path="workflow"
-                            element={<WorkflowDashboard />}
-                          />
-                          <Route
-                            path="workflow/design"
-                            element={<WorkflowDesigner />}
-                          />
-                          <Route path="template" element={<TemplateLayout />} />
-                          <Route path="dispatch" element={<DispatchLayout />} />
-                          <Route path="archive" element={<ArchiveLayout />} />
-                          <Route
-                            path="digital-archive"
-                            element={<DigitalArchiveLayout />}
-                          />
-                          <Route
-                            path="system-access"
-                            element={<SystemAccessLayout />}
-                          />
-                        </Routes>
-                      </MainLayout>
-                    </ProtectedRoute>
-                  </LanguageProvider>
+                  <ProtectedRoute>
+                    <MainLayout>
+                      <Routes>
+                        <Route index element={<Home />} />
+                        <Route path="exchange" element={<ExchangeLayout />} />
+                        <Route
+                          path="exchange/:folder"
+                          element={<ExchangeLayout />}
+                        />
+                        <Route
+                          path="exchange/:folder/:messageId"
+                          element={<ExchangeLayout />}
+                        />
+                        <Route
+                          path="workflow"
+                          element={<WorkflowDashboard />}
+                        />
+                        <Route
+                          path="workflow/design"
+                          element={<WorkflowDesigner />}
+                        />
+                        <Route path="template" element={<TemplateLayout />} />
+                        <Route path="dispatch" element={<DispatchLayout />} />
+                        <Route path="archive" element={<ArchiveLayout />} />
+                        <Route
+                          path="digital-archive"
+                          element={<DigitalArchiveLayout />}
+                        />
+                        <Route
+                          path="system-access"
+                          element={<SystemAccessLayout />}
+                        />
+                      </Routes>
+                    </MainLayout>
+                  </ProtectedRoute>
                 }
               />
             </Routes>

@@ -6,7 +6,7 @@ type Language = "en" | "ar";
 type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof typeof translations.en) => string;
+  t: (key: string) => string;
   dir: () => "ltr" | "rtl";
 };
 
@@ -14,7 +14,11 @@ const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+export const LanguageProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [language, setLanguage] = useState<Language>(() => {
     return (localStorage.getItem("language") as Language) || "en";
   });
@@ -25,8 +29,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = language;
   }, [language]);
 
-  const t = (key: keyof typeof translations.en) => {
-    return translations[language][key] || translations.en[key];
+  const t = (key: string) => {
+    return translations[language][key] || translations.en[key] || key;
   };
 
   const dir = () => (language === "ar" ? "rtl" : "ltr");
@@ -36,7 +40,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       {children}
     </LanguageContext.Provider>
   );
-}
+};
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);

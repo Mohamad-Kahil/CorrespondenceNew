@@ -33,17 +33,12 @@ export function WorkflowList({ workflows = [] }: WorkflowListProps) {
   const displayWorkflows = workflows.map((workflow) => ({
     id: workflow.id,
     name: workflow.name,
-    status: "active",
+    status: "active" as const,
     progress: 0,
     startDate: new Date().toISOString().split("T")[0],
     owner: "Current User",
     description: workflow.description,
-    steps:
-      workflow.tasks?.map((task) => ({
-        name: task.title,
-        status: "pending",
-        assignee: task.assignee,
-      })) || [],
+    steps: [],
   }));
 
   return (

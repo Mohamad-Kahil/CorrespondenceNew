@@ -25,9 +25,7 @@ interface Document {
 
 export function DigitalArchiveLayout() {
   const { t } = useLanguage();
-  const [selectedDocument, setSelectedDocument] = useState<Document | null>(
-    null,
-  );
+  const [selectedDocument, setSelectedDocument] = useState<any>(null);
 
   return (
     <div className="p-6 space-y-6">

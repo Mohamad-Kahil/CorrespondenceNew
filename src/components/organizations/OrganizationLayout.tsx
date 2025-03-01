@@ -15,10 +15,6 @@ export function OrganizationLayout() {
         <h1 className="text-2xl font-semibold">
           {t("organizations") || "Organizations"}
         </h1>
-        <p className="text-muted-foreground mt-2">
-          {t("organizationsDesc") ||
-            "Manage organizations, ministries, and corporate entities"}
-        </p>
       </header>
 
       {selectedOrganizationId ? (

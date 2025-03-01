@@ -15,10 +15,6 @@ export function EmployeeProfileLayout() {
         <h1 className="text-2xl font-semibold">
           {t("employeeProfiles") || "Employee Profiles"}
         </h1>
-        <p className="text-muted-foreground mt-2">
-          {t("employeeProfilesDesc") ||
-            "View and manage employee information and profiles"}
-        </p>
       </header>
 
       {selectedEmployeeId ? (

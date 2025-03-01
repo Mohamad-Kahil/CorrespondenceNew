@@ -88,6 +88,7 @@ export function Sidebar() {
   return (
     <div className="h-screen w-64 bg-card border-x border-border p-4 flex flex-col">
       <div className="mb-8 flex items-center justify-between px-4">
+        <h2 className="text-lg font-semibold text-alert">Micro Digits</h2>
         <h2 className="text-lg font-semibold text-primary">
           {t("documentManagement")}
         </h2>

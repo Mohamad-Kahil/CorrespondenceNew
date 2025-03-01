@@ -49,7 +49,7 @@ function App() {
                   <ProtectedRoute>
                     <MainLayout>
                       <Routes>
-                        <Route index element={<Home />} />
+                        <Route index element={<ExchangeLayout />} />
                         <Route path="exchange" element={<ExchangeLayout />} />
                         <Route
                           path="exchange/:folder"

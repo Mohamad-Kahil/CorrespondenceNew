@@ -32,7 +32,6 @@ export function ExchangeLayout() {
         <h1 className="text-2xl font-semibold">
           {t("documentExchangeSystem")}
         </h1>
-        <p className="text-muted-foreground mt-2">{t("exchangeDescription")}</p>
       </header>
       <ResizablePanelGroup
         direction="horizontal"

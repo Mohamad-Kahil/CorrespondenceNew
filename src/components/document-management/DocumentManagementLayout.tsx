@@ -14,10 +14,6 @@ export function DocumentManagementLayout() {
         <h1 className="text-2xl font-semibold">
           {t("documentManagementProcess") || "Document Management Process"}
         </h1>
-        <p className="text-muted-foreground mt-2">
-          {t("documentManagementDesc") ||
-            "Manage inbound and outbound document processes with step-by-step wizards"}
-        </p>
       </header>
 
       <Tabs

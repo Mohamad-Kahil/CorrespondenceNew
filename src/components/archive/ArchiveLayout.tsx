@@ -12,7 +12,6 @@ export function ArchiveLayout() {
     <div className="p-6 space-y-6">
       <header className="p-6 border-b -mx-6 -mt-6 mb-6">
         <h1 className="text-2xl font-semibold">{t("archiveStorage")}</h1>
-        <p className="text-muted-foreground mt-2">{t("archiveDescription")}</p>
       </header>
 
       <ArchiveStats />

@@ -42,7 +42,6 @@ export function WorkflowDashboard() {
         <h1 className="text-2xl font-semibold">
           {t("documentWorkflowSystem")}
         </h1>
-        <p className="text-muted-foreground mt-2">{t("workflowDescription")}</p>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

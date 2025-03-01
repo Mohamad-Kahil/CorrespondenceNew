@@ -461,7 +461,9 @@ export function AddOrganizationDialog({
                     name="personnelDepartment"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("department") || "Department"}</FormLabel>
+                        <FormLabel>
+                          {t("departmentField") || "Department"}
+                        </FormLabel>
                         <FormControl>
                           <Input
                             placeholder="International Relations"
@@ -524,7 +526,7 @@ export function AddOrganizationDialog({
                       name="personnelPhone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("phone") || "Phone"}</FormLabel>
+                          <FormLabel>{t("phoneField") || "Phone"}</FormLabel>
                           <FormControl>
                             <Input placeholder="+965-2222-3333" {...field} />
                           </FormControl>
@@ -538,7 +540,7 @@ export function AddOrganizationDialog({
                       name="personnelMobile"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("mobile") || "Mobile"}</FormLabel>
+                          <FormLabel>{t("mobileLabel") || "Mobile"}</FormLabel>
                           <FormControl>
                             <Input placeholder="+965-9999-8888" {...field} />
                           </FormControl>
@@ -629,7 +631,8 @@ export function AddOrganizationDialog({
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>
-                            {t("authorizationLevel") || "Authorization Level"}
+                            {t("authorizationLevelField") ||
+                              "Authorization Level"}
                           </FormLabel>
                           <Select
                             onValueChange={field.onChange}
@@ -783,7 +786,7 @@ export function AddOrganizationDialog({
                     name="addressPhone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("phone") || "Phone"}</FormLabel>
+                        <FormLabel>{t("phoneField") || "Phone"}</FormLabel>
                         <FormControl>
                           <Input placeholder="+965-2222-3333" {...field} />
                         </FormControl>
@@ -916,7 +919,7 @@ export function AddOrganizationDialog({
                 variant="outline"
                 onClick={() => onOpenChange(false)}
               >
-                {t("cancel") || "Cancel"}
+                {t("cancelAction") || "Cancel"}
               </Button>
               <Button type="submit">
                 {t("addOrganization") || "Add Organization"}

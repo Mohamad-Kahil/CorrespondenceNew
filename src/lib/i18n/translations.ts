@@ -117,7 +117,7 @@ export const translations = {
     signOut: "Sign Out",
 
     // Navigation
-    inboundDocument: "Inbound Documents",
+    inboundOutboundDocuments: "Inbound / Outbound",
     templates: "Templates",
 
     // Workflow Section
@@ -485,7 +485,7 @@ export const translations = {
     signOut: "تسجيل خروج",
 
     // Navigation
-    inboundDocument: "المستندات الواردة",
+    inboundOutboundDocuments: "الوارد / الصادر",
     templates: "النماذج",
 
     // Workflow Section

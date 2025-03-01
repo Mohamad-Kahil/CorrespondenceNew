@@ -43,9 +43,9 @@ const menuItems = [
     path: "/template",
   },
   {
-    name: "inboundDocument",
+    name: "inboundOutboundDocuments",
     icon: InboxIcon,
-    path: "/",
+    path: "/document-management",
   },
   {
     name: "dispatch",

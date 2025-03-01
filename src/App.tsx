@@ -4,6 +4,7 @@ import Home from "./components/home";
 import routes from "./tempo-routes";
 import { MainLayout } from "./components/layout/MainLayout";
 import DispatchLayout from "./components/dispatch/DispatchLayout";
+import { DocumentManagementLayout } from "./components/document-management/DocumentManagementLayout";
 import TemplateLayout from "./components/template/TemplateLayout";
 import { ExchangeLayout } from "./components/exchange/ExchangeLayout";
 import { ThemeProvider } from "./components/ThemeProvider";
@@ -30,16 +31,16 @@ function App() {
   }
 
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
-        </div>
-      }
-    >
-      <LanguageProvider>
-        <ThemeProvider>
-          <AuthProvider>
+    <LanguageProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Suspense
+            fallback={
+              <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+              </div>
+            }
+          >
             {tempoRoutes}
             <Routes>
               <Route path="/login" element={<LoginPage />} />
@@ -69,6 +70,10 @@ function App() {
                         />
                         <Route path="template" element={<TemplateLayout />} />
                         <Route path="dispatch" element={<DispatchLayout />} />
+                        <Route
+                          path="document-management"
+                          element={<DocumentManagementLayout />}
+                        />
                         <Route path="archive" element={<ArchiveLayout />} />
                         <Route
                           path="digital-archive"
@@ -92,10 +97,10 @@ function App() {
                 }
               />
             </Routes>
-          </AuthProvider>
-        </ThemeProvider>
-      </LanguageProvider>
-    </Suspense>
+          </Suspense>
+        </AuthProvider>
+      </ThemeProvider>
+    </LanguageProvider>
   );
 }
 

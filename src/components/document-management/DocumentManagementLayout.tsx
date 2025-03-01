@@ -25,7 +25,7 @@ export function DocumentManagementLayout() {
         value={activeTab}
         onValueChange={(value) => setActiveTab(value as "inbound" | "outbound")}
         className="w-full"
-        dir={t("direction")}
+        dir={t("direction") === "rtl" ? "rtl" : "ltr"}
       >
         <TabsList className="grid grid-cols-2 w-full max-w-md mx-auto mb-8">
           <TabsTrigger value="inbound">

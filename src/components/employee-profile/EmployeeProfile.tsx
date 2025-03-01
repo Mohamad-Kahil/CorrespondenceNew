@@ -111,7 +111,11 @@ export function EmployeeProfile({ employeeId }: EmployeeProfileProps) {
         </div>
       </Card>
 
-      <Tabs defaultValue="personal" className="space-y-4" dir={t("direction")}>
+      <Tabs
+        defaultValue="personal"
+        className="space-y-4"
+        dir={t("direction") === "rtl" ? "rtl" : "ltr"}
+      >
         <TabsList className="grid grid-cols-6 w-full">
           <TabsTrigger value="personal">
             {t("personalInfo") || "Personal Info"}

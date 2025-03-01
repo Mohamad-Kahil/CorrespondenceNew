@@ -6,7 +6,6 @@ import {
   RefreshCcw,
   Workflow,
   FileText,
-  Send,
   Moon,
   Sun,
   LogOut,
@@ -46,11 +45,6 @@ const menuItems = [
     name: "inboundOutboundDocuments",
     icon: InboxIcon,
     path: "/document-management",
-  },
-  {
-    name: "dispatch",
-    icon: Send,
-    path: "/dispatch",
   },
   {
     name: "archiveStorage",

@@ -202,7 +202,11 @@ export function OrganizationProfile({
         </div>
       </Card>
 
-      <Tabs defaultValue="overview" className="space-y-4" dir={t("direction")}>
+      <Tabs
+        defaultValue="overview"
+        className="space-y-4"
+        dir={t("direction") === "rtl" ? "rtl" : "ltr"}
+      >
         <TabsList className="grid grid-cols-4 w-full">
           <TabsTrigger value="overview">
             {t("organizationOverview") || "Organization Overview"}

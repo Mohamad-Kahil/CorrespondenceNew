@@ -192,7 +192,7 @@ export function AddOrganizationDialog({
             <Tabs
               defaultValue="overview"
               className="w-full"
-              dir={t("direction")}
+              dir={t("direction") === "rtl" ? "rtl" : "ltr"}
             >
               <TabsList className="grid grid-cols-4 w-full">
                 <TabsTrigger value="overview">

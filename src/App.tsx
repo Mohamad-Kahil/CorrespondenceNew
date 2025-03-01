@@ -3,7 +3,6 @@ import { useRoutes, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
 import routes from "./tempo-routes";
 import { MainLayout } from "./components/layout/MainLayout";
-import DispatchLayout from "./components/dispatch/DispatchLayout";
 import { DocumentManagementLayout } from "./components/document-management/DocumentManagementLayout";
 import TemplateLayout from "./components/template/TemplateLayout";
 import { ExchangeLayout } from "./components/exchange/ExchangeLayout";
@@ -69,7 +68,6 @@ function App() {
                           element={<WorkflowDesigner />}
                         />
                         <Route path="template" element={<TemplateLayout />} />
-                        <Route path="dispatch" element={<DispatchLayout />} />
                         <Route
                           path="document-management"
                           element={<DocumentManagementLayout />}

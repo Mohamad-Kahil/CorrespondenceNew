@@ -209,7 +209,7 @@ export function AddEmployeeDialog({
             <Tabs
               defaultValue="personal"
               className="w-full"
-              dir={t("direction")}
+              dir={t("direction") === "rtl" ? "rtl" : "ltr"}
             >
               <TabsList className="grid grid-cols-5 w-full">
                 <TabsTrigger value="personal">
@@ -238,7 +238,7 @@ export function AddEmployeeDialog({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          {t("employeeId") || "Employee ID"}
+                          {t("employeeIdLabel") || "Employee ID"}
                         </FormLabel>
                         <FormControl>
                           <Input placeholder="EMP001" {...field} />
@@ -321,7 +321,7 @@ export function AddEmployeeDialog({
                               {t("female") || "Female"}
                             </SelectItem>
                             <SelectItem value="Other">
-                              {t("other") || "Other"}
+                              {t("otherType") || "Other"}
                             </SelectItem>
                           </SelectContent>
                         </Select>
@@ -341,7 +341,7 @@ export function AddEmployeeDialog({
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("email") || "Email"}</FormLabel>
+                          <FormLabel>{t("emailField") || "Email"}</FormLabel>
                           <FormControl>
                             <Input
                               type="email"
@@ -359,7 +359,7 @@ export function AddEmployeeDialog({
                       name="mobile"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("mobile") || "Mobile"}</FormLabel>
+                          <FormLabel>{t("mobileLabel") || "Mobile"}</FormLabel>
                           <FormControl>
                             <Input placeholder="+1-555-123-4567" {...field} />
                           </FormControl>
@@ -373,7 +373,7 @@ export function AddEmployeeDialog({
                       name="phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("phone") || "Phone"}</FormLabel>
+                          <FormLabel>{t("phoneField") || "Phone"}</FormLabel>
                           <FormControl>
                             <Input placeholder="+1-555-987-6543" {...field} />
                           </FormControl>
@@ -387,7 +387,9 @@ export function AddEmployeeDialog({
                       name="address"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("address") || "Address"}</FormLabel>
+                          <FormLabel>
+                            {t("addressField") || "Address"}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               placeholder="123 Main Street, Apt 4B"
@@ -453,7 +455,7 @@ export function AddEmployeeDialog({
                       name="emergencyContactName"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("name") || "Name"}</FormLabel>
+                          <FormLabel>{t("nameLabel") || "Name"}</FormLabel>
                           <FormControl>
                             <Input placeholder="Sarah Smith" {...field} />
                           </FormControl>
@@ -483,7 +485,7 @@ export function AddEmployeeDialog({
                       name="emergencyContactMobile"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("mobile") || "Mobile"}</FormLabel>
+                          <FormLabel>{t("mobileLabel") || "Mobile"}</FormLabel>
                           <FormControl>
                             <Input placeholder="+1-555-765-4321" {...field} />
                           </FormControl>
@@ -497,7 +499,7 @@ export function AddEmployeeDialog({
                       name="emergencyContactPhone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>{t("phone") || "Phone"}</FormLabel>
+                          <FormLabel>{t("phoneField") || "Phone"}</FormLabel>
                           <FormControl>
                             <Input placeholder="+1-555-234-5678" {...field} />
                           </FormControl>
@@ -512,7 +514,7 @@ export function AddEmployeeDialog({
                       render={({ field }) => (
                         <FormItem className="col-span-2">
                           <FormLabel>
-                            {t("description") || "Description"}
+                            {t("descriptionText") || "Description"}
                           </FormLabel>
                           <FormControl>
                             <Input
@@ -644,7 +646,9 @@ export function AddEmployeeDialog({
                     name="department"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("department") || "Department"}</FormLabel>
+                        <FormLabel>
+                          {t("departmentField") || "Department"}
+                        </FormLabel>
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
@@ -653,7 +657,8 @@ export function AddEmployeeDialog({
                             <SelectTrigger>
                               <SelectValue
                                 placeholder={
-                                  t("selectDepartment") || "Select department"
+                                  t("selectDepartmentAction") ||
+                                  "Select department"
                                 }
                               />
                             </SelectTrigger>
@@ -663,16 +668,16 @@ export function AddEmployeeDialog({
                               {t("executive") || "Executive"}
                             </SelectItem>
                             <SelectItem value="Finance">
-                              {t("finance") || "Finance"}
+                              {t("financeField") || "Finance"}
                             </SelectItem>
                             <SelectItem value="Technology">
-                              {t("technology") || "Technology"}
+                              {t("technologyField") || "Technology"}
                             </SelectItem>
                             <SelectItem value="Human Resources">
                               {t("humanResources") || "Human Resources"}
                             </SelectItem>
                             <SelectItem value="Operations">
-                              {t("operations") || "Operations"}
+                              {t("operationsField") || "Operations"}
                             </SelectItem>
                             <SelectItem value="Marketing">
                               {t("marketing") || "Marketing"}
@@ -731,7 +736,7 @@ export function AddEmployeeDialog({
                               {t("partTime") || "Part-time"}
                             </SelectItem>
                             <SelectItem value="Contract">
-                              {t("contract") || "Contract"}
+                              {t("contractType") || "Contract"}
                             </SelectItem>
                             <SelectItem value="Temporary">
                               {t("temporary") || "Temporary"}
@@ -751,7 +756,7 @@ export function AddEmployeeDialog({
                     name="manager"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>{t("manager") || "Manager"}</FormLabel>
+                        <FormLabel>{t("managerRole") || "Manager"}</FormLabel>
                         <FormControl>
                           <Input placeholder="EMP001 (optional)" {...field} />
                         </FormControl>
@@ -820,7 +825,8 @@ export function AddEmployeeDialog({
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>
-                          {t("authorizationLevel") || "Authorization Level"}
+                          {t("authorizationLevelField") ||
+                            "Authorization Level"}
                         </FormLabel>
                         <Select
                           onValueChange={field.onChange}
@@ -992,7 +998,7 @@ export function AddEmployeeDialog({
                 variant="outline"
                 onClick={() => onOpenChange(false)}
               >
-                {t("cancel") || "Cancel"}
+                {t("cancelAction") || "Cancel"}
               </Button>
               <Button type="submit">
                 {t("addEmployee") || "Add Employee"}

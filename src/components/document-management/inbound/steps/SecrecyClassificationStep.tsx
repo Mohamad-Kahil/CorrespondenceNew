@@ -96,7 +96,10 @@ export function SecrecyClassificationStep({
       )}
 
       {clearanceError && (
-        <Alert variant="warning">
+        <Alert
+          variant="default"
+          className="bg-amber-50 border-amber-200 text-amber-800 dark:bg-amber-900/20 dark:border-amber-900/30 dark:text-amber-300"
+        >
           <AlertTriangle className="h-4 w-4" />
           <AlertTitle>
             {t("clearanceWarning") || "Clearance Warning"}

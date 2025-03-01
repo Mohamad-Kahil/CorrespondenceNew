@@ -267,9 +267,6 @@ export function WorkflowDesigner() {
             <h1 className="text-2xl font-semibold text-foreground">
               {t("workflowDesigner")}
             </h1>
-            <p className="text-muted-foreground mt-2">
-              {t("workflowDesignerDesc")}
-            </p>
           </div>
           <div className="flex gap-2">
             <Select onValueChange={(value) => handleLoadWorkflow(value)}>

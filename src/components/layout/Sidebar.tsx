@@ -67,7 +67,7 @@ const menuItems = [
     path: "/employee-profiles",
   },
   {
-    name: "organizations",
+    name: "Organizations",
     icon: Building2,
     path: "/organizations",
   },

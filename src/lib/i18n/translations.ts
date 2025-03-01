@@ -41,6 +41,11 @@ export const translations = {
 
     // Navigation
     inboundOutboundDocuments: "Inbound / Outbound",
+    inboundDocuments: "Inbound Documents",
+    outboundDocuments: "Outbound Documents",
+    documentManagementProcess: "Document Management Process",
+    documentManagementDesc:
+      "Manage inbound and outbound document processes with step-by-step wizards",
     templates: "Templates",
 
     // Workflow Section
@@ -223,6 +228,97 @@ export const translations = {
 
     // System Titles
     documentIntakeSystem: "Document Intake System",
+    secrecyClassification: "Secrecy Classification",
+    secrecyClassificationInstructions:
+      "Please select the document's secrecy level.",
+    selectSecrecyLevel: "Select secrecy level",
+    secrecyLevel: "Secrecy Level",
+    yourClearanceLevel: "Your clearance level",
+    clearanceWarning: "Clearance Warning",
+    insufficientClearance:
+      "This document requires higher clearance. Please escalate to authorized personnel.",
+    insufficientClearanceForCreation:
+      "You do not have sufficient clearance to create a document with this secrecy level.",
+    escalateToResponsibleDepartment: "Escalate to Responsible Department",
+    public: "Public",
+    documentCreationAndAuthorization: "Document Creation and Authorization",
+    documentCreationInstructions:
+      "Enter the document details: title, subject, and secrecy level.",
+    outboundTrackingNumber: "Outbound Tracking Number",
+    inboundTrackingNumber: "Inbound Tracking Number",
+    enterDocumentContent: "Enter document content",
+    documentReception: "Document Reception",
+    documentReceptionInstructions:
+      "Please enter the details of the received document: sender's name, organization, date received, and any external tracking numbers.",
+    documentProcessing: "Document Processing",
+    documentProcessingInstructions:
+      "Please scan the document using a high-resolution scanner and upload the file here.",
+    routing: "Routing",
+    routingInstructions:
+      "Based on the document's markings, select the responsible department from the provided list.",
+    routingToResponsibleDepartment: "Routing to Responsible Department",
+    responsibleDepartment: "Responsible Department",
+    metadataCreation: "Metadata Creation and Digital Archiving",
+    metadataInstructions:
+      "Enter the document metadata: title, subject, keywords, and any additional fields.",
+    physicalStorage: "Physical Storage",
+    physicalArchiving: "Physical Archiving",
+    physicalArchivingInstructions:
+      "A barcode has been generated for tracking number {trackingNumber}. Please print it, attach it to the document, and place the document in the selected storage location. Confirm when complete.",
+    barcodePrinted: "Barcode Printed",
+    attachBarcodeInstructions:
+      "Please attach the printed barcode to the document and place it in the selected storage location.",
+    confirmArchiving: "Confirm Archiving",
+    printBarcodeFirst: "Please print the barcode first",
+    confirmArchivingFirst: "Please confirm archiving first",
+    processCompletion: "Process Completion",
+    inboundProcessComplete: "The inbound process is complete!",
+    documentStoredAt: "Document has been stored at",
+    documentSummary: "Document Summary",
+    processNewDocument: "Process New Document",
+    ocrExtractedText: "OCR Extracted Text",
+    verifyText: "Verify Text",
+    ocrTextWillAppearHere: "OCR text will appear here",
+    textVerified: "Text Verified",
+    ocrTextVerified:
+      "The OCR text has been verified and is ready for processing.",
+    ocrTextRequired: "OCR text is required",
+    verifyOcrFirst: "Please verify the OCR text first",
+    uploading: "Uploading...",
+    dragAndDropOrClick: "Drag and drop your file here, or click to browse",
+    fillRequiredFields: "Please fill all required fields",
+    outboundProcessComplete: "The outbound process is complete!",
+    retainedCopyStoredAt: "Retained copy has been stored at",
+    documentCreation: "Document Creation",
+    recipientForm: "Recipient Form",
+    archivingPreparation: "Archiving Preparation",
+    dispatchProcess: "Dispatch Process",
+    archivingPreparationInstructions:
+      "Scan the signed document and upload the file here.",
+    uploadDocumentFirst: "Please upload the document first",
+    documentUploaded: "Document Uploaded",
+    documentUploadedDesc:
+      "The document has been successfully uploaded and is ready for archiving.",
+    recipientFormPreparation: "Recipient Form Preparation",
+    recipientFormInstructions:
+      "Provide the recipient details: full name, title, organization/department, delivery address, contact information, delivery method, and any special instructions.",
+    deliveryAddress: "Delivery Address",
+    enterDeliveryAddress: "Enter complete delivery address",
+    dispatchProcessInstructions:
+      "Prepare the document for dispatch (e.g., place in an envelope or security bag). Select the delivery method and provide any tracking numbers if available.",
+    dispatchDetails: "Dispatch Details",
+    enterDispatchNotes: "Enter any notes about the dispatch process",
+    confirmPreparation:
+      "I confirm that the document has been prepared for dispatch according to security protocols",
+    confirmPreparationFirst:
+      "Please confirm that the document has been prepared for dispatch",
+    uploadDeliveryFormFirst: "Please upload the signed delivery form first",
+    deliveryFormUploaded: "Delivery Form Uploaded",
+    deliveryFormUploadedDesc:
+      "The delivery form has been successfully uploaded and attached to the document record.",
+    deliveryConfirmationInstructions:
+      "Once delivered, upload the signed delivery form to confirm receipt.",
+    uploadDeliveryForm: "Upload Delivery Form",
     storageLocationGrid: "Storage Location Grid",
     selectStorageLocation: "Select an available storage location",
     location: "Location",
@@ -333,6 +429,11 @@ export const translations = {
 
     // Navigation
     inboundOutboundDocuments: "الوارد / الصادر",
+    inboundDocuments: "المستندات الواردة",
+    outboundDocuments: "المستندات الصادرة",
+    documentManagementProcess: "عملية إدارة المستندات",
+    documentManagementDesc:
+      "إدارة عمليات المستندات الواردة والصادرة باستخدام معالجات خطوة بخطوة",
     templates: "النماذج",
 
     // Workflow Section
@@ -502,6 +603,93 @@ export const translations = {
 
     // System Titles
     documentIntakeSystem: "نظام استلام المستندات",
+    secrecyClassification: "تصنيف السرية",
+    secrecyClassificationInstructions: "الرجاء اختيار مستوى سرية المستند.",
+    selectSecrecyLevel: "اختر مستوى السرية",
+    secrecyLevel: "مستوى السرية",
+    yourClearanceLevel: "مستوى التصريح الخاص بك",
+    clearanceWarning: "تحذير التصريح",
+    insufficientClearance:
+      "يتطلب هذا المستند تصريحًا أعلى. يرجى التصعيد إلى الموظفين المخولين.",
+    insufficientClearanceForCreation:
+      "ليس لديك تصريح كافٍ لإنشاء مستند بهذا المستوى من السرية.",
+    escalateToResponsibleDepartment: "التصعيد إلى القسم المسؤول",
+    public: "عام",
+    documentCreationAndAuthorization: "إنشاء المستند والتفويض",
+    documentCreationInstructions:
+      "أدخل تفاصيل المستند: العنوان والموضوع ومستوى السرية.",
+    outboundTrackingNumber: "رقم تتبع الصادر",
+    inboundTrackingNumber: "رقم تتبع الوارد",
+    enterDocumentContent: "أدخل محتوى المستند",
+    documentReception: "استلام المستند",
+    documentReceptionInstructions:
+      "الرجاء إدخال تفاصيل المستند المستلم: اسم المرسل، المنظمة، تاريخ الاستلام، وأي أرقام تتبع خارجية.",
+    documentProcessing: "معالجة المستند",
+    documentProcessingInstructions:
+      "الرجاء مسح المستند ضوئيًا باستخدام ماسح ضوئي عالي الدقة وتحميل الملف هنا.",
+    routing: "التوجيه",
+    routingInstructions:
+      "بناءً على علامات المستند، حدد القسم المسؤول من القائمة المقدمة.",
+    routingToResponsibleDepartment: "التوجيه إلى القسم المسؤول",
+    responsibleDepartment: "القسم المسؤول",
+    metadataCreation: "إنشاء البيانات الوصفية والأرشفة الرقمية",
+    metadataInstructions:
+      "أدخل البيانات الوصفية للمستند: العنوان، الموضوع، الكلمات المفتاحية، وأي حقول إضافية.",
+    physicalStorage: "التخزين المادي",
+    physicalArchiving: "الأرشفة المادية",
+    physicalArchivingInstructions:
+      "تم إنشاء باركود لرقم التتبع {trackingNumber}. يرجى طباعته، وإرفاقه بالمستند، ووضع المستند في موقع التخزين المحدد. قم بالتأكيد عند الانتهاء.",
+    barcodePrinted: "تمت طباعة الباركود",
+    attachBarcodeInstructions:
+      "يرجى إرفاق الباركود المطبوع بالمستند ووضعه في موقع التخزين المحدد.",
+    confirmArchiving: "تأكيد الأرشفة",
+    printBarcodeFirst: "يرجى طباعة الباركود أولاً",
+    confirmArchivingFirst: "يرجى تأكيد الأرشفة أولاً",
+    processCompletion: "اكتمال العملية",
+    inboundProcessComplete: "اكتملت عملية الوارد!",
+    documentStoredAt: "تم تخزين المستند في",
+    documentSummary: "ملخص المستند",
+    processNewDocument: "معالجة مستند جديد",
+    ocrExtractedText: "النص المستخرج من التعرف الضوئي",
+    verifyText: "التحقق من النص",
+    ocrTextWillAppearHere: "سيظهر نص التعرف الضوئي هنا",
+    textVerified: "تم التحقق من النص",
+    ocrTextVerified: "تم التحقق من نص التعرف الضوئي وهو جاهز للمعالجة.",
+    ocrTextRequired: "نص التعرف الضوئي مطلوب",
+    verifyOcrFirst: "يرجى التحقق من نص التعرف الضوئي أولاً",
+    uploading: "جاري التحميل...",
+    dragAndDropOrClick: "اسحب وأفلت الملف هنا، أو انقر للتصفح",
+    fillRequiredFields: "يرجى ملء جميع الحقول المطلوبة",
+    outboundProcessComplete: "اكتملت عملية الصادر!",
+    retainedCopyStoredAt: "تم تخزين النسخة المحتفظ بها في",
+    documentCreation: "إنشاء المستند",
+    recipientForm: "نموذج المستلم",
+    archivingPreparation: "تحضير الأرشفة",
+    dispatchProcess: "عملية الإرسال",
+    archivingPreparationInstructions:
+      "قم بمسح المستند الموقع ضوئيًا وتحميل الملف هنا.",
+    uploadDocumentFirst: "يرجى تحميل المستند أولاً",
+    documentUploaded: "تم تحميل المستند",
+    documentUploadedDesc: "تم تحميل المستند بنجاح وهو جاهز للأرشفة.",
+    recipientFormPreparation: "إعداد نموذج المستلم",
+    recipientFormInstructions:
+      "قدم تفاصيل المستلم: الاسم الكامل، اللقب، المنظمة/القسم، عنوان التسليم، معلومات الاتصال، طريقة التسليم، وأي تعليمات خاصة.",
+    deliveryAddress: "عنوان التسليم",
+    enterDeliveryAddress: "أدخل عنوان التسليم الكامل",
+    dispatchProcessInstructions:
+      "قم بإعداد المستند للإرسال (مثل وضعه في ظرف أو حقيبة أمنية). حدد طريقة التسليم وقدم أي أرقام تتبع إن وجدت.",
+    dispatchDetails: "تفاصيل الإرسال",
+    enterDispatchNotes: "أدخل أي ملاحظات حول عملية الإرسال",
+    confirmPreparation:
+      "أؤكد أن المستند قد تم إعداده للإرسال وفقًا لبروتوكولات الأمان",
+    confirmPreparationFirst: "يرجى تأكيد أن المستند قد تم إعداده للإرسال",
+    uploadDeliveryFormFirst: "يرجى تحميل نموذج التسليم الموقع أولاً",
+    deliveryFormUploaded: "تم تحميل نموذج التسليم",
+    deliveryFormUploadedDesc:
+      "تم تحميل نموذج التسليم بنجاح وإرفاقه بسجل المستند.",
+    deliveryConfirmationInstructions:
+      "بمجرد التسليم، قم بتحميل نموذج التسليم الموقع لتأكيد الاستلام.",
+    uploadDeliveryForm: "تحميل نموذج التسليم",
     storageLocationGrid: "شبكة مواقع التخزين",
     selectStorageLocation: "اختر موقع تخزين متاح",
     location: "الموقع",

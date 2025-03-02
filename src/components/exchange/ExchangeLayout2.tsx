@@ -310,13 +310,15 @@ export function ExchangeLayout2() {
     return messages.filter((m) => m.folder === folder).length;
   };
 
-  // Mock departments
+  // Departments are fetched dynamically in a real app
+  // This is a mock implementation that would be replaced with API calls
   const departments = [
     { id: "hr", name: "HR", nameAr: "الموارد البشرية", color: "#3366FF" },
     { id: "it", name: "IT", nameAr: "تقنية المعلومات", color: "#9933FF" },
     { id: "sales", name: "Sales", nameAr: "المبيعات", color: "#FFFF33" },
     { id: "marketing", name: "Marketing", nameAr: "التسويق", color: "#00CCCC" },
     { id: "finance", name: "Finance", nameAr: "المالية", color: "#666666" },
+    // New departments would be added here when fetched from the backend
   ];
 
   // Priorities
@@ -429,7 +431,9 @@ export function ExchangeLayout2() {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <header className="p-4 border-b flex justify-between items-center bg-card">
-        <h1 className="text-xl font-semibold">{t("documentExchangeSystem")}</h1>
+        <h1 className="text-2xl font-semibold">
+          {t("documentExchangeSystem")}
+        </h1>
         <div className="flex items-center gap-2">
           <Button
             variant="ghost"
@@ -704,7 +708,7 @@ export function ExchangeLayout2() {
             <div className="flex flex-1 overflow-hidden">
               {/* Notification List */}
               <div
-                className={`${selectedNotification ? "w-2/5" : "w-full"} border-${language === "ar" ? "l" : "r"} overflow-auto`}
+                className={`${selectedNotification ? "w-2/5" : "w-full"} overflow-auto h-[calc(100vh-57px)]`}
               >
                 {/* Notification List Header */}
                 <div className="p-4 border-b flex justify-between items-center bg-card">
@@ -837,7 +841,7 @@ export function ExchangeLayout2() {
             <div className="flex flex-1 overflow-hidden">
               {/* Email List */}
               <div
-                className={`${selectedMessage ? "w-2/5" : "w-full"} border-${language === "ar" ? "l" : "r"} overflow-auto`}
+                className={`${selectedMessage ? "w-2/5" : "w-full"} overflow-auto h-[calc(100vh-57px)]`}
               >
                 {/* Email List Header */}
                 <div className="p-4 border-b flex justify-between items-center bg-card">
@@ -908,7 +912,7 @@ export function ExchangeLayout2() {
                 </div>
 
                 {/* Email List */}
-                <div className="divide-y">
+                <div>
                   {filteredMessages.length === 0 ? (
                     <div className="p-8 text-center text-muted-foreground">
                       {t("noMessages")}
@@ -917,7 +921,7 @@ export function ExchangeLayout2() {
                     filteredMessages.map((message) => (
                       <div
                         key={message.id}
-                        className={`p-4 hover:bg-muted/50 cursor-pointer ${selectedMessage?.id === message.id ? "bg-muted" : ""} border border-transparent`}
+                        className={`p-4 hover:bg-muted/50 cursor-pointer ${selectedMessage?.id === message.id ? "bg-muted" : ""}`}
                         onClick={() => {
                           if (isSelectMode) {
                             toggleMessageSelection(message.id);

@@ -595,7 +595,7 @@ export function ExchangeLayout2() {
                         className="w-full justify-start"
                         onClick={() => setNotificationFilter("overdue")}
                       >
-                        <AlertCircle className="h-4 w-4 mr-2 text-red-500" />
+                        <Clock className="h-4 w-4 mr-2 text-amber-500" />
                         {t("overdueTasks")}
                       </Button>
                       <Button
@@ -608,7 +608,7 @@ export function ExchangeLayout2() {
                         className="w-full justify-start"
                         onClick={() => setNotificationFilter("actionRequired")}
                       >
-                        <AlertTriangle className="h-4 w-4 mr-2 text-amber-500" />
+                        <AlertTriangle className="h-4 w-4 mr-2 text-red-500" />
                         {t("actionRequiredFilter")}
                       </Button>
                     </div>
@@ -725,7 +725,7 @@ export function ExchangeLayout2() {
                 </div>
 
                 {/* Notification List */}
-                <div className="divide-y">
+                <div>
                   {filteredNotifications.length === 0 ? (
                     <div className="p-8 text-center text-muted-foreground">
                       {t("noMessages") || "No notifications found"}
@@ -734,7 +734,7 @@ export function ExchangeLayout2() {
                     filteredNotifications.map((notification) => (
                       <div
                         key={notification.id}
-                        className={`p-4 hover:bg-muted/50 cursor-pointer ${selectedNotification?.id === notification.id ? "bg-muted" : ""} ${!notification.isRead ? "border-l-4 border-blue-500" : ""}`}
+                        className={`p-4 hover:bg-muted/50 cursor-pointer ${selectedNotification?.id === notification.id ? "bg-muted" : ""}`}
                         onClick={() => setSelectedNotification(notification)}
                       >
                         <div className="flex justify-between items-start">
@@ -743,11 +743,20 @@ export function ExchangeLayout2() {
                             <span className="font-medium">
                               {notification.title}
                             </span>
-                            {notification.actionRequired && (
-                              <Badge variant="destructive" className="text-xs">
-                                {t("actionRequired") || "Action Required"}
+                            {notification.isOverdue && (
+                              <Badge className="text-xs bg-amber-500 hover:bg-amber-600">
+                                {t("overdueTasks") || "Overdue Task"}
                               </Badge>
                             )}
+                            {notification.actionRequired &&
+                              !notification.isOverdue && (
+                                <Badge
+                                  variant="destructive"
+                                  className="text-xs"
+                                >
+                                  {t("actionRequired") || "Action Required"}
+                                </Badge>
+                              )}
                           </div>
                           <div className="text-xs text-muted-foreground">
                             {formatDate(notification.date)}
@@ -787,11 +796,17 @@ export function ExchangeLayout2() {
                             )}
                           </p>
                         </div>
-                        {selectedNotification.actionRequired && (
-                          <Badge variant="destructive">
-                            {t("actionRequired") || "Action Required"}
+                        {selectedNotification.isOverdue && (
+                          <Badge className="bg-amber-500 hover:bg-amber-600">
+                            {t("overdueTasks") || "Overdue Task"}
                           </Badge>
                         )}
+                        {selectedNotification.actionRequired &&
+                          !selectedNotification.isOverdue && (
+                            <Badge variant="destructive">
+                              {t("actionRequired") || "Action Required"}
+                            </Badge>
+                          )}
                       </div>
 
                       <Separator className="my-4" />

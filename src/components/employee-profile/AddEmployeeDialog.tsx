@@ -320,9 +320,6 @@ export function AddEmployeeDialog({
                             <SelectItem value="Female">
                               {t("female") || "Female"}
                             </SelectItem>
-                            <SelectItem value="Other">
-                              {t("otherType") || "Other"}
-                            </SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />

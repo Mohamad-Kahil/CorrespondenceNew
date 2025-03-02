@@ -6,6 +6,7 @@ import { MainLayout } from "./components/layout/MainLayout";
 import { DocumentManagementLayout } from "./components/document-management/DocumentManagementLayout";
 import TemplateLayout from "./components/template/TemplateLayout";
 import { ExchangeLayout } from "./components/exchange/ExchangeLayout";
+import { ExchangeLayout2 } from "./components/exchange/ExchangeLayout2";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { LanguageProvider } from "./lib/i18n/LanguageContext";
 import { AuthProvider } from "./components/auth/AuthProvider";
@@ -49,7 +50,7 @@ function App() {
                   <ProtectedRoute>
                     <MainLayout>
                       <Routes>
-                        <Route index element={<ExchangeLayout />} />
+                        <Route index element={<ExchangeLayout2 />} />
                         <Route path="exchange" element={<ExchangeLayout />} />
                         <Route
                           path="exchange/:folder"
@@ -58,6 +59,15 @@ function App() {
                         <Route
                           path="exchange/:folder/:messageId"
                           element={<ExchangeLayout />}
+                        />
+                        <Route path="exchange2" element={<ExchangeLayout2 />} />
+                        <Route
+                          path="exchange2/:folder"
+                          element={<ExchangeLayout2 />}
+                        />
+                        <Route
+                          path="exchange2/:folder/:messageId"
+                          element={<ExchangeLayout2 />}
                         />
                         <Route
                           path="workflow"

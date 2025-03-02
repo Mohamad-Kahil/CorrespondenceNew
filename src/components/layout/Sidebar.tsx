@@ -24,7 +24,7 @@ const menuItems = [
   {
     name: "exchangeSystem",
     icon: RefreshCcw,
-    path: "/exchange",
+    path: "/exchange2",
   },
   {
     name: "workflow",

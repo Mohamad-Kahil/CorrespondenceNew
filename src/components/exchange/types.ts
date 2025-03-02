@@ -9,6 +9,8 @@ export interface Message {
   hasDocument: boolean;
   isUnread: boolean;
   folder: "inbox" | "sent" | "drafts" | "archive" | "trash";
+  department?: string;
+  priority?: string;
   documentName?: string;
   documentSize?: string;
 }

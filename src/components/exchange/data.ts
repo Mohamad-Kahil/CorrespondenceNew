@@ -10,6 +10,17 @@ export const messages: Message[] = Array.from({ length: 20 }, (_, i) => ({
   date: "2024-02-20",
   hasDocument: true,
   isUnread: i < 5,
+  department:
+    i % 5 === 0
+      ? "hr"
+      : i % 4 === 0
+        ? "it"
+        : i % 3 === 0
+          ? "sales"
+          : i % 2 === 0
+            ? "marketing"
+            : "finance",
+  priority: i % 3 === 0 ? "high" : i % 2 === 0 ? "medium" : "low",
   folder:
     i % 5 === 0
       ? "sent"

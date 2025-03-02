@@ -272,7 +272,8 @@ export function ExchangeLayout2() {
   const filteredMessages = messages.filter((message) => {
     const folderMatch = message.folder === selectedFolder;
     const departmentMatch =
-      !selectedDepartment || message.department === selectedDepartment;
+      !selectedDepartment ||
+      message.department.toLowerCase() === selectedDepartment.toLowerCase();
     const priorityMatch =
       !selectedPriority || message.priority === selectedPriority;
     const searchMatch =

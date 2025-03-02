@@ -61,6 +61,7 @@ interface Notification {
   sender?: string;
   actionRequired?: boolean;
   isOverdue?: boolean;
+  dueSoon?: boolean;
 }
 
 // Mock notifications
@@ -87,7 +88,6 @@ const notifications: Notification[] = [
     date: "2024-06-01T09:15:00",
     isRead: false,
     relatedId: "task-124",
-    actionRequired: true,
     isOverdue: true,
   },
   {
@@ -120,7 +120,6 @@ const notifications: Notification[] = [
     date: "2024-05-31T11:10:00",
     isRead: false,
     relatedId: "task-127",
-    actionRequired: true,
     isOverdue: true,
   },
   {
@@ -220,7 +219,6 @@ const notifications: Notification[] = [
     date: "2024-06-01T15:20:00",
     isRead: false,
     relatedId: "task-135",
-    actionRequired: true,
     isOverdue: true,
   },
   {
@@ -243,6 +241,41 @@ const notifications: Notification[] = [
     isRead: true,
     relatedId: "task-137",
   },
+  // Due Soon tasks
+  {
+    id: 18,
+    type: "task",
+    subtype: "taskDueReminder",
+    title: "Report Due Soon",
+    content: "Your monthly financial report is due in 3 days.",
+    date: "2024-06-02T11:30:00",
+    isRead: false,
+    relatedId: "task-138",
+    dueSoon: true,
+  },
+  {
+    id: 19,
+    type: "task",
+    subtype: "taskDueReminder",
+    title: "Project Milestone Due Soon",
+    content: "The first milestone for the marketing project is due in 2 days.",
+    date: "2024-06-02T14:15:00",
+    isRead: false,
+    relatedId: "task-139",
+    dueSoon: true,
+  },
+  {
+    id: 20,
+    type: "task",
+    subtype: "taskDueReminder",
+    title: "Client Meeting Preparation",
+    content:
+      "Prepare materials for the client meeting scheduled for next week.",
+    date: "2024-06-03T09:00:00",
+    isRead: false,
+    relatedId: "task-140",
+    dueSoon: true,
+  },
 ];
 
 export function ExchangeLayout2() {
@@ -256,7 +289,7 @@ export function ExchangeLayout2() {
   const [selectedNotification, setSelectedNotification] =
     useState<Notification | null>(null);
   const [notificationFilter, setNotificationFilter] = useState<
-    "all" | "task" | "workflow" | "overdue" | "actionRequired"
+    "all" | "task" | "workflow" | "overdue" | "actionRequired" | "dueSoon"
   >("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isSelectMode, setIsSelectMode] = useState<boolean>(false);
@@ -297,6 +330,7 @@ export function ExchangeLayout2() {
       return false;
     if (notificationFilter === "actionRequired" && !notification.actionRequired)
       return false;
+    if (notificationFilter === "dueSoon" && !notification.dueSoon) return false;
 
     const searchMatch =
       !searchQuery ||
@@ -553,21 +587,23 @@ export function ExchangeLayout2() {
 
                 {/* Show notification filters when notifications folder is selected */}
                 {selectedFolder === "notifications" ? (
-                  <div className="space-y-4 p-2">
-                    <p className="text-sm font-medium mb-2 text-muted-foreground">
-                      {t("notifications")}
-                    </p>
-                    <div className="flex flex-col space-y-2">
+                  <div className="p-2">
+                    <div className="flex justify-between items-center mb-2">
+                      <p className="text-sm font-medium text-muted-foreground">
+                        {t("notifications")}
+                      </p>
                       <Button
                         variant={
                           notificationFilter === "all" ? "default" : "outline"
                         }
                         size="sm"
-                        className="w-full justify-start"
+                        className="h-7 px-2"
                         onClick={() => setNotificationFilter("all")}
                       >
                         {t("all") || "All"}
                       </Button>
+                    </div>
+                    <div className="flex flex-col gap-2">
                       <Button
                         variant={
                           notificationFilter === "task" ? "default" : "outline"
@@ -589,6 +625,19 @@ export function ExchangeLayout2() {
                         onClick={() => setNotificationFilter("workflow")}
                       >
                         {t("workflowNotifications")}
+                      </Button>
+                      <Button
+                        variant={
+                          notificationFilter === "dueSoon"
+                            ? "default"
+                            : "outline"
+                        }
+                        size="sm"
+                        className="w-full justify-start"
+                        onClick={() => setNotificationFilter("dueSoon")}
+                      >
+                        <Clock className="h-4 w-4 mr-2 text-blue-500" />
+                        {t("dueSoon") || "Due Soon"}
                       </Button>
                       <Button
                         variant={
@@ -723,7 +772,9 @@ export function ExchangeLayout2() {
                             ? t("workflowNotifications")
                             : notificationFilter === "overdue"
                               ? t("overdueTasks")
-                              : t("actionRequiredFilter")}
+                              : notificationFilter === "dueSoon"
+                                ? t("dueSoon") || "Due Soon"
+                                : t("actionRequiredFilter")}
                       </Badge>
                     )}
                   </h2>
@@ -753,8 +804,14 @@ export function ExchangeLayout2() {
                                 {t("overdueTasks") || "Overdue Task"}
                               </Badge>
                             )}
+                            {notification.dueSoon && (
+                              <Badge className="text-xs bg-blue-500 hover:bg-blue-600">
+                                {t("dueSoon") || "Due Soon"}
+                              </Badge>
+                            )}
                             {notification.actionRequired &&
-                              !notification.isOverdue && (
+                              !notification.isOverdue &&
+                              !notification.dueSoon && (
                                 <Badge
                                   variant="destructive"
                                   className="text-xs"
@@ -806,8 +863,14 @@ export function ExchangeLayout2() {
                             {t("overdueTasks") || "Overdue Task"}
                           </Badge>
                         )}
+                        {selectedNotification.dueSoon && (
+                          <Badge className="bg-blue-500 hover:bg-blue-600">
+                            {t("dueSoon") || "Due Soon"}
+                          </Badge>
+                        )}
                         {selectedNotification.actionRequired &&
-                          !selectedNotification.isOverdue && (
+                          !selectedNotification.isOverdue &&
+                          !selectedNotification.dueSoon && (
                             <Badge variant="destructive">
                               {t("actionRequired") || "Action Required"}
                             </Badge>

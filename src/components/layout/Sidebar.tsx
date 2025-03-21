@@ -72,7 +72,7 @@ const menuItems = [
     path: "/organizations",
   },
   {
-    name: "organizationInfo",
+    name: "organizationInformation",
     icon: Building2,
     path: "/organization-info",
   },

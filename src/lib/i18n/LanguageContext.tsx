@@ -7,19 +7,15 @@ type LanguageContextType = {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
-  dir: () => "ltr" | "rtl";
+  dir: string;
 };
 
 const LanguageContext = createContext<LanguageContextType | undefined>(
   undefined,
 );
 
-// Using arrow function with named export for consistency
-export const LanguageProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+// Using named function declaration for consistency
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguage] = useState<Language>(() => {
     return (localStorage.getItem("language") as Language) || "en";
   });
@@ -34,20 +30,20 @@ export const LanguageProvider = ({
     return translations[language][key] || translations.en[key] || key;
   };
 
-  const dir = () => (language === "ar" ? "rtl" : "ltr");
+  const dir = language === "ar" ? "rtl" : "ltr";
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t, dir }}>
       {children}
     </LanguageContext.Provider>
   );
-};
+}
 
-// Using arrow function with named export for consistency
-export const useLanguage = () => {
+// Using named function declaration for consistency
+export function useLanguage() {
   const context = useContext(LanguageContext);
   if (context === undefined) {
     throw new Error("useLanguage must be used within a LanguageProvider");
   }
   return context;
-};
+}

@@ -28,23 +28,29 @@ export function DigitalArchiveLayout() {
   const [selectedDocument, setSelectedDocument] = useState<any>(null);
 
   return (
-    <div className="p-6 space-y-6">
-      <header className="p-6 border-b -mx-6 -mt-6 mb-6">
+    <div className="h-screen flex flex-col overflow-hidden bg-background">
+      <header className="p-6 border-b flex-shrink-0">
         <h1 className="text-2xl font-semibold">{t("digitalArchive")}</h1>
       </header>
 
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="min-h-[600px] rounded-lg border"
-      >
-        <ResizablePanel defaultSize={25} minSize={20}>
-          <RepositoryTree onDocumentSelect={setSelectedDocument} />
-        </ResizablePanel>
-        <ResizableHandle />
-        <ResizablePanel defaultSize={75}>
-          <DocumentViewer document={selectedDocument} />
-        </ResizablePanel>
-      </ResizablePanelGroup>
+      <div className="flex-1 overflow-hidden p-6 pt-0">
+        <ResizablePanelGroup
+          direction="horizontal"
+          className="h-full rounded-lg border"
+        >
+          <ResizablePanel defaultSize={25} minSize={20}>
+            <div className="h-full overflow-hidden">
+              <RepositoryTree onDocumentSelect={setSelectedDocument} />
+            </div>
+          </ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={75}>
+            <div className="h-full overflow-y-auto">
+              <DocumentViewer document={selectedDocument} />
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
     </div>
   );
 }

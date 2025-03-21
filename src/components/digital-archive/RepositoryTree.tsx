@@ -192,6 +192,12 @@ export function RepositoryTree({ onDocumentSelect }: RepositoryTreeProps) {
                 setSelectedItem(item.id);
                 if (item.type === "document") {
                   onDocumentSelect(item);
+                } else if (
+                  item.type === "folder" &&
+                  item.children &&
+                  item.children.length > 0
+                ) {
+                  toggleExpand(item.id);
                 }
               }}
             >
@@ -331,13 +337,13 @@ export function RepositoryTree({ onDocumentSelect }: RepositoryTreeProps) {
 
   return (
     <div className="h-full flex flex-col border-r">
-      <div className="p-4 border-b">
+      <div className="p-4 border-b flex-shrink-0">
         <div className="relative">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input placeholder={t("searchArchive")} className="pl-8" />
         </div>
       </div>
-      <ScrollArea className="flex-1 p-4">
+      <ScrollArea className="flex-1 p-4 overflow-y-auto">
         {mockData.map((item) => renderItem(item))}
       </ScrollArea>
     </div>

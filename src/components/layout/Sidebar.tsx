@@ -71,6 +71,11 @@ const menuItems = [
     icon: Building2,
     path: "/organizations",
   },
+  {
+    name: "organizationInfo",
+    icon: Building2,
+    path: "/organization-info",
+  },
 ];
 
 export function Sidebar() {

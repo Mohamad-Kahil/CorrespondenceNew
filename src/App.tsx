@@ -19,6 +19,7 @@ import { DigitalArchiveLayout } from "./components/digital-archive/DigitalArchiv
 import { SystemAccessLayout } from "./components/system-access/SystemAccessLayout";
 import { EmployeeProfileLayout } from "./components/employee-profile/EmployeeProfileLayout";
 import { OrganizationLayout } from "./components/organizations/OrganizationLayout";
+import { OrganizationInfoLayout } from "./components/organization-info/OrganizationInfoLayout";
 
 function App() {
   // Handle Tempo routes
@@ -98,6 +99,10 @@ function App() {
                         <Route
                           path="organizations"
                           element={<OrganizationLayout />}
+                        />
+                        <Route
+                          path="organization-info"
+                          element={<OrganizationInfoLayout />}
                         />
                       </Routes>
                     </MainLayout>

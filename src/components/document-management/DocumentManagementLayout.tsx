@@ -9,7 +9,10 @@ export function DocumentManagementLayout() {
   const [activeTab, setActiveTab] = useState<"inbound" | "outbound">("inbound");
 
   return (
-    <div className="p-6 space-y-6" dir={t("direction")}>
+    <div
+      className="p-6 space-y-6 h-screen overflow-hidden"
+      dir={t("direction")}
+    >
       <header className="p-6 border-b -mx-6 -mt-6 mb-6">
         <h1 className="text-2xl font-semibold">
           {t("documentManagementProcess") || "Document Management Process"}
@@ -32,11 +35,17 @@ export function DocumentManagementLayout() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="inbound" className="mt-6">
+        <TabsContent
+          value="inbound"
+          className="mt-6 overflow-auto h-[calc(100vh-220px)]"
+        >
           <InboundDocumentWizard />
         </TabsContent>
 
-        <TabsContent value="outbound" className="mt-6">
+        <TabsContent
+          value="outbound"
+          className="mt-6 overflow-auto h-[calc(100vh-220px)]"
+        >
           <OutboundDocumentWizard />
         </TabsContent>
       </Tabs>

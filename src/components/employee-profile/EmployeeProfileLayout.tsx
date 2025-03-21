@@ -10,7 +10,10 @@ export function EmployeeProfileLayout() {
   >(null);
 
   return (
-    <div className="p-6 space-y-6" dir={t("direction")}>
+    <div
+      className="p-6 space-y-6 h-screen overflow-hidden"
+      dir={t("direction")}
+    >
       <header className="p-6 border-b -mx-6 -mt-6 mb-6">
         <h1 className="text-2xl font-semibold">
           {t("employeeProfiles") || "Employee Profiles"}
@@ -18,7 +21,7 @@ export function EmployeeProfileLayout() {
       </header>
 
       {selectedEmployeeId ? (
-        <div className="space-y-4">
+        <div className="space-y-4 overflow-auto h-[calc(100vh-180px)]">
           <button
             onClick={() => setSelectedEmployeeId(null)}
             className="text-primary hover:underline flex items-center gap-1"
@@ -42,7 +45,9 @@ export function EmployeeProfileLayout() {
           <EmployeeProfile employeeId={selectedEmployeeId} />
         </div>
       ) : (
-        <EmployeeTable onSelectEmployee={setSelectedEmployeeId} />
+        <div className="overflow-auto h-[calc(100vh-180px)]">
+          <EmployeeTable onSelectEmployee={setSelectedEmployeeId} />
+        </div>
       )}
     </div>
   );

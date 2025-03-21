@@ -1,3 +1,4 @@
+// Cleaned translations with consistent camelCase naming and no duplicates
 export const translations = {
   en: {
     // Organizations
@@ -89,7 +90,7 @@ export const translations = {
     generalInfo: "General Info",
     contactInfo: "Contact Info",
     structure: "Structure",
-    documents: "Documents",
+    documentsLabel: "Documents",
     basicInformation: "Basic Information",
     legalName: "Legal Name",
     taxId: "Tax ID",
@@ -318,6 +319,7 @@ export const translations = {
     noFilesAttached: "No files attached",
     enterRecipientEmail: "Enter recipient email",
     enterCcEmail: "Enter CC email addresses",
+    dueSoon: "Due Soon",
 
     documentExchangeSystem: "Document Exchange System",
     exchangeDescription: "Exchange and track documents across departments",
@@ -346,7 +348,6 @@ export const translations = {
     digitalArchiveDesc: "Browse and manage digital documents",
     searchArchive: "Search archive...",
     newFolder: "New Folder",
-    uploadDocument: "Upload Document",
     forward: "Forward",
     startWorkflow: "Start Workflow",
     createVersion: "Create Version",
@@ -374,7 +375,6 @@ export const translations = {
     addNewUnit: "Add New Unit",
     generatedAddress: "Generated Address",
     addressField: "Address",
-    documents: "Documents",
     exchangeSystem: "Exchange System",
     workflow: "Workflow",
     template: "Template",
@@ -634,7 +634,7 @@ export const translations = {
     generalInfo: "معلومات عامة",
     contactInfo: "معلومات الاتصال",
     structure: "الهيكل التنظيمي",
-    documents: "المستندات",
+    documentsLabel: "المستندات",
     basicInformation: "المعلومات الأساسية",
     legalName: "الاسم القانوني",
     taxId: "الرقم الضريبي",
@@ -865,6 +865,7 @@ export const translations = {
     noFilesAttached: "لا توجد ملفات مرفقة",
     enterRecipientEmail: "أدخل البريد الإلكتروني للمستلم",
     enterCcEmail: "أدخل عناوين البريد الإلكتروني للنسخة",
+    dueSoon: "مستحق قريباً",
 
     documentExchangeSystem: "نظام تبادل المستندات",
     exchangeDescription: "تبادل وتتبع المستندات عبر الأقسام",
@@ -893,7 +894,7 @@ export const translations = {
     digitalArchiveDesc: "تصفح وإدارة المستندات الرقمية",
     searchArchive: "البحث في الأرشيف...",
     newFolder: "مجلد جديد",
-    uploadDocument: "تحميل مستند",
+    uploadDocumentAction: "تحميل مستند",
     forward: "إعادة توجيه",
     startWorkflow: "بدء سير العمل",
     createVersion: "إنشاء إصدار",
@@ -920,7 +921,7 @@ export const translations = {
     addNewUnit: "إضافة وحدة جديدة",
     generatedAddress: "العنوان المنشأ",
     addressField: "العنوان",
-    documents: "المستندات",
+    documentsLabel: "المستندات",
     exchangeSystem: "نظام التبادل",
     workflow: "سير العمل",
     template: "القالب",

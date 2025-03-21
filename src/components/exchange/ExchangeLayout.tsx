@@ -27,15 +27,15 @@ export function ExchangeLayout() {
   };
 
   return (
-    <div className="min-h-screen">
-      <header className="p-6 border-b">
+    <div className="h-screen overflow-hidden flex flex-col">
+      <header className="p-6 border-b flex-shrink-0">
         <h1 className="text-2xl font-semibold">
           {t("documentExchangeSystem")}
         </h1>
       </header>
       <ResizablePanelGroup
         direction="horizontal"
-        className="min-h-[calc(100vh-116px)]"
+        className="flex-1 overflow-hidden"
       >
         <ResizablePanel defaultSize={20} minSize={15}>
           <ExchangeSidebar currentFolder={folder} />

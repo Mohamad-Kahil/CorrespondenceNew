@@ -463,9 +463,9 @@ export function ExchangeLayout2() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="h-screen bg-background flex flex-col overflow-hidden">
       {/* Header */}
-      <header className="p-4 border-b flex justify-between items-center bg-card">
+      <header className="p-4 border-b flex justify-between items-center bg-card flex-shrink-0">
         <h1 className="text-2xl font-semibold">
           {t("documentExchangeSystem")}
         </h1>
@@ -530,7 +530,7 @@ export function ExchangeLayout2() {
           </div>
 
           {/* Folders */}
-          <div className="flex-1 overflow-auto">
+          <div className="flex-1 overflow-y-auto">
             <div className="p-2">
               <Button
                 key="notifications"
@@ -758,7 +758,7 @@ export function ExchangeLayout2() {
             <div className="flex flex-1 overflow-hidden">
               {/* Notification List */}
               <div
-                className={`${selectedNotification ? "w-2/5" : "w-full"} overflow-auto h-[calc(100vh-57px)]`}
+                className={`${selectedNotification ? "w-2/5" : "w-full"} overflow-y-auto h-full`}
               >
                 {/* Notification List Header */}
                 <div className="p-4 border-b flex justify-between items-center bg-card">
@@ -835,7 +835,7 @@ export function ExchangeLayout2() {
 
               {/* Notification Detail */}
               {selectedNotification && (
-                <div className="w-3/5 overflow-auto bg-background p-6 border-l">
+                <div className="w-3/5 overflow-y-auto h-full bg-background p-6 border-l">
                   <div className="max-w-3xl mx-auto">
                     <div className="mb-6">
                       <div className="flex items-center gap-2 mb-2">
@@ -905,7 +905,7 @@ export function ExchangeLayout2() {
             <div className="flex flex-1 overflow-hidden">
               {/* Email List */}
               <div
-                className={`${selectedMessage ? "w-2/5" : "w-full"} overflow-auto h-[calc(100vh-57px)]`}
+                className={`${selectedMessage ? "w-2/5" : "w-full"} overflow-y-auto h-full`}
               >
                 {/* Email List Header */}
                 <div className="p-4 border-b flex justify-between items-center bg-card">
@@ -1052,7 +1052,7 @@ export function ExchangeLayout2() {
 
               {/* Email Content */}
               {selectedMessage && (
-                <div className="w-3/5 overflow-auto bg-background p-6 border-l">
+                <div className="w-3/5 overflow-y-auto h-full bg-background p-6 border-l">
                   <div className="max-w-3xl mx-auto">
                     {/* Email Header */}
                     <div className="mb-6">

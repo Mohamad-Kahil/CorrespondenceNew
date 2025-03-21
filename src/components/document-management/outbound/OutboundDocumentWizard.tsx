@@ -115,28 +115,28 @@ export function OutboundDocumentWizard() {
   };
 
   const stepTitles = [
-    t("documentCreation") || "Document Creation",
-    t("recipientForm") || "Recipient Form",
-    t("archivingPreparation") || "Archiving Preparation",
-    t("physicalStorage") || "Physical Storage",
-    t("dispatchProcess") || "Dispatch Process",
-    t("deliveryConfirmation") || "Delivery Confirmation",
-    t("processCompletion") || "Process Completion",
+    "Document Creation",
+    "Recipient Form",
+    "Archiving Preparation",
+    "Physical Storage",
+    "Dispatch Process",
+    "Delivery Confirmation",
+    "Process Completion",
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-5xl mx-auto">
       <WizardStepIndicator
         currentStep={currentStep}
         totalSteps={totalSteps}
         stepTitles={stepTitles}
       />
 
-      <Card className="p-6">
-        {renderStep()}
+      <Card className="p-4 overflow-hidden">
+        <div className="overflow-y-auto">{renderStep()}</div>
 
         {currentStep !== 1 && currentStep !== totalSteps && (
-          <div className="flex justify-between mt-6 pt-4 border-t">
+          <div className="flex justify-between mt-4 pt-3 border-t">
             <Button variant="outline" onClick={handleBack}>
               {t("back") || "Back"}
             </Button>

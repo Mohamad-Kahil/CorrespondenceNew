@@ -13,8 +13,8 @@ export function WizardStepIndicator({
   stepTitles = [],
 }: WizardStepIndicatorProps) {
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between mb-2">
+    <div className="w-full max-w-4xl mx-auto transform scale-80">
+      <div className="flex items-center justify-between">
         {Array.from({ length: totalSteps }).map((_, index) => {
           const stepNumber = index + 1;
           const isActive = stepNumber === currentStep;
@@ -27,7 +27,7 @@ export function WizardStepIndicator({
             >
               <div
                 className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium",
+                  "w-7 h-7 rounded-full flex items-center justify-center text-xs font-medium",
                   isActive
                     ? "bg-primary text-primary-foreground"
                     : isCompleted
@@ -40,7 +40,7 @@ export function WizardStepIndicator({
               {stepTitles[index] && (
                 <span
                   className={cn(
-                    "text-xs mt-1 text-center max-w-[80px] absolute -bottom-6",
+                    "text-[10px] mt-1 text-center max-w-[70px] whitespace-nowrap overflow-hidden text-ellipsis",
                     isActive || isCompleted
                       ? "text-foreground"
                       : "text-muted-foreground",
@@ -53,16 +53,16 @@ export function WizardStepIndicator({
           );
         })}
       </div>
-      <div className="relative mt-2">
-        <div className="absolute top-0 h-1 bg-muted w-full rounded-full" />
+      <div className="relative mt-1">
+        <div className="absolute top-0 h-0.5 bg-muted w-full rounded-full" />
         <div
-          className="absolute top-0 h-1 bg-primary rounded-full transition-all duration-300 ease-in-out"
+          className="absolute top-0 h-0.5 bg-primary rounded-full transition-all duration-300 ease-in-out"
           style={{
             width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
           }}
         />
       </div>
-      <div className="h-8" /> {/* Spacer for step titles */}
+      <div className="h-6" /> {/* Reduced spacer for step titles */}
     </div>
   );
 }

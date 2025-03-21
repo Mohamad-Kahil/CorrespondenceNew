@@ -9,46 +9,43 @@ export function DocumentManagementLayout() {
   const [activeTab, setActiveTab] = useState<"inbound" | "outbound">("inbound");
 
   return (
-    <div
-      className="p-6 space-y-6 h-screen overflow-hidden"
-      dir={t("direction")}
-    >
-      <header className="p-6 border-b -mx-6 -mt-6 mb-6">
+    <div className="h-screen flex flex-col overflow-hidden bg-background">
+      <header className="p-4 border-b flex-shrink-0">
         <h1 className="text-2xl font-semibold">
           {t("documentManagementProcess") || "Document Management Process"}
         </h1>
       </header>
 
-      <Tabs
-        defaultValue="inbound"
-        value={activeTab}
-        onValueChange={(value) => setActiveTab(value as "inbound" | "outbound")}
-        className="w-full"
-        dir={t("direction") === "rtl" ? "rtl" : "ltr"}
-      >
-        <TabsList className="grid grid-cols-2 w-full max-w-md mx-auto mb-8">
-          <TabsTrigger value="inbound">
-            {t("inboundDocuments") || "Inbound Documents"}
-          </TabsTrigger>
-          <TabsTrigger value="outbound">
-            {t("outboundDocuments") || "Outbound Documents"}
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent
-          value="inbound"
-          className="mt-6 overflow-auto h-[calc(100vh-220px)]"
+      <div className="flex-1 overflow-hidden">
+        <Tabs
+          defaultValue="inbound"
+          value={activeTab}
+          onValueChange={(value) =>
+            setActiveTab(value as "inbound" | "outbound")
+          }
+          className="h-full flex flex-col"
+          dir={t("direction") === "rtl" ? "rtl" : "ltr"}
         >
-          <InboundDocumentWizard />
-        </TabsContent>
+          <TabsList className="grid grid-cols-2 w-full max-w-md mx-auto my-2 flex-shrink-0">
+            <TabsTrigger value="inbound">
+              {t("inboundDocuments") || "Inbound Documents"}
+            </TabsTrigger>
+            <TabsTrigger value="outbound">
+              {t("outboundDocuments") || "Outbound Documents"}
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent
-          value="outbound"
-          className="mt-6 overflow-auto h-[calc(100vh-220px)]"
-        >
-          <OutboundDocumentWizard />
-        </TabsContent>
-      </Tabs>
+          <div className="flex-1 overflow-hidden px-4">
+            <TabsContent value="inbound" className="h-full overflow-y-auto">
+              <InboundDocumentWizard />
+            </TabsContent>
+
+            <TabsContent value="outbound" className="h-full overflow-y-auto">
+              <OutboundDocumentWizard />
+            </TabsContent>
+          </div>
+        </Tabs>
+      </div>
     </div>
   );
 }

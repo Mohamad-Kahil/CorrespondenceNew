@@ -133,29 +133,29 @@ export function InboundDocumentWizard() {
   };
 
   const stepTitles = [
-    t("documentReception") || "Document Reception",
-    t("secrecyClassification") || "Secrecy Classification",
-    t("routing") || "Routing",
-    t("documentProcessing") || "Document Processing",
-    t("metadata") || "Metadata",
-    t("physicalStorage") || "Physical Storage",
-    t("physicalArchiving") || "Physical Archiving",
-    t("processCompletion") || "Process Completion",
+    "Document Reception",
+    "Secrecy Classification",
+    "Routing",
+    "Document Processing",
+    "Metadata",
+    "Physical Storage",
+    "Physical Archiving",
+    "Process Completion",
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-5xl mx-auto">
       <WizardStepIndicator
         currentStep={currentStep}
         totalSteps={totalSteps}
         stepTitles={stepTitles}
       />
 
-      <Card className="p-6">
-        {renderStep()}
+      <Card className="p-4 overflow-hidden">
+        <div className="overflow-y-auto">{renderStep()}</div>
 
         {currentStep !== 1 && currentStep !== totalSteps && (
-          <div className="flex justify-between mt-6 pt-4 border-t">
+          <div className="flex justify-between mt-4 pt-3 border-t">
             <Button variant="outline" onClick={handleBack}>
               {t("back") || "Back"}
             </Button>
